@@ -1,7 +1,20 @@
 var fetch = require('isomorphic-fetch');
 
+var ADD_ENTRY = 'ADD_ENTRY';
+var addEntry = function(entry){
+	return {
+		type: ADD_ENTRY,
+		entry: entry
+	}
+};
 
-
+var DELETE_ENTRY = 'DELETE_ENTRY';
+var deleteEntry = function(entry){
+	return {
+		type: DELETE_ENTRY,
+		entry: entry
+	}
+};
 
 
 var FETCH_DESCRIPTION_SUCCESS = 'FETCH_DESCRIPTION_SUCCESS';
@@ -95,10 +108,10 @@ var fetchCards = function(object){
 // };
 
 
-// exports.FETCH_CARDS = FETCH_CARDS;
-// exports.fetchCards = fetchCards;
-// exports.GUESS_NUM = GUESS_NUM;
-// exports.guessNum = guessNum;
+exports.ADD_ENTRY = ADD_ENTRY;
+exports.addEntry = addEntry;
+exports.DELETE_ENTRY = DELETE_ENTRY;
+exports.deleteEntry = deleteEntry;
 // exports.FEEDBACK = FEEDBACK;
 // exports.feedback = feedback;
 // exports.NEW_GAME = NEW_GAME;
