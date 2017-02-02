@@ -14,7 +14,7 @@ var scrumReducer = function(state, action){
 	} else if (action.type === actions.DELETE_ENTRY){
 
 		var i = state.entries.indexOf(action.entry)
-		console.log(i)
+		console.log(typeof(state.entries))
 		var newState = state.entries.splice(i, 1)
 		console.log(newState)
 		return Object.assign({}, state, {entries: newState})
