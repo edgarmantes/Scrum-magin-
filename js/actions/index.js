@@ -8,6 +8,15 @@ var addEntry = function(entry){
 	}
 };
 
+var ADD_TO_TASK_LIST = 'ADD_TO_TASK_LIST';
+var addToTaskList = function(entry){
+	return {
+		type: ADD_TO_TASK_LIST,
+		entry: entry
+	}
+};
+
+
 var DELETE_ENTRY = 'DELETE_ENTRY';
 var deleteEntry = function(entry){
 	return {
@@ -15,6 +24,35 @@ var deleteEntry = function(entry){
 		entry: entry
 	}
 };
+
+
+var BACK_LOG = 'BACK_LOG';
+var backLog = function(entry){
+	return {
+		type: BACK_LOG,
+		entry: entry
+	}
+};
+
+
+var ADD_TO_DEV = 'ADD_TO_DEV';
+var addToDev = function(entry){
+	return {
+		type: ADD_TO_DEV,
+		entry: entry
+	}
+};
+
+
+var BACK_TASK = 'BACK_TASK';
+var backTask = function(entry){
+	console.log('test back_task')
+	return {
+		type: BACK_TASK,
+		entry: entry
+	}
+};
+
 
 
 var FETCH_DESCRIPTION_SUCCESS = 'FETCH_DESCRIPTION_SUCCESS';
@@ -112,10 +150,15 @@ exports.ADD_ENTRY = ADD_ENTRY;
 exports.addEntry = addEntry;
 exports.DELETE_ENTRY = DELETE_ENTRY;
 exports.deleteEntry = deleteEntry;
-// exports.FEEDBACK = FEEDBACK;
-// exports.feedback = feedback;
-// exports.NEW_GAME = NEW_GAME;
-// exports.newGame = newGame;
+exports.ADD_TO_TASK_LIST = ADD_TO_TASK_LIST;
+exports.addToTaskList = addToTaskList;
+
+exports.BACK_LOG = BACK_LOG;
+exports.backLog = backLog;
+exports.ADD_TO_DEV = ADD_TO_DEV;
+exports.addToDev = addToDev;
+exports.BACK_TASK = BACK_TASK;
+exports.backTask = backTask;
 
 exports.FETCH_DESCRIPTION_SUCCESS = FETCH_DESCRIPTION_SUCCESS;
 exports.fetchDescriptionSuccess = fetchDescriptionSuccess;

@@ -1,24 +1,71 @@
 var actions = require('../actions/index');
 
 var initialCardState = {
-	entries: ["testing state"]
+	entries: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
+	taskList: [],
+	devList: [],
+	testList: [],
+	releaseList: []
 };
 
 var scrumReducer = function(state, action){
 	state = state || initialCardState;
 
-	if (action.type === actions.ADD_ENTRY){
+	if (action.type === actions.ADD_ENTRY){ // Back Log reducer 
+
 		var newArray = state.entries.concat(action.entry)
 
 		return Object.assign({}, state, {entries: newArray})
+
 	} else if (action.type === actions.DELETE_ENTRY){
 
-		var i = state.entries.indexOf(action.entry)
-		console.log(typeof(state.entries))
-		var newState = state.entries.splice(i, 1)
-		console.log(newState)
-		return Object.assign({}, state, {entries: newState})
+		var filtered = state.entries.filter(function(entry){
+			return entry !== action.entry
+		});
+		return Object.assign({}, state, { entries: filtered});
 
+	} else if (action.type === actions.ADD_TO_TASK_LIST){
+
+		var filtered = state.entries.filter(function(entry){
+			return entry !== action.entry
+		});
+
+		state.taskList.push(action.entry)
+
+		return Object.assign({}, state, { entries: filtered}); //back log reducer end
+
+	} else if (action.type === actions.BACK_LOG){	// Task list reducer
+
+		var filtered = state.taskList.filter(function(entry){
+
+			return entry !== action.entry
+		});
+
+		state.entries.push(action.entry)
+
+		return Object.assign({}, state, { taskList: filtered});
+
+	} else if (action.type === actions.ADD_TO_DEV){
+
+		var filtered = state.taskList.filter(function(entry){
+
+			return entry !== action.entry
+		});
+
+		state.devList.push(action.entry)
+
+		return Object.assign({}, state, { taskList: filtered}); // Task list reducer end
+
+	} else if (action.type === actions.BACK_TASK){ //Dev list reducer
+
+		var filtered = state.devList.filter(function(entry){
+
+			return entry !== action.entry
+		});
+
+		state.taskList.push(action.entry)
+
+		return Object.assign({}, state, { devList: filtered});
 
 	} else if (action.type === actions.FETCH_CARDS){
 		console.log('testing FETCH_CARDS')

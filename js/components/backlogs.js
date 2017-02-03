@@ -13,19 +13,24 @@ var BackLogs = React.createClass({
 		var entry = document.getElementsByClassName('entry')[0].value;
 
 		this.props.dispatch(actions.addEntry(entry));
+		document.getElementsByClassName('entry')[0].reset;		
+	},
+
+	addToTaskList: function(entry){
+		this.props.dispatch(actions.addToTaskList(entry));
 	},
 
 	deleteEntry: function(entry){
 		this.props.dispatch(actions.deleteEntry(entry));
+
 	},
 
 	render: function(props){
 	
 		var entryArray = this.props.entries.map(function(entry, index){
 
-			return 	(
-					<List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} index={index} />
-			)
+			return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} btnOne='Delete' btnTwo='Add to Task List' />
+			
 		}, this)
 
 		return (
