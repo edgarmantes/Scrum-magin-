@@ -1,5 +1,13 @@
 var fetch = require('isomorphic-fetch');
 
+var RESET_STATE = 'RESET_STATE';
+var resetState = function(){
+	return {
+		type: RESET_STATE
+	}
+};
+
+
 var ADD_ENTRY = 'ADD_ENTRY';
 var addEntry = function(entry){
 	return {
@@ -49,6 +57,53 @@ var backTask = function(entry){
 	console.log('test back_task')
 	return {
 		type: BACK_TASK,
+		entry: entry
+	}
+};
+
+
+var ADD_TO_TEST = 'ADD_TO_TEST';
+var addToTest = function(entry){
+	return {
+		type: ADD_TO_TEST,
+		entry: entry
+	}
+};
+
+
+var BACK_DEV = 'BACK_DEV';
+var backDev = function(entry){
+	return {
+		type: BACK_DEV,
+		entry: entry
+	}
+};
+
+
+var ADD_TO_RELEASE = 'ADD_TO_RELEASE';
+var addToRelease = function(entry){
+	return {
+		type: ADD_TO_RELEASE,
+		entry: entry
+	}
+};
+
+
+var BACK_TEST = 'BACK_TEST';
+var backTest = function(entry){
+	console.log('test action')
+	return {
+		type: BACK_TEST,
+		entry: entry
+	}
+};
+
+
+var ADD_TO_DONE = 'ADD_TO_DONE';
+var addToDone = function(entry){
+	console.log('test actions')
+	return {
+		type: ADD_TO_DONE,
 		entry: entry
 	}
 };
@@ -145,7 +200,8 @@ var fetchCards = function(object){
 
 // };
 
-
+exports.RESET_STATE = RESET_STATE;
+exports.resetState = resetState;
 exports.ADD_ENTRY = ADD_ENTRY;
 exports.addEntry = addEntry;
 exports.DELETE_ENTRY = DELETE_ENTRY;
@@ -159,6 +215,16 @@ exports.ADD_TO_DEV = ADD_TO_DEV;
 exports.addToDev = addToDev;
 exports.BACK_TASK = BACK_TASK;
 exports.backTask = backTask;
+exports.ADD_TO_TEST = ADD_TO_TEST;
+exports.addToTest = addToTest;
+exports.BACK_DEV = BACK_DEV;
+exports.backDev = backDev;
+exports.ADD_TO_RELEASE = ADD_TO_RELEASE;
+exports.addToRelease = addToRelease;
+exports.BACK_TEST = BACK_TEST;
+exports.backTest = backTest;
+exports.ADD_TO_DONE = ADD_TO_DONE;
+exports.addToDone = addToDone;
 
 exports.FETCH_DESCRIPTION_SUCCESS = FETCH_DESCRIPTION_SUCCESS;
 exports.fetchDescriptionSuccess = fetchDescriptionSuccess;

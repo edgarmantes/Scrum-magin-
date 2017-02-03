@@ -1,4 +1,4 @@
-exports.DATABASE_URL = // requires a URL from the MongoDB website. Follow MongoDB setup instructions. 
+exports.DATABASE_URL = 'mongodb://emantes:123456@ds139979.mlab.com:39979/scrummage'
 
 
 

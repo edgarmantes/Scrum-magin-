@@ -22,24 +22,29 @@ var Scrum = React.createClass({
 		this.props.dispatch(actions.backTask(entry))
 	},
 
-	addToTest: function(){
+	addToTest: function(entry){
 
+		this.props.dispatch(actions.addToTest(entry))
 	},
 
-	backDev: function(){
+	backDev: function(entry){
 
+		this.props.dispatch(actions.backDev(entry))
 	},
 
-	addToRelease: function(){
+	addToRelease: function(entry){
 
+		this.props.dispatch(actions.addToRelease(entry))
 	},
 
-	backTest: function(){
+	backTest: function(entry){
 
+		this. props.dispatch(actions.backTest(entry))
 	},
 
-	addToDone: function(){
-
+	addToDone: function(entry){
+		console.log('test dispatch')
+		this.props.dispatch(actions.addToDone(entry))
 	},
 
 
@@ -64,24 +69,28 @@ var Scrum = React.createClass({
 		return (
 			<div className='scrum-container boards row'>
 				<div className='scrum-tasks boards col-3'>
+					<h3>Tasks</h3>
 					<ul>
 						{tasks}
 					</ul>
 				</div>
 				<div className='scrum-dev boards col-3'>
+					<h3>Dev</h3>
 					<ul>
 						{dev}
 					</ul>
 				</div>
 				<div className='scrum-test boards col-3'>
+					<h3>Test</h3>
 					<ul>	
 						{test}
 					</ul>
 				</div>
 				<div className='scrum-release boards col-3'>
-					<div>	
+					<h3>Release</h3>
+					<ul>	
 						{release}
-					</div>	
+					</ul>	
 				</div>
 
 			</div>
