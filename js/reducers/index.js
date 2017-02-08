@@ -1,12 +1,13 @@
 var actions = require('../actions/index');
 
 var initialCardState = {
-	entries: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
-	taskList: [],
+	entries: [],
+	taskList: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
 	devList: [],
 	testList: [],
 	releaseList: [],
-	doneList: []
+	doneList: [],
+	crew:[]
 };
 
 var scrumReducer = function(state, action){
@@ -131,9 +132,14 @@ var scrumReducer = function(state, action){
 			devList: [],
 			testList: [],
 			releaseList: [],
-			doneList: []
+			doneList: [],
+			crew: []
 		};
 		return Object.assign({}, state, resetCardState)
+	} else if (action.type === actions.ADD_MEMBER){
+		console.log('testing new user')
+		var newArray = state.crew.concat(action.member)
+		return Object.assign({},state, {crew: newArray})
 	}
 
 	else if (action.type === actions.FETCH_CARDS){
@@ -142,7 +148,7 @@ var scrumReducer = function(state, action){
 		
 	} else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {   // ***
 
-        return Object.assign({}, state, { cards : action })
+        return state
     }
     else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
 		

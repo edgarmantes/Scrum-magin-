@@ -108,6 +108,15 @@ var addToDone = function(entry){
 	}
 };
 
+var ADD_MEMBER = 'ADD_MEMBER';
+var addMember = function(member){
+	console.log('testing member action')
+	return{
+		type: ADD_MEMBER,
+		member: member
+	}
+};
+
 
 
 var FETCH_DESCRIPTION_SUCCESS = 'FETCH_DESCRIPTION_SUCCESS';
@@ -127,38 +136,50 @@ var fetchDescriptionError = function(object, error) {
     };
 };
 
-var fetchCards = function(object){
-		console.log('test fetchfunction')	
+var fetchUser = function(objects){
+		console.log('test fetchfunction ' + JSON.stringify(objects))
+		var body = JSON.stringify(objects);	
 	return function(dispatch){
 
-		return fetch('http://localhost:8080/home', { method: 'GET'}).then(function(response){
+		return fetch('http://localhost:8080/users', 
+			{
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+				}, 
+				mode: 'cors',
+				cache: 'default',
+				body: JSON.stringify(objects)
+			}).then(function(response){
 
-			if (response.status < 200 || response.status >= 300){
-				var error = new Error (response.statusText)
-				error.response = response
-				throw error;
-			}
-			console.log(response)
-			return response.text();
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+				console.log(response)
+				return response.text();
 
-		}).then(function(response){
+			}).then(function(response){
 
-			return response
+				return response
 
-		}).then(function(data){
+			}).then(function(data){
 
-			var cards = data;
-			return dispatch(
-				fetchDescriptionSuccess(object, cards)
-			);
+				var cards = data;
+				return dispatch(
+					fetchDescriptionSuccess(object, cards)
+				);
 
-		}).catch(function(error){
+			}).catch(function(error){
 
-			return dispatch(
-				fetchDescriptionError(object, error)
-			)
+				return dispatch(
+					fetchDescriptionError(object, error)
+				)
 
-		});
+			});
+
 	};
 };
 
@@ -225,10 +246,12 @@ exports.BACK_TEST = BACK_TEST;
 exports.backTest = backTest;
 exports.ADD_TO_DONE = ADD_TO_DONE;
 exports.addToDone = addToDone;
+exports.ADD_MEMBER = ADD_MEMBER;
+exports.addMember = addMember;
 
 exports.FETCH_DESCRIPTION_SUCCESS = FETCH_DESCRIPTION_SUCCESS;
 exports.fetchDescriptionSuccess = fetchDescriptionSuccess;
 exports.FETCH_DESCRIPTION_ERROR = FETCH_DESCRIPTION_ERROR;
 exports.fetchDescriptionError = fetchDescriptionError;
 
-exports.fetchCards = fetchCards;
+exports.fetchUser = fetchUser;

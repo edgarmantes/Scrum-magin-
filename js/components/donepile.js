@@ -16,7 +16,7 @@ var DonePile = React.createClass({
 			
 			<div className="container row"> 
 				<div className="row border">
-					<h1 className="col-6">Done Pile</h1>
+					<h1 className="done-pile-h1 col-6">Done Pile</h1>
 				</div>
 				<div className="log-container col-12 border">
 					<ul className="done-list">

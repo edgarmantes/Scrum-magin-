@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var User = require('./models/user');
+var session = require('client-sessions');
 
 var config = require('./config');
 var passport = require('passport');
@@ -9,10 +11,55 @@ var BasicStrategy = require('passport-http').BasicStrategy;
 var jsonParser = bodyParser.json();
 var app = express();
 
+mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(passport.initialize());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET','PUT','POST','DELETE', 'OPTIONS');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
+// sessions middleware - configuration of handler
+app.use(session({
+    cookieName: 'session',
+    secret: 'blahdeeblahdeeblah-Trump',
+    duration: 30*60*1000,
+    activeDuration: 30*60*1000,
+    httpOnly: true,
+    secure: true,
+    ephemeral: true
+}));
+
+// session middleware - making the middleware global
+app.use(function(req, res, next){
+    if (req.session && req.session.user){
+        User.findOne({username: req.session.user.username}, function(err, user){
+            if (user) {
+                req.user = user;
+                delete req.user.password;
+                req.session.user = user;
+
+            }
+            next();
+        });
+    } else {
+        next();
+    }
+})
+
+// session middleware - function to pass to routesto check for open sessions
+function(req, res, next){
+    if (!req.user) {
+        res.status(401); // send this status code to inform client that person is not signed in.
+    } else {
+        next();
+    }
+};
 
 // middleware to run as a module or as a server. 
 // This setup the connection to the server and the server to the DB.
@@ -44,7 +91,6 @@ exports.app = app;
 exports.runServer = runServer;
 
 
-// This is the setup for Passport.js authentication
 var strategy = new BasicStrategy(function(username, password, callback) {
     User.findOne({
         username: username
@@ -77,150 +123,123 @@ var strategy = new BasicStrategy(function(username, password, callback) {
 
 passport.use(strategy);
 
+// Beginning routes
 
-// Add all the models required for the DataBase here:
-// example:
-	// var LogRoom = require('./models/LogRoom');
-	// var Entries = require('./models/Entries');
-	// var User = require('./models/User');
+app.options('*', function(req, res){
+    res.status(200)
+});
 
+app.get('/test', function(){
+    console.log('testing server')
+})
 
-// 
+// Authenticate user supplied sign In credentials
+app.get('/hidden', passport.authenticate('basic', {session: false}), function(req, res) {
+    res.json({
+        message: 'Luke... I am your father'
+    });
+});
 
-// Routes required for Passport.js. It includes salted hashes
-app.post('/users', jsonParser, function(req, res) {
-	// 'User' is an example of the user model for MongoDB. That is the collection .findOne() will look into for the requested information.
-    User.findOne({username: req.body.usernameup}, function(err, user){
+// Create new users
+app.post('/users', function(req, res) {
+    console.log(req.body)
+
+    if (!req.body) {
+        return res.status(400).json({
+            message: "No request body"
+        });
+    }
+
+    if (!('username' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: username'
+        });
+    }
+
+    var username = req.body.username;
+
+    if (typeof username !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: username'
+        });
+    }
+
+    username = username.trim();
+
+    if (username === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: username'
+        });
+    }
+
+    if (!('password' in req.body)) {
+        return res.status(422).json({
+            message: 'Missing field: password'
+        });
+    }
+
+    var password = req.body.password;
+
+    if (typeof password !== 'string') {
+        return res.status(422).json({
+            message: 'Incorrect field type: password'
+        });
+    }
+
+    password = password.trim();
+
+    if (password === '') {
+        return res.status(422).json({
+            message: 'Incorrect field length: password'
+        });
+    }
+
+    // var user = new User({
+    //     username: username,
+    //     password: password
+    // });
+
+    // user.save(function(err) {
+    //     if (err) {
+    //         return res.status(500).json({
+    //             message: 'Internal server error'
+    //         });
+    //     }
+
+    //     return res.status(201).json({});
+    // });
+
+    bcrypt.genSalt(10, function(err, salt) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal server error'
             });
         }
 
-        if (user !== null){
-            return res.status(422).json({
-                message: 'Username taken: Please choose another username'
-            });
-        }
-
-        if (!req.body) {
-            return res.status(400).json({
-                message: "No request body"
-            });
-        }
-
-        if (!('usernameup' in req.body)) {
-            return res.status(422).json({
-                message: 'Missing field: username'
-            });
-        }
-
-        var username = req.body.usernameup;
-
-        if (typeof username !== 'string') {
-            return res.status(421).json({
-                message: 'Incorrect field type: username'
-            });
-        }
-
-        username = username.trim();
-
-        if (username === '') {
-            return res.status(422).json({
-                message: 'Incorrect field length: username'
-            });
-        }
-
-        if (!('passwordup' in req.body)) {
-            return res.status(423).json({
-                message: 'Missing field: password'
-            });
-        }
-
-        var password = req.body.passwordup;
-
-        if (typeof password !== 'string') {
-            return res.status(424).json({
-                message: 'Incorrect field type: password'
-            });
-        }
-
-        password = password.trim();
-
-        if (password === '') {
-            return res.status(425).json({
-                message: 'Incorrect field length: password'
-            });
-        }
-
-        var userId = null;
-
-        bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(password, salt, function(err, hash) {
             if (err) {
                 return res.status(500).json({
                     message: 'Internal server error'
                 });
             }
 
-            bcrypt.hash(password, salt, function(err, hash) {
+            var user = new User({
+                username: username,
+                password: hash
+            });
+
+            user.save(function(err) {
                 if (err) {
                     return res.status(500).json({
                         message: 'Internal server error'
                     });
                 }
 
-                var user = new User({
-                    username: username,
-                    password: hash
-                });
-
-                user.save(function(err, user) {
-
-                    if (err) {
-                        return res.status(500).json({
-                            message: 'Internal server error'
-                        });
-                    }
-                    userId = user._id;
-                    return res.status(201).json(userId);
-                });
+                return res.status(201).json({});
             });
         });
-
-    })   
+    });
 });
-
-// Used to sign in for existing users. This is the login endpoint
-app.post('/users/signin', jsonParser, function(req, res){
-	// 'User' is an example of the user model for MongoDB. That is the collection .findOne() will look into for the requested information.
-    User.findOne({username: req.body.usernamein}, function(err, object){
-
-        object.validatePassword(req.body.passwordin, function(err, result){
-            res.status(201).json(object._id);
-        })
-    })
-
-});
-
-// This is used for new users who are sigin up. Creates new documents in the db. 
-app.post('/user', function(req, res){
-	User.create({
-		username: req.body.username,
-		logroomIds: [],
-	}, function(err, object){
-		    if (err) {
-            	return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        res.status(200).json(object);
-	})
-});
-
-// Add the application methods and endpoints here:
-
-
-// ...
 
 
 // Used for error handling. If a request was made to a non-existing endpoint this will be returned

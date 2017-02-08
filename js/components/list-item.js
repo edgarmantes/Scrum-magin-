@@ -13,9 +13,12 @@ var List = React.createClass({
 
 	render: function(props){
 		return (
-			<li className='listItem' >{this.props.entry}
-				<input className="entry-btn" onClick={this.props.onClick} type='submit' value={this.props.btnOne} />
-				<input className="entry-btn" onClick={this.props.onClickAdd} type='submit' value={this.props.btnTwo} />
+			<li className='listItem' >
+				<div className='entry'>{this.props.entry}</div>
+				<div className='btn-container'>
+					<input className="entry-btn" onClick={this.props.onClick} type='submit' value={this.props.btnOne} />
+					<input className="entry-btn" onClick={this.props.onClickAdd} type='submit' value={this.props.btnTwo} />
+				</div>
 			</li>
 		)
 	}

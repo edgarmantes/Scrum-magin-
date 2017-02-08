@@ -61,18 +61,19 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.0",
+    "body-parser": "^1.15.2",
+    "client-sessions": "^0.7.0",
+    "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^4.7.3",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^3.0.0",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0",
-    "bcryptjs": "^2.4.0",
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "mongoose": "^4.7.3",
-    "passport": "^0.3.2",
-    "passport-http": "^0.3.0"
+    "redux-thunk": "^2.2.0"
   }
 }

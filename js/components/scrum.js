@@ -51,48 +51,55 @@ var Scrum = React.createClass({
 	render: function(props){
 
 		var tasks = this.props.taskList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backLog.bind(null, entry)} onClickAdd={this.addToDev.bind(null, entry)} index={index} btnOne='back' btnTwo='next' />
+			return <List key={index} entry={entry} onClick={this.backLog.bind(null, entry)} onClickAdd={this.addToDev.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />
 		}, this)
 
 		var dev = this.props.devList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backTask.bind(null, entry)} onClickAdd={this.addToTest.bind(null, entry)} index={index} btnOne='back' btnTwo='next' />		
+			return <List key={index} entry={entry} onClick={this.backTask.bind(null, entry)} onClickAdd={this.addToTest.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />		
 		}, this)
 
 		var test = this.props.testList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backDev.bind(null, entry)} onClickAdd={this.addToRelease.bind(null, entry)} index={index} btnOne='back' btnTwo='next' />		
+			return <List key={index} entry={entry} onClick={this.backDev.bind(null, entry)} onClickAdd={this.addToRelease.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />		
 		}, this)
 
 		var release = this.props.releaseList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backTest.bind(null, entry)} onClickAdd={this.addToDone.bind(null, entry)} index={index} btnOne='back' btnTwo='next' />	
+			return <List key={index} entry={entry} onClick={this.backTest.bind(null, entry)} onClickAdd={this.addToDone.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />	
 		}, this)
 
 		return (
-			<div className='scrum-container boards row'>
-				<div className='scrum-tasks boards col-3'>
-					<h3>Tasks</h3>
-					<ul>
-						{tasks}
-					</ul>
+			<div className='scrum-container row'>
+				<div className='col-3'>
+					<div className='scrum-tasks boards'>
+						<h2 className='column'>Tasks</h2>
+						<ul>
+							{tasks}
+						</ul>
+					</div>
 				</div>
-				<div className='scrum-dev boards col-3'>
-					<h3>Dev</h3>
-					<ul>
-						{dev}
-					</ul>
+				<div className='col-3'>
+					<div className='scrum-dev boards'>
+						<h2 className='column'>Dev</h2>
+						<ul>
+							{dev}
+						</ul>
+					</div>
 				</div>
-				<div className='scrum-test boards col-3'>
-					<h3>Test</h3>
-					<ul>	
-						{test}
-					</ul>
+				<div className='col-3'>
+					<div className='scrum-test boards'>
+						<h2 className='column'>Test</h2>
+						<ul>	
+							{test}
+						</ul>
+					</div>
 				</div>
-				<div className='scrum-release boards col-3'>
-					<h3>Release</h3>
-					<ul>	
-						{release}
-					</ul>	
+				<div className='col-3'>
+					<div className='scrum-release boards'>
+						<h2 className='column'>Release</h2>
+						<ul>	
+							{release}
+						</ul>	
+					</div>
 				</div>
-
 			</div>
 		)
 	}
