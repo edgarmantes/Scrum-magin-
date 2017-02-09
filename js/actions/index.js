@@ -128,7 +128,7 @@ var fetchDescriptionSuccess = function(object, cards) {
 };
 
 var FETCH_DESCRIPTION_ERROR= 'FETCH_DESCRIPTION_ERROR';
-var fetchDescriptionError = function(object, error) {
+var fetchDescriptionError = function(error) {
     return {
         type: FETCH_DESCRIPTION_ERROR,
 
@@ -138,21 +138,21 @@ var fetchDescriptionError = function(object, error) {
 
 var fetchUser = function(objects){
 		console.log('test fetchfunction ' + JSON.stringify(objects))
-		var body = JSON.stringify(objects);	
+
 	return function(dispatch){
 
 		return fetch('http://localhost:8080/users', 
 			{
 				method: 'POST',
 				headers: {
-					'content-type': 'application/json',
+					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 				}, 
 				mode: 'cors',
 				cache: 'default',
 				body: JSON.stringify(objects)
 			}).then(function(response){
-
+				console.log(response)
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
@@ -175,7 +175,7 @@ var fetchUser = function(objects){
 			}).catch(function(error){
 
 				return dispatch(
-					fetchDescriptionError(object, error)
+					fetchDescriptionError(error)
 				)
 
 			});
@@ -184,42 +184,6 @@ var fetchUser = function(objects){
 };
 
 
-// var fetchDescription = function(object){
-// 	return function(dispatch){
-
-// 		return fetch('http://localhost:8080/fewest-guesses', { method: 'GET' }).then(function(response){
-
-// 			if (response.status < 200 || response.status >= 300){
-// 				var error = new Error (response.statusText)
-// 				error.response = response
-// 				throw error;
-// 			}
-// 			return response.text();
-
-// 		}). then(function(response){
-// 			console.log(response)
-// 			document.getElementById('fewestNumber').innerHTML = response;
-// 			return response
-
-
-
-// 		}).then(function(data){
-
-// 			var description = data;
-// 			return dispatch(
-// 				fetchDescriptionSuccess(object, description)
-// 			);
-
-// 		}).catch(function(error){
-
-// 			return dispatch(
-// 				fetchDescriptionError(object, error)
-// 			)
-
-// 		});
-// 	};
-
-// };
 
 exports.RESET_STATE = RESET_STATE;
 exports.resetState = resetState;

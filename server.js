@@ -8,7 +8,7 @@ var session = require('client-sessions');
 var config = require('./config');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
-var jsonParser = bodyParser.json();
+
 var app = express();
 
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
@@ -18,7 +18,7 @@ app.use(passport.initialize());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET','PUT','POST','DELETE', 'OPTIONS');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
@@ -53,7 +53,7 @@ app.use(function(req, res, next){
 })
 
 // session middleware - function to pass to routesto check for open sessions
-function(req, res, next){
+function requireLogin(req, res, next){
     if (!req.user) {
         res.status(401); // send this status code to inform client that person is not signed in.
     } else {
@@ -142,7 +142,7 @@ app.get('/hidden', passport.authenticate('basic', {session: false}), function(re
 
 // Create new users
 app.post('/users', function(req, res) {
-    console.log(req.body)
+    console.log('server received ' + req.body.username)
 
     if (!req.body) {
         return res.status(400).json({
@@ -194,20 +194,6 @@ app.post('/users', function(req, res) {
         });
     }
 
-    // var user = new User({
-    //     username: username,
-    //     password: password
-    // });
-
-    // user.save(function(err) {
-    //     if (err) {
-    //         return res.status(500).json({
-    //             message: 'Internal server error'
-    //         });
-    //     }
-
-    //     return res.status(201).json({});
-    // });
 
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
@@ -228,14 +214,14 @@ app.post('/users', function(req, res) {
                 password: hash
             });
 
-            user.save(function(err) {
+            user.save(function(object, err) {
                 if (err) {
                     return res.status(500).json({
                         message: 'Internal server error'
                     });
                 }
 
-                return res.status(201).json({});
+                return res.status(201).json(object);
             });
         });
     });
