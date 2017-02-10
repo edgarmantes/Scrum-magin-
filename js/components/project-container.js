@@ -13,7 +13,21 @@ var CreateProjectContainer = React.createClass({
 		element.setAttribute('class', 'crewPerson')
 		element.textContent = member
 		document.getElementById('members').appendChild(element);
-		document.getElementById('members').reset();
+		//document.getElementById('members').reset();
+	},
+
+	createProject: function(e){
+		e.preventDefault();
+		var info = {
+			projectName: document.getElementsByClassName('project-name')[0].value,
+			startDate: document.getElementsByClassName('start-date')[0].value,
+			endDate: document.getElementsByClassName('end-date')[0].value,
+			projectLeader: document.getElementsByClassName('project-leader')[0].value,
+			scrumMaster: document.getElementsByClassName('scrum-master')[0].value,
+			crew: this.props.crew
+		};
+
+		this.props.dispatch(actions.createProject(info));
 	},
 
 	render: function(props){
@@ -21,27 +35,29 @@ var CreateProjectContainer = React.createClass({
 			<div className='createProject row'>
 				<div className='createContainer col-12'>
 					<form className="createProjectForm">
-						<label>Project Name:</label><br/>
-						<input type="text" className="project-name create-input" placeholder='"best app ever!"' /><br/>	
-						<label>Start Date:</label><br/>
-						<input type="text" className="start-date create-input" placeholder='01/01/17' /><br/>
-						<label>End Date:</label><br/>
-						<input type="text" className="end-date create-input" placeholder='01/01/17' /><br/>
-						<label>Project Leader:</label><br/>
-						<input type="text" className="project-leader create-input" placeholder='"Big Boss"' /><br/>
-						<label>Scrum Master:</label><br/>
-						<input type="text" className="scrum-master create-input" placeholder='"me"' /><br/>
-						<label>Add Member:</label><br/>
+						<fieldset>
+							<label>Project Name:</label><br/>
+							<input type="text" className="project-name create-input" placeholder='"best app ever!"' /><br/>	
+							<label>Start Date:</label><br/>
+							<input type="text" className="start-date create-input" placeholder='01/01/17' /><br/>
+							<label>End Date:</label><br/>
+							<input type="text" className="end-date create-input" placeholder='01/01/17' /><br/>
+							<label>Project Leader:</label><br/>
+							<input type="text" className="project-leader create-input" placeholder='"Big Boss"' /><br/>
+							<label>Scrum Master:</label><br/>
+							<input type="text" className="scrum-master create-input" placeholder='"me"' /><br/>
+							<label>Add Member:</label><br/>
 
-							<input type="text" className="add-members create-input" placeholder='Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
+								<input type="text" className="add-members create-input" placeholder='Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
 
-						<label>Team Members:</label><br/>	
-						<div className='listedMembers'>
-							<ul id='members'>
-								<li className='crewPerson'>Steve</li>
-							</ul>
-						</div>
-						<button className='create-btn' type="submit">Create Project</button><br/>
+							<label>Team Members:</label><br/>	
+							<div className='listedMembers'>
+								<ul id='members'>
+									<li className='crewPerson'>Steve</li>
+								</ul>
+							</div>
+							<button className='create-btn' type="submit" onClick={this.createProject}>Create Project</button><br/>
+						</fieldset>
 					</form>	
 				</div>
 			</div>	
@@ -58,7 +74,9 @@ var mapStateToProps = function(state, props){
 		devList: state.devList,
 		testList: state.testList,
 		releaseList: state.releaseList,
-		doneList: state.doneList
+		doneList: state.doneList,
+
+		crew: state.crew
 	}
 };
 

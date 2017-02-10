@@ -28,7 +28,7 @@ var SignUp = React.createClass({
 					<form >
 						<fieldset>
 							<input id='username-signup' type='text' placeholder='User Name' required/>
-							<input id='password-signup' type='text' placeholder='*********' required/>
+							<input id='password-signup' type='password' placeholder='*********' required/>
 							<input className='input-signup' type='submit' value='Sign Up' onClick={this.createUser}  />
 						</fieldset>
 					</form>

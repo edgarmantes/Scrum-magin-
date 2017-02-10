@@ -1,5 +1,10 @@
 var fetch = require('isomorphic-fetch');
 
+var router = require('react-router');
+var Router = router.Router;
+var Route = router.Route;
+var hashHistory = router.hashHistory;
+
 var RESET_STATE = 'RESET_STATE';
 var resetState = function(){
 	return {
@@ -118,22 +123,49 @@ var addMember = function(member){
 };
 
 
+var GET_PROJECTS = 'GET_PROJECTS';
+var getProjects = function(){
+		console.log('test GET_PROJECTS')
 
-var FETCH_DESCRIPTION_SUCCESS = 'FETCH_DESCRIPTION_SUCCESS';
-var fetchDescriptionSuccess = function(object, cards) {
-    return {
-        type: FETCH_DESCRIPTION_SUCCESS,
-        cards : [cards]
-    };
-};
+	return function(dispatch){
+		console.log('test for dispatch')
+		return fetch('http://localhost:8080/projects', 
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+				}
+			}).then(function(response){
+				console.log(response.status)
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+				hashHistory.push('home')
+				return response.text();
 
-var FETCH_DESCRIPTION_ERROR= 'FETCH_DESCRIPTION_ERROR';
-var fetchDescriptionError = function(error) {
-    return {
-        type: FETCH_DESCRIPTION_ERROR,
+			}).then(function(response){
 
-        error: error
-    };
+				return response
+
+			}).then(function(data){
+
+				var cards = data;
+				return dispatch(
+					getProjectsSuccess(object, cards)
+				);
+
+			}).catch(function(error){
+
+				return dispatch(
+					getProjectsError(error)
+				)
+
+			});
+
+	};
 };
 
 var fetchUser = function(objects){
@@ -152,13 +184,13 @@ var fetchUser = function(objects){
 				cache: 'default',
 				body: JSON.stringify(objects)
 			}).then(function(response){
-				console.log(response)
+				console.log(response.status)
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
 					throw error;
 				}
-				console.log(response)
+				hashHistory.push('home')
 				return response.text();
 
 			}).then(function(response){
@@ -183,6 +215,109 @@ var fetchUser = function(objects){
 	};
 };
 
+var createProject = function(objects){
+		console.log('test fetchfunction ' + JSON.stringify(objects))
+
+	return function(dispatch){
+		console.log('test for dispatch')
+		return fetch('http://localhost:8080/createproject', 
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+				}, 
+				mode: 'cors',
+				cache: 'default',
+				body: JSON.stringify(objects)
+			}).then(function(response){
+				console.log(response.status)
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+				hashHistory.push('home')
+				return response.text();
+
+			}).then(function(response){
+
+				return response
+
+			}).then(function(data){
+
+				var cards = data;
+				return dispatch(
+					CreateProjectSuccess(object, cards)
+				);
+
+			}).catch(function(error){
+
+				return dispatch(
+					CreateProjectError(error)
+				)
+
+			});
+
+	};
+};
+
+
+
+var CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
+var createProjectSuccess = function(object, project) {
+    return {
+        type: CREATE_PROJECT_SUCCESS,
+        project : project
+    };
+};
+
+
+var CREATE_PROJECT_ERROR= 'CREATE_PROJECT_ERROR';
+var createProjectError = function(error) {
+    return {
+        type: CREATE_PROJECT_ERROR,
+
+        error: error
+    };
+};
+
+var GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
+var getProjectSuccess = function(object, project) {
+    return {
+        type: GET_PROJECTS_SUCCESS,
+        project : project
+    };
+};
+
+
+var GET_PROJECTS_ERROR= 'GET_PROJECTS_ERROR';
+var getProjectsError = function(error) {
+    return {
+        type: GET_PROJECTS_ERROR,
+
+        error: error
+    };
+};
+
+
+var FETCH_DESCRIPTION_SUCCESS = 'FETCH_DESCRIPTION_SUCCESS';
+var fetchDescriptionSuccess = function(object, projects) {
+    return {
+        type: FETCH_DESCRIPTION_SUCCESS,
+        projects : projects
+    };
+};
+
+
+var FETCH_DESCRIPTION_ERROR= 'FETCH_DESCRIPTION_ERROR';
+var fetchDescriptionError = function(error) {
+    return {
+        type: FETCH_DESCRIPTION_ERROR,
+
+        error: error
+    };
+};
 
 
 exports.RESET_STATE = RESET_STATE;
@@ -212,10 +347,19 @@ exports.ADD_TO_DONE = ADD_TO_DONE;
 exports.addToDone = addToDone;
 exports.ADD_MEMBER = ADD_MEMBER;
 exports.addMember = addMember;
+exports.createProject = createProject;
+exports.GET_PROJECTS = GET_PROJECTS;
+exports.getProjects = getProjects;
 
+
+exports.CREATE_PROJECT_SUCCESS = CREATE_PROJECT_SUCCESS;
+exports.createProjectSuccess = createProjectSuccess
+exports.CREATE_PROJECT_ERROR = CREATE_PROJECT_ERROR;
+exports.createProjectError = createProjectError
 exports.FETCH_DESCRIPTION_SUCCESS = FETCH_DESCRIPTION_SUCCESS;
 exports.fetchDescriptionSuccess = fetchDescriptionSuccess;
 exports.FETCH_DESCRIPTION_ERROR = FETCH_DESCRIPTION_ERROR;
 exports.fetchDescriptionError = fetchDescriptionError;
 
 exports.fetchUser = fetchUser;
+exports.createProject = createProject;

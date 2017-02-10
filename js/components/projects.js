@@ -27,6 +27,7 @@ var Projects = React.createClass({
 	componentDidMount: function(){
 		console.log('testing prjects mounting')
 		this.props.dispatch(actions.resetState())
+		this.props.dispatch(actions.getProjects())
 	},
 
 	render: function(props){

@@ -24,10 +24,10 @@ var SignIn = React.createClass({
 			<div className='signin-container row'>
 				<div className="signin col-6">
 					<h1 className='signin-h1'>Sign In</h1>
-					<form action='/'>
+					<form>
 						<fieldset>
 							<input id='username-signin' type='text' placeholder='User Name' required/>
-							<input id='password-signin' type='text' placeholder='*********' required/>
+							<input id='password-signin' type='password' placeholder='*********' required/>
 							<input className='input-signin' type='submit' value='Sign In' onClick={this.signIn}  />
 						</fieldset>
 					</form>

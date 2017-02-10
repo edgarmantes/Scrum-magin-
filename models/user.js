@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
+var createProject = require('../models/create-project')
+var Schema = mongoose.Schema;
 
 var UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, unique: true },
-    projects: []
+    projects: [ { type: Schema.Types.ObjectId, ref: 'create-project' } ]
 });
 
 var User = mongoose.model('User', UserSchema);

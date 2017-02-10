@@ -1,5 +1,10 @@
 var actions = require('../actions/index');
 
+var router = require('react-router');
+var Router = router.Router;
+var Route = router.Route;
+var hashHistory = router.hashHistory;
+
 var initialCardState = {
 	entries: [],
 	taskList: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
@@ -7,7 +12,15 @@ var initialCardState = {
 	testList: [],
 	releaseList: [],
 	doneList: [],
-	crew:[]
+	crew:[],
+
+	projects: [], /*This is all the projects that the user has open*/
+
+	projectName: null,     /*This is the initial state for the Create Project page*/
+	startDate: null,
+	endDate: null, 
+	projectLeader: null,
+	scrumMaster: null,
 };
 
 var scrumReducer = function(state, action){
@@ -136,19 +149,25 @@ var scrumReducer = function(state, action){
 			crew: []
 		};
 		return Object.assign({}, state, resetCardState)
-	} else if (action.type === actions.ADD_MEMBER){
-		console.log('testing new user')
-		var newArray = state.crew.concat(action.member)
-		return Object.assign({},state, {crew: newArray})
-	}
+	} else if (action.type === actions.ADD_MEMBER){  		/*This starts the reducers for the Create Project page*/ 
 
+		var newArray = state.crew.concat(action.member)
+
+		return Object.assign({},state, {crew: newArray})
+
+	} 
 	else if (action.type === actions.FETCH_CARDS){
 		console.log('testing FETCH_CARDS')
 		return state
 		
-	} else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {   // ***
+	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
 
-        return state
+		hashHistory.push('home')
+		var newProjects = state.project.concat(action.project)
+
+        return Object.assign({}, state, { projects: newProjects});
+    } else if (action.type === actions.GET_PROJECTS){
+    	console.log('test GET_PROJECTS')
     }
     else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
 		

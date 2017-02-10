@@ -2,8 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
-var User = require('./models/user');
 var session = require('client-sessions');
+// Schema models
+var User = require('./models/user');
+var CreateProject = require('./models/create-project')
 
 var config = require('./config');
 var passport = require('passport');
@@ -13,7 +15,7 @@ var app = express();
 
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('build'));
 app.use(passport.initialize());
 
 app.use(function(req, res, next) {
@@ -37,7 +39,9 @@ app.use(session({
 
 // session middleware - making the middleware global
 app.use(function(req, res, next){
+            console.log(42, req.session)
     if (req.session && req.session.user){
+        console.log(43, 'set up global session ' +req.session.user)
         User.findOne({username: req.session.user.username}, function(err, user){
             if (user) {
                 req.user = user;
@@ -55,6 +59,7 @@ app.use(function(req, res, next){
 // session middleware - function to pass to routesto check for open sessions
 function requireLogin(req, res, next){
     if (!req.user) {
+        console.log('requireLogin has no req.user')
         res.status(401); // send this status code to inform client that person is not signed in.
     } else {
         next();
@@ -214,18 +219,64 @@ app.post('/users', function(req, res) {
                 password: hash
             });
 
-            user.save(function(object, err) {
+            user.save(function(err, object) {
+                req.session.user = object;
                 if (err) {
                     return res.status(500).json({
                         message: 'Internal server error'
                     });
                 }
 
-                return res.status(201).json(object);
+                return res.status(201).json(object); // new user has been created successfully
             });
         });
     });
 });
+
+
+app.get('/projects', requireLogin, function(req, res){
+    User.findOne(req.session.user._id)
+        .populate('projects')
+        .exec(function(err, data){
+            console.log(data)
+        })
+});
+
+app.post('/createproject', requireLogin, function(req, res){
+    console.log(234, 'server received ' + req.body)
+    CreateProject.create({
+                projectName: req.body.projectName,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+                projectLeader: req.body.projectLeader,
+                scrumMaster: req.body.scrumMaster,
+                crew: req.body.crew
+
+        }, function(err, object){
+            console.log(254, err, object)
+            if (err){
+                return res.status(500).json({
+                    message: 'did not create the project. Internal Server Error'
+                });
+            }
+
+console.log(req)
+            // User.findOneAndUpdate(
+            //     {_id: req.session.user._id},
+            //     {$push:{'projects': object._id}}, 
+            //     function(err, user){
+            //         if (err) {
+            //             return res.status(502).json({
+            //                 message: 'Internal Server Error'
+            //             })
+            //         }
+            //     }
+            // )
+            res.status(200).json(object)
+        }
+    )
+
+})
 
 
 // Used for error handling. If a request was made to a non-existing endpoint this will be returned
