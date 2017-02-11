@@ -14,7 +14,8 @@ var initialCardState = {
 	doneList: [],
 	crew:[],
 
-	projects: [], /*This is all the projects that the user has open*/
+	userid: null, /*This is all the projects that the user has open*/
+	projects: [],
 
 	projectName: null,     /*This is the initial state for the Create Project page*/
 	startDate: null,
@@ -162,7 +163,7 @@ var scrumReducer = function(state, action){
 		
 	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
 
-		hashHistory.push('home')
+		// hashHistory.push('home')
 		var newProjects = state.project.concat(action.project)
 
         return Object.assign({}, state, { projects: newProjects});
@@ -171,8 +172,28 @@ var scrumReducer = function(state, action){
     }
     else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
 		
+		console.log(173, 'reducer for FETCH_DESCRIPTION_ERROR')
 		return state
+
+    } else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {   // ***
+		
+    	var userInfo = {
+    		userId: action.user._id,
+    		projects: action.user.projects
+    	}
+
+		return Object.assign({}, state, userInfo)
+
+    } else if (action.type === actions.GET_USER_SUCCESS){
+
+    	return Object.assign({}, state, {userid: action.userId})
+
+    } else if (action.type === actions.GET_USER_ERROR) {
+
+    	return state
+    	
     }
+
 
 	return state;
 };

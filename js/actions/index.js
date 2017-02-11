@@ -184,7 +184,6 @@ var fetchUser = function(objects){
 				cache: 'default',
 				body: JSON.stringify(objects)
 			}).then(function(response){
-				console.log(response.status)
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
@@ -193,15 +192,9 @@ var fetchUser = function(objects){
 				hashHistory.push('home')
 				return response.text();
 
-			}).then(function(response){
-
-				return response
-
 			}).then(function(data){
-
-				var cards = data;
 				return dispatch(
-					fetchDescriptionSuccess(object, cards)
+					fetchDescriptionSuccess(data)
 				);
 
 			}).catch(function(error){
@@ -215,8 +208,54 @@ var fetchUser = function(objects){
 	};
 };
 
-var createProject = function(objects){
-		console.log('test fetchfunction ' + JSON.stringify(objects))
+var getUser = function(cred){
+	console.log(212, 'this is what was passed when signing in: ', cred)
+
+	return function(dispatch){
+		console.log('test for dispatch on getUser')
+		return fetch('/hidden', 
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+				}, 
+				mode: 'cors',
+				cache: 'default',
+				body: JSON.stringify(cred)
+			}).then(function(response){
+				console.log(response)
+				var url = response.url;
+				var split = url.split('/');
+				var userId = split[3];
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+				hashHistory.push('home')
+				return userId;
+
+			}).then(function(userId){
+
+				return dispatch(
+					getUserSuccess(userId)
+				);
+
+			}).catch(function(error){
+
+				return dispatch(
+					getUserError(error)
+				)
+
+			});
+
+	};
+};
+
+var createProject = function(newProject){
+		console.log('test createProject action-function ' + JSON.stringify(objects))
 
 	return function(dispatch){
 		console.log('test for dispatch')
@@ -229,32 +268,27 @@ var createProject = function(objects){
 				}, 
 				mode: 'cors',
 				cache: 'default',
-				body: JSON.stringify(objects)
+				body: JSON.stringify(newProject)
 			}).then(function(response){
-				console.log(response.status)
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
 					throw error;
 				}
-				hashHistory.push('home')
+
+				// hashHistory.push('home')
 				return response.text();
 
-			}).then(function(response){
-
-				return response
-
-			}).then(function(data){
-
-				var cards = data;
+			}).then(function(project){
+				console.log(project)
 				return dispatch(
-					CreateProjectSuccess(object, cards)
+					createProjectSuccess(project)
 				);
 
 			}).catch(function(error){
 
 				return dispatch(
-					CreateProjectError(error)
+					createProjectError(error)
 				)
 
 			});
@@ -265,7 +299,7 @@ var createProject = function(objects){
 
 
 var CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
-var createProjectSuccess = function(object, project) {
+var createProjectSuccess = function(project) {
     return {
         type: CREATE_PROJECT_SUCCESS,
         project : project
@@ -302,10 +336,10 @@ var getProjectsError = function(error) {
 
 
 var FETCH_DESCRIPTION_SUCCESS = 'FETCH_DESCRIPTION_SUCCESS';
-var fetchDescriptionSuccess = function(object, projects) {
+var fetchDescriptionSuccess = function(data) {
     return {
         type: FETCH_DESCRIPTION_SUCCESS,
-        projects : projects
+        user : data
     };
 };
 
@@ -317,6 +351,23 @@ var fetchDescriptionError = function(error) {
 
         error: error
     };
+};
+
+
+var GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+var getUserSuccess = function(userId){
+	return {
+		type: GET_USER_SUCCESS,
+		userId: userId
+	}
+};
+
+var GET_USER_ERROR = 'GET_USER_ERROR';
+var getUserError = function(err){
+	return {
+		type: GET_USER_ERROR,
+		error: err
+	}
 };
 
 
@@ -360,6 +411,11 @@ exports.FETCH_DESCRIPTION_SUCCESS = FETCH_DESCRIPTION_SUCCESS;
 exports.fetchDescriptionSuccess = fetchDescriptionSuccess;
 exports.FETCH_DESCRIPTION_ERROR = FETCH_DESCRIPTION_ERROR;
 exports.fetchDescriptionError = fetchDescriptionError;
+exports.GET_USER_SUCCESS = GET_USER_SUCCESS;
+exports.getUserSuccess = getUserSuccess;
+exports.GET_USER_ERROR = GET_USER_ERROR;
+exports.getUserError = getUserError;
 
 exports.fetchUser = fetchUser;
 exports.createProject = createProject;
+exports.getUser = getUser;
