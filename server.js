@@ -19,6 +19,8 @@ mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise ha
 app.use(express.static('build'));
 var bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({extended: false}));
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
@@ -57,6 +59,13 @@ exports.runServer = runServer;
 
 passport.use(new LocalStrategy(     // LocalStrategy will parse the username and password from the req.body and pass it on to the inside function.
     function(username, password, done) {
+        // User.findOne({username: username, password: password}, function(err, user){
+        //     if (err) { return done(err) }
+        //     if (!user) {return done(null, false)}
+        //     return done(null, user);
+        // });
+
+
         User.findOne({ username: username }, function (err, user) { // First this searches for an existing username that was provided
             
             if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
@@ -83,31 +92,32 @@ passport.use(new LocalStrategy(     // LocalStrategy will parse the username and
 ));
 
 
-passport.serializeUser(function(user, done) {
-    console.log(58, user._id) 
-    done(null, user._id)
-});
+// passport.serializeUser(function(user, done) {
+//     console.log(58, user._id) 
+//     done(null, user)
+// });
 
-passport.deserializeUser(function(id, done){
-    console.log(63, id)
-    User.findById(id, function(err, user){
-        console.log(65, user)
-        done(err, user);
-    });
-});
+// passport.deserializeUser(function(id, done){
+//     console.log(63, id)
+//     User.findById(user._id, function(err, user){
+//         console.log(65, user)
+//         done(err, user);
+//     });
+// });
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({ 
         secret: 'blahblahblahblah-Trump', 
+        cookie: {maxAge: 60000},
         resave: false, 
-        saveUninitialized: false,
-        // store: new MongoStore({ url: config.DATABASE_URL }),
+        saveUninitialized: true,
+        store: new MongoStore({ url: config.DATABASE_URL }),
 
     })  
 );
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Beginning routes
 
@@ -141,23 +151,73 @@ app.get('/test', function(){
 
 
 // Authenticate user supplied sign In credentials
-app.post('/hidden', passport.authenticate('local'), function(req, res){
+// app.post('/hidden', passport.authenticate('local'), function(req, res){
+//                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
+//     // console.log(112, req.user) req.user is able to see req.user object
+//     console.log(121, req.user)
+//     req.logIn(req.user, function(err){
+//         res.redirect('/')
+//     })
+//     res.status(211)
+//     // var user = req.body;
+//     // User.findOne({username: user.username, password: user.password}, function(err, foundUser){
+//     //     // res.addHeader('s:', user._id)
+//     //     res.json(foundUser)
+//     // })
+// });
+
+// function checkSignIn(req, res){
+//     console.log(168, req.session.userId)
+//     if (req.session.userId){
+//         console.log(169, 'checkSignIn has passed')
+//         return res.status(200);
+//     } else {
+//         console.log(171, 'checkSignIn did not pass')
+//         return res.status(402)
+//     }
+// };
+
+
+
+app.post('/hidden', function(req, res){
                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
-    // console.log(112, req.user) req.user is able to see req.user object
-    console.log(121, req.user)
-    // req.logIn(req.user, function(err){
-        // res.redirect('/')
-    // })
-    // res.status(211)
-    var id = req.user._id;
-    User.findById(id, function(err, user){
-        res.json(user)
-    })
+    console.log(176, req.session) //req.user is able to see req.user object
+
+        User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
+            
+            if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
+                return res.status(500).json({ message: 'Internal Server Error. Did not validate Username.' }) 
+            }
+            if (!user) {        // If no username found this err will be thrown
+                return res.status(401).json({ message: 'Incorrect username.' });
+            }
+
+            user.validatePassword(req.body.password, function(err, isValid){  // If username is found in the db this will authenticate the submitted password with the db password on file. The validatePassword() method is a method from the User model. 
+                if (err) { // if there was an issue besides 'invalid password' the error message will be passed in here. 
+                    return res.status(500).json({ message: 'Internal Server Error. Did not validate.' }) 
+                } 
+
+                if (!isValid) {         // If password submitted is incvalid this err will be thrown
+                    return res.status(401).json({ message: 'Incorrect password.' });
+                }
+                console.log(187, 'login authenticated')
+                req.session.userId = user._id;
+                console.log(190, req.session)
+                res.redirect('/protected_page')
+                // return res.status(210).json(user)
+            });
+        });  
+});
+
+app.get('/protected_page', function(req, res){
+    console.log(220, req.session)
+    req.session.userId = req.session.userId;
+    res.status(200).cookie('userId', req.session.userId).json({msg:'working'})
 });
 
 app.get('/projects', function(req, res){
-    console.log(122, req.user)
-    console.log(123, req.session)
+    console.log(205, req.session)
+    res.status(200).json({message:'projects has completed'})
     // User.findOne(req.session.user._id)
     //     .populate('projects')
     //     .exec(function(err, data){
