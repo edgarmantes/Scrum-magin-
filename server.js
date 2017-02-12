@@ -1,23 +1,22 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs');
-var session = require('client-sessions');
+var cookieParser = require('cookie-parser');
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session);
+
 // Schema models
 var User = require('./models/user');
 var CreateProject = require('./models/create-project')
-
 var config = require('./config');
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
-var LocalStrategy = require('passport-local').Strategy;
-
 var app = express();
 
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
-app.use(bodyParser.json());
+
 app.use(express.static('build'));
-app.use(passport.initialize());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -55,13 +54,15 @@ if (require.main === module) {
 exports.app = app;
 exports.runServer = runServer;
 
-passport.serializeUser(function(user, done) { 
-    return done(null, user._id)
+passport.serializeUser(function(user, done) {
+    console.log(58, user._id) 
+    done(null, user._id)
 });
 
 passport.deserializeUser(function(id, done){
+    console.log(63, id)
     User.findById(id, function(err, user){
-        console.log(77, user)
+        console.log(65, user)
         done(err, user);
     });
 });
@@ -69,7 +70,7 @@ passport.deserializeUser(function(id, done){
 passport.use(new LocalStrategy(     // LocalStrategy will parse the username and password from the req.body and pass it on to the inside function.
     function(username, password, done) {
         User.findOne({ username: username }, function (err, user) { // First this searches for an existing username that was provided
-  
+            
             if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
                 return done(err); 
             }
@@ -91,9 +92,20 @@ passport.use(new LocalStrategy(     // LocalStrategy will parse the username and
             });
         });                         // Once this function completes the serializeUser() is invoked and continues from there
     }
-))
+));
 
 
+app.use(bodyParser.json());
+app.use(cookieParser('blahblahblahblah-Trump'));
+app.use(session({ 
+        secret: 'blahblahblahblah-Trump', 
+        resave: false, 
+        saveUninitialized: false,
+        store: new MongoStore({ url: config.DATABASE_URL }) 
+    })  
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Beginning routes
 
@@ -105,37 +117,47 @@ app.get('/test', function(){
     console.log('testing server')
 })
 
+app.post('/hidden', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return res.status(500).json({message: 'something broke' });
+        } else if (!info) {
+            console.log(125, err, user, info)
+            return res.status(401).json({message: 'unauthorized'});
+        } else {
+            req.login(user, function(err) {
+                if (err) {
+                    return res.status(500)
+                } else {
+                    res.redirect('/')
+                    return res.status(200).json(user)
+                }
+            })
+        }
+    })(req, res, next);
+});
 
-app.get('/:userid', function(req, res){
-    console.log(110, req.params)
-    return res.status(212)
-})
 
+// // Authenticate user supplied sign In credentials
+// app.post('/hidden', passport.authenticate('local'), function(req, res){
+//                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
+//     // console.log(112, req.user) req.user is able to see req.user object
+//     console.log(121, req.user)
+//     req.logIn(req.user, function(err){
+//         res.redirect('/')
+//     })
 
-// // POST /login
-// //   This is an alternative implementation that uses a custom callback to
-// //   achieve the same functionality.
-// app.post('/login', function(req, res, next) {
-//   passport.authenticate('local', function(err, user, info) {
-//     if (err) { return next(err) }
-//     if (!user) {
-//       return res.json(401, { error: 'message' });
-//     }
-
-//     //user has authenticated correctly thus we create a JWT token 
-//     var token = jwt.encode({ username: 'somedata'}, tokenSecret);
-//     res.json({ token : token });
-
-//   })(req, res, next);
+//     res.status(211)
 // });
 
-
-// Authenticate user supplied sign In credentials
-app.post('/hidden', passport.authenticate('local'), function(req, res){
-                    //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
-    // res.setHeader('body', req.user)
-    res.redirect('/')
-    res.status(211)
+app.get('/projects', function(req, res){
+    console.log(122, req.user)
+    console.log(123, req.session)
+    // User.findOne(req.session.user._id)
+    //     .populate('projects')
+    //     .exec(function(err, data){
+    //         console.log(data)
+    //     })
 });
 
 // Create new users
@@ -226,18 +248,10 @@ app.post('/users', function(req, res) {
     });
 });
 
-app.get('/projects', function(req, res){
-    console.log(215, req.session === true)
-    console.log(207, req.user)
-    // User.findOne(req.session.user._id)
-    //     .populate('projects')
-    //     .exec(function(err, data){
-    //         console.log(data)
-    //     })
-});
+
 
 app.post('/createproject', function(req, res){
-    console.log(224, req)
+    console.log(224)
     CreateProject.create({
                 projectName: req.body.projectName,
                 startDate: req.body.startDate,
@@ -247,7 +261,7 @@ app.post('/createproject', function(req, res){
                 crew: req.body.crew
 
         }, function(err, object){
-            console.log(226, err, object)
+            console.log(230 )
             if (err){
                 return res.status(500).json({
                     message: 'did not create the project. Internal Server Error'

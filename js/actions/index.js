@@ -180,7 +180,7 @@ var fetchUser = function(objects){
 					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 				}, 
-				mode: 'cors',
+				credentials: 'same-origin',
 				cache: 'default',
 				body: JSON.stringify(objects)
 			}).then(function(response){
@@ -220,8 +220,7 @@ var getUser = function(cred){
 					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 				}, 
-				mode: 'cors',
-				cache: 'default',
+				credentials: 'same-origin',
 				body: JSON.stringify(cred)
 			}).then(function(response){
 				console.log(response)
@@ -255,7 +254,7 @@ var getUser = function(cred){
 };
 
 var createProject = function(newProject){
-		console.log('test createProject action-function ' + JSON.stringify(objects))
+		console.log('test createProject action-function ' + JSON.stringify(newProject))
 
 	return function(dispatch){
 		console.log('test for dispatch')
