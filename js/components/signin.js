@@ -8,14 +8,15 @@ var Form = require('./form');
 
 var SignIn = React.createClass({
 
-	signIn: function(){
+	signIn: function(e){
+		e.preventDefault();
 		console.log('submit test')
 		var user = {
 			username: document.getElementById('username-signin').value,
 			password: document.getElementById('password-signin').value
 		}
 
-		this.props.dispatch(actions.fetchUser(user))
+		this.props.dispatch(actions.getUser(user))
 	},
 
 	render: function(props){

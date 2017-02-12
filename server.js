@@ -1,22 +1,22 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs');
-var session = require('client-sessions');
+var cookieParser = require('cookie-parser');
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session);
+
 // Schema models
 var User = require('./models/user');
 var CreateProject = require('./models/create-project')
-
 var config = require('./config');
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
-
 var app = express();
 
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
-app.use(bodyParser.json());
+
 app.use(express.static('build'));
-app.use(passport.initialize());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,47 +24,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
-
-// sessions middleware - configuration of handler
-app.use(session({
-    cookieName: 'session',
-    secret: 'blahdeeblahdeeblah-Trump',
-    duration: 30*60*1000,
-    activeDuration: 30*60*1000,
-    httpOnly: true,
-    secure: true,
-    ephemeral: true
-}));
-
-// session middleware - making the middleware global
-app.use(function(req, res, next){
-            console.log(42, req.session)
-    if (req.session && req.session.user){
-        console.log(43, 'set up global session ' +req.session.user)
-        User.findOne({username: req.session.user.username}, function(err, user){
-            if (user) {
-                req.user = user;
-                delete req.user.password;
-                req.session.user = user;
-
-            }
-            next();
-        });
-    } else {
-        next();
-    }
-})
-
-// session middleware - function to pass to routesto check for open sessions
-function requireLogin(req, res, next){
-    if (!req.user) {
-        console.log('requireLogin has no req.user')
-        res.status(401); // send this status code to inform client that person is not signed in.
-    } else {
-        next();
-    }
-};
 
 // middleware to run as a module or as a server. 
 // This setup the connection to the server and the server to the DB.
@@ -95,38 +54,58 @@ if (require.main === module) {
 exports.app = app;
 exports.runServer = runServer;
 
+passport.serializeUser(function(user, done) {
+    console.log(58, user._id) 
+    done(null, user._id)
+});
 
-var strategy = new BasicStrategy(function(username, password, callback) {
-    User.findOne({
-        username: username
-    }, function (err, user) {
-        if (err) {
-            callback(err);
-            return;
-        }
-
-        if (!user) {
-            return callback(null, false, {
-                message: 'Incorrect username.'
-            });
-        }
-
-        user.validatePassword(password, function(err, isValid) {
-            if (err) {
-                return callback(err);
-            }
-
-            if (!isValid) {
-                return callback(null, false, {
-                    message: 'Incorrect password.'
-                });
-            }
-            return callback(null, user);
-        });
+passport.deserializeUser(function(id, done){
+    console.log(63, id)
+    User.findById(id, function(err, user){
+        console.log(65, user)
+        done(err, user);
     });
 });
 
-passport.use(strategy);
+passport.use(new LocalStrategy(     // LocalStrategy will parse the username and password from the req.body and pass it on to the inside function.
+    function(username, password, done) {
+        User.findOne({ username: username }, function (err, user) { // First this searches for an existing username that was provided
+            
+            if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
+                return done(err); 
+            }
+            if (!user) {        // If no username found this err will be thrown
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+
+            user.validatePassword(password, function(err, isValid){  // If username is found in the db this will authenticate the submitted password with the db password on file. The validatePassword() method is a method from the User model. 
+                if (err) { // if there was an issue besides 'invalid password' the error message will be passed in here. 
+                    return done(null, false, err);
+                } 
+
+                if (!isValid) {         // If password submitted is incvalid this err will be thrown
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+
+                return done(null, user, { _id: user._id}); 
+                    // If password passes authentication this 'done()' function will be called passing in 'null' (for 'error' argument) and 'user' for the 
+            });
+        });                         // Once this function completes the serializeUser() is invoked and continues from there
+    }
+));
+
+
+app.use(bodyParser.json());
+app.use(cookieParser('blahblahblahblah-Trump'));
+app.use(session({ 
+        secret: 'blahblahblahblah-Trump', 
+        resave: false, 
+        saveUninitialized: false,
+        store: new MongoStore({ url: config.DATABASE_URL }) 
+    })  
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Beginning routes
 
@@ -138,11 +117,47 @@ app.get('/test', function(){
     console.log('testing server')
 })
 
-// Authenticate user supplied sign In credentials
-app.get('/hidden', passport.authenticate('basic', {session: false}), function(req, res) {
-    res.json({
-        message: 'Luke... I am your father'
-    });
+app.post('/hidden', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        if (err) {
+            return res.status(500).json({message: 'something broke' });
+        } else if (!info) {
+            console.log(125, err, user, info)
+            return res.status(401).json({message: 'unauthorized'});
+        } else {
+            req.login(user, function(err) {
+                if (err) {
+                    return res.status(500)
+                } else {
+                    res.redirect('/')
+                    return res.status(200).json(user)
+                }
+            })
+        }
+    })(req, res, next);
+});
+
+
+// // Authenticate user supplied sign In credentials
+// app.post('/hidden', passport.authenticate('local'), function(req, res){
+//                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
+//     // console.log(112, req.user) req.user is able to see req.user object
+//     console.log(121, req.user)
+//     req.logIn(req.user, function(err){
+//         res.redirect('/')
+//     })
+
+//     res.status(211)
+// });
+
+app.get('/projects', function(req, res){
+    console.log(122, req.user)
+    console.log(123, req.session)
+    // User.findOne(req.session.user._id)
+    //     .populate('projects')
+    //     .exec(function(err, data){
+    //         console.log(data)
+    //     })
 });
 
 // Create new users
@@ -220,7 +235,7 @@ app.post('/users', function(req, res) {
             });
 
             user.save(function(err, object) {
-                req.session.user = object;
+
                 if (err) {
                     return res.status(500).json({
                         message: 'Internal server error'
@@ -234,16 +249,9 @@ app.post('/users', function(req, res) {
 });
 
 
-app.get('/projects', requireLogin, function(req, res){
-    User.findOne(req.session.user._id)
-        .populate('projects')
-        .exec(function(err, data){
-            console.log(data)
-        })
-});
 
-app.post('/createproject', requireLogin, function(req, res){
-    console.log(234, 'server received ' + req.body)
+app.post('/createproject', function(req, res){
+    console.log(224)
     CreateProject.create({
                 projectName: req.body.projectName,
                 startDate: req.body.startDate,
@@ -253,14 +261,13 @@ app.post('/createproject', requireLogin, function(req, res){
                 crew: req.body.crew
 
         }, function(err, object){
-            console.log(254, err, object)
+            console.log(230 )
             if (err){
                 return res.status(500).json({
                     message: 'did not create the project. Internal Server Error'
                 });
             }
 
-console.log(req)
             // User.findOneAndUpdate(
             //     {_id: req.session.user._id},
             //     {$push:{'projects': object._id}}, 

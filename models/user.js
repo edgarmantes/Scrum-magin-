@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var createProject = require('../models/create-project')
 var Schema = mongoose.Schema;
+var bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -8,13 +9,13 @@ var UserSchema = new mongoose.Schema({
     projects: [ { type: Schema.Types.ObjectId, ref: 'create-project' } ]
 });
 
-var User = mongoose.model('User', UserSchema);
-
 UserSchema.methods.validatePassword = function(password, callback) {
+    var isvalid = null;
     bcrypt.compare(password, this.password, function(err, isValid) {
+
         if (err) {
-            callback(err);
-            return;
+            console.log(17, err);
+            callback(err, null);
         }
         callback(null, isValid);
     });
