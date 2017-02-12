@@ -1,5 +1,5 @@
 var express = require('express');
-var bodyParser = require('body-parser');
+
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -17,6 +17,7 @@ var app = express();
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
 
 app.use(express.static('build'));
+var bodyParser = require('body-parser');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -54,19 +55,6 @@ if (require.main === module) {
 exports.app = app;
 exports.runServer = runServer;
 
-passport.serializeUser(function(user, done) {
-    console.log(58, user._id) 
-    done(null, user._id)
-});
-
-passport.deserializeUser(function(id, done){
-    console.log(63, id)
-    User.findById(id, function(err, user){
-        console.log(65, user)
-        done(err, user);
-    });
-});
-
 passport.use(new LocalStrategy(     // LocalStrategy will parse the username and password from the req.body and pass it on to the inside function.
     function(username, password, done) {
         User.findOne({ username: username }, function (err, user) { // First this searches for an existing username that was provided
@@ -87,7 +75,7 @@ passport.use(new LocalStrategy(     // LocalStrategy will parse the username and
                     return done(null, false, { message: 'Incorrect password.' });
                 }
 
-                return done(null, user, { _id: user._id}); 
+                return done(null, user); 
                     // If password passes authentication this 'done()' function will be called passing in 'null' (for 'error' argument) and 'user' for the 
             });
         });                         // Once this function completes the serializeUser() is invoked and continues from there
@@ -95,13 +83,27 @@ passport.use(new LocalStrategy(     // LocalStrategy will parse the username and
 ));
 
 
+passport.serializeUser(function(user, done) {
+    console.log(58, user._id) 
+    done(null, user._id)
+});
+
+passport.deserializeUser(function(id, done){
+    console.log(63, id)
+    User.findById(id, function(err, user){
+        console.log(65, user)
+        done(err, user);
+    });
+});
+
 app.use(bodyParser.json());
-app.use(cookieParser('blahblahblahblah-Trump'));
+app.use(cookieParser());
 app.use(session({ 
         secret: 'blahblahblahblah-Trump', 
         resave: false, 
         saveUninitialized: false,
-        store: new MongoStore({ url: config.DATABASE_URL }) 
+        // store: new MongoStore({ url: config.DATABASE_URL }),
+
     })  
 );
 app.use(passport.initialize());
@@ -117,38 +119,41 @@ app.get('/test', function(){
     console.log('testing server')
 })
 
-app.post('/hidden', function (req, res, next) {
-    passport.authenticate('local', function (err, user, info) {
-        if (err) {
-            return res.status(500).json({message: 'something broke' });
-        } else if (!info) {
-            console.log(125, err, user, info)
-            return res.status(401).json({message: 'unauthorized'});
-        } else {
-            req.login(user, function(err) {
-                if (err) {
-                    return res.status(500)
-                } else {
-                    res.redirect('/')
-                    return res.status(200).json(user)
-                }
-            })
-        }
-    })(req, res, next);
-});
+// app.post('/hidden', function (req, res, next) {
+//     passport.authenticate('local', function (err, user, info) {
+//         if (err) {
+//             return res.status(500).json({message: 'something broke' });
+//         } else if (!info) {
 
-
-// // Authenticate user supplied sign In credentials
-// app.post('/hidden', passport.authenticate('local'), function(req, res){
-//                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
-//     // console.log(112, req.user) req.user is able to see req.user object
-//     console.log(121, req.user)
-//     req.logIn(req.user, function(err){
-//         res.redirect('/')
-//     })
-
-//     res.status(211)
+//             return res.status(401).json({message: 'unauthorized'});
+//         } else {
+//             req.login(user, function(err) {
+//                 if (err) {
+//                     return res.status(500)
+//                 } else {
+//                     res.redirect('/')
+//                     return res.status(200).json(user)
+//                 }
+//             })
+//         }
+//     })(req, res, next);
 // });
+
+
+// Authenticate user supplied sign In credentials
+app.post('/hidden', passport.authenticate('local'), function(req, res){
+                    //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
+    // console.log(112, req.user) req.user is able to see req.user object
+    console.log(121, req.user)
+    // req.logIn(req.user, function(err){
+        // res.redirect('/')
+    // })
+    // res.status(211)
+    var id = req.user._id;
+    User.findById(id, function(err, user){
+        res.json(user)
+    })
+});
 
 app.get('/projects', function(req, res){
     console.log(122, req.user)
