@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var createProject = require('../models/create-project')
+var createProject = require('./create-project')
 var Schema = mongoose.Schema;
 var bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, unique: true },
-    projects: [ { type: Schema.Types.ObjectId, ref: 'create-project' } ]
+    projects: [ { type: Schema.Types.ObjectId, ref: 'CreateProject' } ]
 });
 
 UserSchema.methods.validatePassword = function(password, callback) {

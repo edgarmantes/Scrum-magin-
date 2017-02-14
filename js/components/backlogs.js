@@ -8,16 +8,39 @@ var List = require('./list-item');
 
 var BackLogs = React.createClass({
 
+	componentWillMount: function(){
+		var createProjectId = this.props.projects[this.props.params.Order]._id;
+		console.log(12, createProjectId)
+		this.props.dispatch(actions.loadThisProject(createProjectId))
+	},
+
 	addEntry: function(event){
 		event.preventDefault();
-		var entry = document.getElementsByClassName('backlog-entry')[0].value;
-		console.log(entry)
-		this.props.dispatch(actions.addEntry(entry));
-		document.getElementsByClassName('entry')[0].reset;		
+		var entry = document.getElementsByClassName('backlog-entry')[0].value;	
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'entries',
+			from: null,
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};
+		document.getElementsByClassName('backlog-entry')[0].value = '';	
+		this.props.dispatch(actions.move(creds, actions.addEntry))
+	
 	},
 
 	addToTaskList: function(entry){
-		this.props.dispatch(actions.addToTaskList(entry));
+
+	
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'taskList',
+			from: 'entries',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.addToTaskList))		
+		// this.props.dispatch(actions.addToTaskList(entry));
 	},
 
 	deleteEntry: function(entry){
@@ -59,7 +82,9 @@ var BackLogs = React.createClass({
 var mapStateToProps = function(state, props){	
 
 	return {
-		entries : state.entries
+		entries : state.entries,
+		projects: state.projects, 
+		userid: state.userid
 	}
 };
 

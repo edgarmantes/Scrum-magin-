@@ -34,11 +34,11 @@ var routes = (
 					<IndexRoute component={Projects} />
 					<Route path='/createproject' component={ProjectContainer} />
 				</Route>	 
-				<Route path='scrumboard' component={Home}> 
+				<Route path='scrumboard/:Order' component={Home}> 
 					<Route component={Scrumboard}>
 						<IndexRoute component={BackLogs} />
-						<Route path='/scrum' component={Scrum} />
-						<Route path='/donepile' component={DonePile} />
+						<Route path='/scrum/:Order' component={Scrum} />
+						<Route path='/donepile/:Order' component={DonePile} />
 					</Route>
 				</Route>
 				

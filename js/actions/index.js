@@ -23,6 +23,7 @@ var addEntry = function(entry){
 
 var ADD_TO_TASK_LIST = 'ADD_TO_TASK_LIST';
 var addToTaskList = function(entry){
+
 	return {
 		type: ADD_TO_TASK_LIST,
 		entry: entry
@@ -124,37 +125,36 @@ var addMember = function(member){
 
 
 var GET_PROJECTS = 'GET_PROJECTS';
-var getProjects = function(){
-		console.log('test GET_PROJECTS')
+var getProjects = function(userid){
 
 	return function(dispatch){
-		console.log('test for dispatch')
+
 		return fetch('http://localhost:8080/projects', 
 			{
-				method: 'GET',
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
-				}
+				},
+				body: JSON.stringify(userid)
 			}).then(function(response){
-				console.log(response.status)
+
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
 					throw error;
 				}
-				hashHistory.push('home')
-				return response.text();
+
+				return response.json();
 
 			}).then(function(response){
 
 				return response
 
-			}).then(function(data){
+			}).then(function(userObject){
 
-				var cards = data;
 				return dispatch(
-					getProjectsSuccess(object, cards)
+					getProjectsSuccess(userObject)
 				);
 
 			}).catch(function(error){
@@ -168,8 +168,9 @@ var getProjects = function(){
 	};
 };
 
+
+
 var fetchUser = function(objects){
-		console.log('test fetchfunction ' + JSON.stringify(objects))
 
 	return function(dispatch){
 
@@ -189,10 +190,13 @@ var fetchUser = function(objects){
 					error.response = response
 					throw error;
 				}
-				hashHistory.push('home')
+
 				return response.text();
 
 			}).then(function(data){
+				setTimeout(function(){
+					hashHistory.push('home')
+				},2000)
 				return dispatch(
 					fetchDescriptionSuccess(data)
 				);
@@ -212,7 +216,6 @@ var getUser = function(cred){
 	console.log(212, 'this is what was passed when signing in: ', cred)
 
 	return function(dispatch){
-		console.log('test for dispatch on getUser')
 		return fetch('/hidden', 
 			{
 				method: 'POST',
@@ -223,21 +226,22 @@ var getUser = function(cred){
 				credentials: 'same-origin',
 				body: JSON.stringify(cred)
 			}).then(function(response){
-				console.log(response)
+
 				var url = response.url;
 				var split = url.split('/');
-				var userId = split[3];
-
+				var userId = split[4];
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
 					throw error;
 				}
-				hashHistory.push('home')
+				
 				return userId;
 
 			}).then(function(userId){
-
+				setTimeout(function(){
+					hashHistory.push('home')
+				},1500)
 				return dispatch(
 					getUserSuccess(userId)
 				);
@@ -254,10 +258,9 @@ var getUser = function(cred){
 };
 
 var createProject = function(newProject){
-		console.log('test createProject action-function ' + JSON.stringify(newProject))
 
 	return function(dispatch){
-		console.log('test for dispatch')
+
 		return fetch('http://localhost:8080/createproject', 
 			{
 				method: 'POST',
@@ -265,8 +268,8 @@ var createProject = function(newProject){
 					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 				}, 
-				mode: 'cors',
-				cache: 'default',
+				// mode: 'cors',
+				// cache: 'default',
 				body: JSON.stringify(newProject)
 			}).then(function(response){
 				if (response.status < 200 || response.status >= 300){
@@ -274,12 +277,11 @@ var createProject = function(newProject){
 					error.response = response
 					throw error;
 				}
-
-				// hashHistory.push('home')
+			
 				return response.text();
 
 			}).then(function(project){
-				console.log(project)
+				hashHistory.push('home')
 				return dispatch(
 					createProjectSuccess(project)
 				);
@@ -295,6 +297,100 @@ var createProject = function(newProject){
 	};
 };
 
+
+	// object, endpoint, to, from, projectName
+var move = function(creds, callback){
+	
+	return function(dispatch){
+		var sendInfo = {
+			payload: { 
+				object: creds.object,
+				to: creds.to,
+				from: creds.from,
+				projectName: creds.projectName
+			},
+			endpoint: creds.endpoint
+		}
+
+		return fetch( sendInfo.endpoint, 
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+				}, 
+				// mode: 'cors',
+				// cache: 'default',
+				body: JSON.stringify(sendInfo.payload)
+			}).then(function(response){
+				console.log(325, response)
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+			
+				return response.text();
+
+			}).then(function(object){
+				console.log(336, object, callback)
+				return dispatch(
+					callback(object)
+				);
+
+			}).catch(function(error){
+				console.log(342, error)
+				return error
+				// return dispatch(
+				// 	createProjectError(error)
+				// )
+
+			});
+
+	};
+
+};
+
+var loadThisProject = function(createProjectId){
+	return function(dispatch){
+
+		var sendProject = { _id: createProjectId}
+
+		return fetch('/loading', 
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+					}, 
+
+					body: JSON.stringify(sendProject)
+				}).then(function(response){
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+			
+				return response.text();
+
+			}).then(function(project){
+
+				return dispatch(
+					loadEntriesSuccess(project)
+				);
+
+			}).catch(function(error){
+				return error
+				// return dispatch(
+				// 	createProjectError(error)
+				// )
+
+			});
+	}		
+};
 
 
 var CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
@@ -316,10 +412,10 @@ var createProjectError = function(error) {
 };
 
 var GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
-var getProjectSuccess = function(object, project) {
+var getProjectsSuccess = function(userObject) {
     return {
         type: GET_PROJECTS_SUCCESS,
-        project : project
+        userObject : userObject
     };
 };
 
@@ -369,6 +465,14 @@ var getUserError = function(err){
 	}
 };
 
+var LOAD_ENTRIES_SUCCESS = 'LOAD_ENTRIES_SUCCESS'
+var loadEntriesSuccess = function(entries){
+	return {
+		type: LOAD_ENTRIES_SUCCESS,
+		entries: entries
+	}
+};
+
 
 exports.RESET_STATE = RESET_STATE;
 exports.resetState = resetState;
@@ -414,7 +518,15 @@ exports.GET_USER_SUCCESS = GET_USER_SUCCESS;
 exports.getUserSuccess = getUserSuccess;
 exports.GET_USER_ERROR = GET_USER_ERROR;
 exports.getUserError = getUserError;
+exports.GET_PROJECTS_SUCCESS = GET_PROJECTS_SUCCESS;
+exports.getProjectsSuccess = getProjectsSuccess;
+exports.GET_PROJECTS_ERROR = GET_PROJECTS_ERROR;
+exports.getProjectsError = getProjectsError;
+exports.LOAD_ENTRIES_SUCCESS = LOAD_ENTRIES_SUCCESS;
+exports.loadEntriesSuccess = loadEntriesSuccess;
 
 exports.fetchUser = fetchUser;
 exports.createProject = createProject;
 exports.getUser = getUser;
+exports.move = move;
+exports.loadThisProject = loadThisProject

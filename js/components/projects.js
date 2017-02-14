@@ -5,34 +5,22 @@ var actions = require('../actions/index')
 
 var ProjectCard = require('./projectCard')
 
-var testArray = [
-	{
-		projectName: 'Project One',
-		sprint: '80'
-	},
-		{
-		projectName: 'Project Two',
-		sprint: '50'
-	},
-		{
-		projectName: 'Project Three',
-		sprint: '20'
-	}
-
-];
-
 
 var Projects = React.createClass({
 
 	componentDidMount: function(){
 		console.log('testing prjects mounting')
 		this.props.dispatch(actions.resetState())
-		this.props.dispatch(actions.getProjects())
+		
+		var userid = {userid: this.props.userid}
+		this.props.dispatch(actions.getProjects(userid))
 	},
 
 	render: function(props){
-		var projectsList = testArray.map(function(object, index){
-			return <ProjectCard key={index} index={index} projectName={object.projectName} sprint={object.sprint} />
+
+		var projectsList = this.props.projects.map(function(object, index){
+
+			return <ProjectCard Order={index} key={index} index={index} projectName={object.projectName} sprint={object.startDate} />
 		})
 
 		return (
@@ -52,7 +40,9 @@ var mapStateToProps = function(state, props){
 		devList: state.devList,
 		testList: state.testList,
 		releaseList: state.releaseList,
-		doneList: state.doneList
+		doneList: state.doneList,
+		userid: state.userid,
+		projects: state.projects
 	}
 };
 

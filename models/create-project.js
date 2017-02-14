@@ -2,12 +2,20 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CreateProjectSchema = new mongoose.Schema({
-    projectName: { type: String, required: true },
-    startDate: { type: String, required: true },
-    endDate: { type: String, required: true },
-    projectLeader: { type: String, required: true },
-    scrumMaster: { type: String, required: true },
-    crew: { type: String, required: true },
+    projectName: { type: String },
+    startDate: { type: String },
+    endDate: { type: String },
+    projectLeader: { type: String },
+    scrumMaster: { type: String },
+    crew: { type: String },
+    userid: { type: String },
+    entries: [{ type: String }],
+	taskList: [{ type: String }],
+	devList: [{ type: String }],
+	testList: [{ type: String }],
+	releaseList: [{ type: String }],
+	doneList: [{ type: String }],
+	crew:[{ type: String }],
 });
 
 var CreateProject = mongoose.model('CreateProject', CreateProjectSchema);

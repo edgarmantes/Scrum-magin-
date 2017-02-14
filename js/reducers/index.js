@@ -6,8 +6,8 @@ var Route = router.Route;
 var hashHistory = router.hashHistory;
 
 var initialCardState = {
-	entries: [],
-	taskList: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
+	entries: null,
+	taskList: null,
 	devList: [],
 	testList: [],
 	releaseList: [],
@@ -43,7 +43,7 @@ var scrumReducer = function(state, action){
 	} else if (action.type === actions.ADD_TO_TASK_LIST){
 
 		var filtered = state.entries.filter(function(entry){
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
 		state.taskList.push(action.entry)
@@ -141,7 +141,7 @@ var scrumReducer = function(state, action){
 	} else if (action.type === actions.RESET_STATE){
 
 		var resetCardState = {
-			entries: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
+			entries: [],
 			taskList: [],
 			devList: [],
 			testList: [],
@@ -163,13 +163,25 @@ var scrumReducer = function(state, action){
 		
 	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
 
-		// hashHistory.push('home')
+
 		var newProjects = state.project.concat(action.project)
 
         return Object.assign({}, state, { projects: newProjects});
+    
     } else if (action.type === actions.GET_PROJECTS){
+    
     	console.log('test GET_PROJECTS')
+    
+    } else if (action.type === actions.GET_PROJECTS_SUCCESS){
+		var projectObject = {	   
+			projects: action.userObject.projects
+		}
+    	return Object.assign({}, state, projectObject)
+    
+    } else if (action.type === actions.GET_PROJECTS_ERROR){
+    	return state
     }
+
     else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
 		
 		console.log(173, 'reducer for FETCH_DESCRIPTION_ERROR')
@@ -191,7 +203,12 @@ var scrumReducer = function(state, action){
     } else if (action.type === actions.GET_USER_ERROR) {
 
     	return state
-    	
+
+    } else if (action.type === actions.LOAD_ENTRIES_SUCCESS) {
+
+    	var entries = JSON.parse(action.entries);
+
+    	return Object.assign({}, state, {entries: entries})
     }
 
 
