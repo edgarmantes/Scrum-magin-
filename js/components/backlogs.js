@@ -1,6 +1,11 @@
 var React = require('react');
 var connect = require('react-redux').connect;
 
+var router = require('react-router');
+var Router = router.Router;
+var Route = router.Route;
+var hashHistory = router.hashHistory;
+
 var actions = require('../actions/index');
 
 var List = require('./list-item');
@@ -8,16 +13,52 @@ var List = require('./list-item');
 
 var BackLogs = React.createClass({
 
+	componentDidMount: function(){
+		// var createProjectId = this.props.projects[this.props.params.Order]._id;
+		var createProjectId = null;
+		localStorage.setItem('Order', this.props.params.Order)
+		if (this.props.entries !== null) {
+			createProjectId = this.props.projects[this.props.params.Order]._id;			
+			localStorage.setItem('createProjectId', createProjectId);
+
+		}  else {
+			alert('reloading causes you to go back to your list of projects!')
+			hashHistory.push('/home')
+		}
+
+		// localStorage.setItem('createProjectId', createProjectId)
+		console.log(12, createProjectId)
+		this.props.dispatch(actions.loadThisProject(createProjectId))
+		this.props.dispatch(actions.getNotes());
+		document.getElementById('hidenotes').style.display = 'block'
+	},
+
 	addEntry: function(event){
 		event.preventDefault();
-		var entry = document.getElementsByClassName('backlog-entry')[0].value;
-		console.log(entry)
-		this.props.dispatch(actions.addEntry(entry));
-		document.getElementsByClassName('entry')[0].reset;		
+		var entry = document.getElementsByClassName('backlog-entry')[0].value;	
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'entries',
+			from: null,
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};
+		document.getElementsByClassName('backlog-entry')[0].value = '';	
+		this.props.dispatch(actions.move(creds, actions.addEntry))
+	
 	},
 
 	addToTaskList: function(entry){
-		this.props.dispatch(actions.addToTaskList(entry));
+
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'taskList',
+			from: 'entries',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.addToTaskList))		
+		// this.props.dispatch(actions.addToTaskList(entry));
 	},
 
 	deleteEntry: function(entry){
@@ -26,12 +67,18 @@ var BackLogs = React.createClass({
 	},
 
 	render: function(props){
-	
-		var entryArray = this.props.entries.map(function(entry, index){
 
-			return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} btnOne='&minus;' btnTwo='&oplus;' />
-			
-		}, this)
+		var entryArray = null;
+			if(!this.props.entries){
+				entryArray = "Restart from 'Projects' list"
+			} else {
+				var entryArray = this.props.entries.map(function(entry, index){
+					return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} btnOne='&minus;' btnTwo='&oplus;' />			
+				}, this)
+
+			}
+
+
 
 		return (
 
@@ -59,7 +106,9 @@ var BackLogs = React.createClass({
 var mapStateToProps = function(state, props){	
 
 	return {
-		entries : state.entries
+		entries : state.entries,
+		projects: state.projects, 
+		userid: state.userid
 	}
 };
 

@@ -6,13 +6,14 @@ var Route = router.Route;
 var hashHistory = router.hashHistory;
 
 var initialCardState = {
-	entries: [],
-	taskList: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
-	devList: [],
-	testList: [],
-	releaseList: [],
-	doneList: [],
-	crew:[],
+	entries: null,
+	taskList: null,
+	devList: null,
+	testList: null,
+	releaseList: null,
+	doneList: null,
+	crew: null,
+	dailyNotes: "",
 
 	userid: null, /*This is all the projects that the user has open*/
 	projects: [],
@@ -43,7 +44,7 @@ var scrumReducer = function(state, action){
 	} else if (action.type === actions.ADD_TO_TASK_LIST){
 
 		var filtered = state.entries.filter(function(entry){
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
 		state.taskList.push(action.entry)
@@ -54,7 +55,7 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.taskList.filter(function(entry){
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
 		state.entries.push(action.entry)
@@ -65,10 +66,10 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.taskList.filter(function(entry){
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
-		state.devList.push(action.entry)
+		state.devList.push(JSON.parse(action.entry))
 
 		return Object.assign({}, state, { taskList: filtered}); // Task list reducer end
 
@@ -76,10 +77,10 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.devList.filter(function(entry){
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
-		state.taskList.push(action.entry)
+		state.taskList.push(JSON.parse(action.entry))
 
 		return Object.assign({}, state, { devList: filtered});
 
@@ -87,10 +88,10 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.devList.filter(function(entry){
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
-		state.testList.push(action.entry)
+		state.testList.push(JSON.parse(action.entry))
 
 		return Object.assign({}, state, { devList: filtered}); //Dev List reducer end
 
@@ -98,10 +99,10 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.testList.filter(function(entry){ 
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
-		state.devList.push(action.entry)
+		state.devList.push(JSON.parse(action.entry))
 
 		return Object.assign({}, state, { testList: filtered});
 
@@ -109,10 +110,10 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.testList.filter(function(entry){
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
-		state.releaseList.push(action.entry)
+		state.releaseList.push(JSON.parse(action.entry))
 
 		return Object.assign({}, state, { testList: filtered}); // Test List reducer end
 
@@ -120,10 +121,10 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.releaseList.filter(function(entry){ 
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
-		state.testList.push(action.entry)
+		state.testList.push(JSON.parse(action.entry))
 
 		return Object.assign({}, state, { releaseList: filtered});
 		
@@ -131,7 +132,7 @@ var scrumReducer = function(state, action){
 
 		var filtered = state.releaseList.filter(function(entry){
 
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry)
 		});
 
 		state.doneList.push(action.entry)
@@ -141,15 +142,18 @@ var scrumReducer = function(state, action){
 	} else if (action.type === actions.RESET_STATE){
 
 		var resetCardState = {
-			entries: ["testing state 1", "testing state 2", "testing state 3", "testing state 4"],
+			entries: [],
 			taskList: [],
 			devList: [],
 			testList: [],
 			releaseList: [],
 			doneList: [],
-			crew: []
+			crew: [],
+			dailyNotes: ""
 		};
+		
 		return Object.assign({}, state, resetCardState)
+	
 	} else if (action.type === actions.ADD_MEMBER){  		/*This starts the reducers for the Create Project page*/ 
 
 		var newArray = state.crew.concat(action.member)
@@ -163,16 +167,33 @@ var scrumReducer = function(state, action){
 		
 	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
 
-		// hashHistory.push('home')
+
 		var newProjects = state.project.concat(action.project)
 
         return Object.assign({}, state, { projects: newProjects});
+    
     } else if (action.type === actions.GET_PROJECTS){
+    
     	console.log('test GET_PROJECTS')
+    
+    } else if (action.type === actions.GET_PROJECTS_SUCCESS){
+		
+		var projectObject = {	   
+			projects: action.userObject.projects
+		}
+    	
+    	return Object.assign({}, state, projectObject)
+    
+    } else if (action.type === actions.GET_PROJECTS_ERROR){
+    	
+    	return state
+    
     }
+
     else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
 		
 		console.log(173, 'reducer for FETCH_DESCRIPTION_ERROR')
+		
 		return state
 
     } else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {   // ***
@@ -191,11 +212,39 @@ var scrumReducer = function(state, action){
     } else if (action.type === actions.GET_USER_ERROR) {
 
     	return state
+
+    } else if (action.type === actions.LOAD_ENTRIES_SUCCESS) {
+
+    	var entries = JSON.parse(action.entries);
+
+    	return Object.assign({}, state, {entries: entries})
+
+    } else if (action.type === actions.LOAD_BOARD_SUCCESS) {
     	
-    }
+    	var project = JSON.parse(action.project)
 
+    	return Object.assign({}, state, project)
 
-	return state;
+    } else if (action.type === actions.LOAD_DONE_LIST_SUCCESS) {
+
+    	// var doneList = JSON.parse(action.doneList)
+    	console.log(221, action.doneList)
+
+    	var donelist = JSON.parse(action.doneList);
+    	return Object.assign({}, state, {doneList: donelist})
+    } 
+    else if (action.type === actions.GET_NOTES_SUCCESS) {
+
+    	var dailyNotes = JSON.parse(action.notes)
+    	console.log(238,dailyNotes)    	
+    	return Object.assign({}, state, dailyNotes)
+
+    } 	
+
+    else {
+
+		return state;
+	}	
 };
 
 exports.scrumReducer = scrumReducer;

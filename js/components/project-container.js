@@ -24,7 +24,8 @@ var CreateProjectContainer = React.createClass({
 			endDate: document.getElementsByClassName('end-date')[0].value,
 			projectLeader: document.getElementsByClassName('project-leader')[0].value,
 			scrumMaster: document.getElementsByClassName('scrum-master')[0].value,
-			crew: this.props.crew
+			crew: this.props.crew,
+			userid: this.props.userid
 		};
 
 		this.props.dispatch(actions.createProject(info));
@@ -76,7 +77,8 @@ var mapStateToProps = function(state, props){
 		releaseList: state.releaseList,
 		doneList: state.doneList,
 
-		crew: state.crew
+		crew: state.crew,
+		userid: state.userid
 	}
 };
 

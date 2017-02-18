@@ -57,53 +57,8 @@ if (require.main === module) {
 exports.app = app;
 exports.runServer = runServer;
 
-passport.use(new LocalStrategy(     // LocalStrategy will parse the username and password from the req.body and pass it on to the inside function.
-    function(username, password, done) {
-        // User.findOne({username: username, password: password}, function(err, user){
-        //     if (err) { return done(err) }
-        //     if (!user) {return done(null, false)}
-        //     return done(null, user);
-        // });
 
 
-        User.findOne({ username: username }, function (err, user) { // First this searches for an existing username that was provided
-            
-            if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
-                return done(err); 
-            }
-            if (!user) {        // If no username found this err will be thrown
-                return done(null, false, { message: 'Incorrect username.' });
-            }
-
-            user.validatePassword(password, function(err, isValid){  // If username is found in the db this will authenticate the submitted password with the db password on file. The validatePassword() method is a method from the User model. 
-                if (err) { // if there was an issue besides 'invalid password' the error message will be passed in here. 
-                    return done(null, false, err);
-                } 
-
-                if (!isValid) {         // If password submitted is incvalid this err will be thrown
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-
-                return done(null, user); 
-                    // If password passes authentication this 'done()' function will be called passing in 'null' (for 'error' argument) and 'user' for the 
-            });
-        });                         // Once this function completes the serializeUser() is invoked and continues from there
-    }
-));
-
-
-// passport.serializeUser(function(user, done) {
-//     console.log(58, user._id) 
-//     done(null, user)
-// });
-
-// passport.deserializeUser(function(id, done){
-//     console.log(63, id)
-//     User.findById(user._id, function(err, user){
-//         console.log(65, user)
-//         done(err, user);
-//     });
-// });
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -116,8 +71,6 @@ app.use(session({
 
     })  
 );
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 // Beginning routes
 
@@ -129,59 +82,11 @@ app.get('/test', function(){
     console.log('testing server')
 })
 
-// app.post('/hidden', function (req, res, next) {
-//     passport.authenticate('local', function (err, user, info) {
-//         if (err) {
-//             return res.status(500).json({message: 'something broke' });
-//         } else if (!info) {
-
-//             return res.status(401).json({message: 'unauthorized'});
-//         } else {
-//             req.login(user, function(err) {
-//                 if (err) {
-//                     return res.status(500)
-//                 } else {
-//                     res.redirect('/')
-//                     return res.status(200).json(user)
-//                 }
-//             })
-//         }
-//     })(req, res, next);
-// });
-
-
-// Authenticate user supplied sign In credentials
-// app.post('/hidden', passport.authenticate('local'), function(req, res){
-//                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
-//     // console.log(112, req.user) req.user is able to see req.user object
-//     console.log(121, req.user)
-//     req.logIn(req.user, function(err){
-//         res.redirect('/')
-//     })
-//     res.status(211)
-//     // var user = req.body;
-//     // User.findOne({username: user.username, password: user.password}, function(err, foundUser){
-//     //     // res.addHeader('s:', user._id)
-//     //     res.json(foundUser)
-//     // })
-// });
-
-// function checkSignIn(req, res){
-//     console.log(168, req.session.userId)
-//     if (req.session.userId){
-//         console.log(169, 'checkSignIn has passed')
-//         return res.status(200);
-//     } else {
-//         console.log(171, 'checkSignIn did not pass')
-//         return res.status(402)
-//     }
-// };
-
 
 
 app.post('/hidden', function(req, res){
                     //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
-    console.log(176, req.session) //req.user is able to see req.user object
+                     //req.user is able to see req.user object
 
         User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
             
@@ -200,29 +105,26 @@ app.post('/hidden', function(req, res){
                 if (!isValid) {         // If password submitted is incvalid this err will be thrown
                     return res.status(401).json({ message: 'Incorrect password.' });
                 }
+                req.session.user = user
                 console.log(187, 'login authenticated')
-                req.session.userId = user._id;
-                console.log(190, req.session)
-                res.redirect('/protected_page')
-                // return res.status(210).json(user)
+                res.redirect('/protected_page/' + user._id)
             });
         });  
 });
 
-app.get('/protected_page', function(req, res){
-    console.log(220, req.session)
-    req.session.userId = req.session.userId;
-    res.status(200).cookie('userId', req.session.userId).json({msg:'working'})
+app.get('/protected_page/:userId', function(req, res){
+    res.status(200).json({userId:req.params.userId})
 });
 
-app.get('/projects', function(req, res){
-    console.log(205, req.session)
-    res.status(200).json({message:'projects has completed'})
-    // User.findOne(req.session.user._id)
-    //     .populate('projects')
-    //     .exec(function(err, data){
-    //         console.log(data)
-    //     })
+app.post('/projects', function(req, res){
+    console.log(120, req.sessions)
+    var userid = String(req.body.userid)
+    User.findOne({ _id: userid})
+        .populate('projects')
+        .exec(function(err, data){
+
+            res.status(200).json(data)
+        })
 });
 
 // Create new users
@@ -316,40 +218,192 @@ app.post('/users', function(req, res) {
 
 
 app.post('/createproject', function(req, res){
-    console.log(224)
-    CreateProject.create({
+    var newProject = {
                 projectName: req.body.projectName,
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
                 projectLeader: req.body.projectLeader,
                 scrumMaster: req.body.scrumMaster,
-                crew: req.body.crew
+                crew: req.body.crew,
+                userid: req.body.userid
+        }
 
-        }, function(err, object){
-            console.log(230 )
+    CreateProject.create(newProject, function(err, object){
+
+
             if (err){
                 return res.status(500).json({
                     message: 'did not create the project. Internal Server Error'
                 });
             }
 
-            // User.findOneAndUpdate(
-            //     {_id: req.session.user._id},
-            //     {$push:{'projects': object._id}}, 
-            //     function(err, user){
-            //         if (err) {
-            //             return res.status(502).json({
-            //                 message: 'Internal Server Error'
-            //             })
-            //         }
-            //     }
-            // )
+            User.findOneAndUpdate(
+                {_id: object.userid},
+                {$push:{'projects': object._id}}, 
+                function(err, user){
+                    if (err) {
+                        return res.status(502).json({
+                            message: 'Internal Server Error'
+                        })
+                    }
+                    console.log(342, user)
+                }
+            )
             res.status(200).json(object)
         }
     )
 
 })
 
+function CreateProjectUpdate(req, res, update){
+    console.log(259, update)
+    CreateProject.findOneAndUpdate(
+        {projectName: req.body.projectName}, update,
+        function(err, object){
+    
+            if(err){
+                return res.status(500).json({
+                message: 'Internal Server Error'
+                })
+            }
+    })
+
+    return
+}
+
+
+// used to move/remove payload from one section of the scrum board to another
+app.post('/move', function(req, res){
+console.log(277, req.session)
+    
+    var updateTo = null;
+    var updateFrom = null;
+    // When 'to' is passed in, this move function will push object into the 'to' location.
+    if (req.body.to === 'entries') {
+
+       updateTo = {$push:{ 'entries' : req.body.object }}
+       CreateProjectUpdate(req, res, updateTo)
+
+    } else if (req.body.to === 'taskList') {
+
+        updateTo = {$push:{ 'taskList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+
+    } else if (req.body.to === 'devList') {
+
+        updateTo = {$push:{ 'devList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    } else if (req.body.to === 'testList') {
+
+        updateTo = {$push:{ 'testList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    } else if (req.body.to === 'releaseList') {
+
+        updateTo = {$push:{ 'releaseList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    } else if (req.body.to === 'doneList') {
+
+        updateTo = {$push:{ 'doneList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    }
+
+
+
+    // When 'from' is assigned, the move function will remove the object 'from' the list of which it is currently moved out of.
+    if (req.body.from === 'entries'){
+
+        updateFrom = {$pull:{ 'entries' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'taskList'){
+
+        updateFrom = {$pull:{ 'taskList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'devList'){
+
+        updateFrom = {$pull:{ 'devList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'testList'){
+
+        updateFrom = {$pull:{ 'testList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'releaseList'){
+
+        updateFrom = {$pull:{ 'releaseList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    }
+    console.log(339, req.body.object)
+    return res.status(200).json(req.body.object)
+})
+
+
+app.post('/loading', function(req, res){
+    console.log(316, 'testing load')
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+        var entries = project.entries;
+
+        return res.status(200).json(entries)
+    })
+
+});
+
+app.post('/loadlist', function(req, res){
+    console.log(316, 'testing load')
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+        console.log(359, 'server loadlist test', project)
+        var doneList = project.doneList;
+        console.log(361, doneList)
+        return res.status(200).json(doneList)
+    })
+
+
+});
+
+app.post('/loadboard', function(req, res){
+    console.log(327, 'testing loadboard', req.body._id)
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+
+        var newBoard = {
+            taskList: project.taskList, 
+            devList: project.devList, 
+            testList: project.testList,
+            releaseList: project.releaseList,
+        }
+        return res.status(200).send(newBoard)
+    })
+
+});
+
+app.post('/notes', function(req, res){
+    console.log(385, 'notes testing')
+
+    CreateProject.findOneAndUpdate({_id: req.body._id}, {dailyNotes: req.body.dailyNotes}, {upsert:true}, function(err, project){
+        if (err) {return res.send(500, { error: err })};
+        console.log(389, project.dailyNotes)
+        return res.status(200).json({dailyNotes: req.body.dailyNotes});
+    })  
+})
+
+
+app.post('/notes/daily', function(req, res){
+    console.log(385, 'notes loading testing')
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+        if (err) {
+            return res.send(500, { error: err })
+        };
+
+        console.log(389, project.dailyNotes)
+        return res.status(200).json({dailyNotes: project.dailyNotes});
+    })  
+})
 
 // Used for error handling. If a request was made to a non-existing endpoint this will be returned
 app.use('*', function(req, res) {

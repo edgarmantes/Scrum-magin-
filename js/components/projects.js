@@ -5,35 +5,37 @@ var actions = require('../actions/index')
 
 var ProjectCard = require('./projectCard')
 
-var testArray = [
-	{
-		projectName: 'Project One',
-		sprint: '80'
-	},
-		{
-		projectName: 'Project Two',
-		sprint: '50'
-	},
-		{
-		projectName: 'Project Three',
-		sprint: '20'
-	}
-
-];
-
 
 var Projects = React.createClass({
 
 	componentDidMount: function(){
-		console.log('testing prjects mounting')
+
 		this.props.dispatch(actions.resetState())
-		this.props.dispatch(actions.getProjects())
+
+		var userid = null;
+		 if (localStorage.userId) {
+			var userid = {userid: localStorage.userId};
+		} else {
+			alert('you are not logged in')
+			hashHistory.push('/')
+		}
+
+		this.props.dispatch(actions.getProjects(userid))
+		document.getElementById('hidenotes').style.display = 'none'
 	},
 
 	render: function(props){
-		var projectsList = testArray.map(function(object, index){
-			return <ProjectCard key={index} index={index} projectName={object.projectName} sprint={object.sprint} />
-		})
+		
+		if (this.props.projects.length !== 0) {
+
+			var projectsList = this.props.projects.map(function(object, index){
+				return <ProjectCard Order={index} key={index} index={index} projectName={object.projectName} sprint={object.startDate} />
+			})
+
+		} else {	
+
+			var projectsList =  <h1 className='menu-header start-a-project'>Start A New Project</h1>;		
+		}
 
 		return (
 			<div className="project-list-container row">
@@ -52,7 +54,9 @@ var mapStateToProps = function(state, props){
 		devList: state.devList,
 		testList: state.testList,
 		releaseList: state.releaseList,
-		doneList: state.doneList
+		doneList: state.doneList,
+		userid: state.userid,
+		projects: state.projects
 	}
 };
 
