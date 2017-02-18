@@ -14,7 +14,7 @@ var List = require('./list-item');
 var BackLogs = React.createClass({
 
 	componentDidMount: function(){
-		// var createProjectId = this.props.projects[this.props.params.Order]._id;
+
 		var createProjectId = null;
 		localStorage.setItem('Order', this.props.params.Order)
 		if (this.props.entries !== null) {
@@ -26,8 +26,6 @@ var BackLogs = React.createClass({
 			hashHistory.push('/home')
 		}
 
-		// localStorage.setItem('createProjectId', createProjectId)
-		console.log(12, createProjectId)
 		this.props.dispatch(actions.loadThisProject(createProjectId))
 		this.props.dispatch(actions.getNotes());
 		document.getElementById('hidenotes').style.display = 'block'

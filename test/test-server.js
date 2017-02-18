@@ -1,4 +1,4 @@
-var config = require('./config')
+var config = require('../config')
 global.DATABASE_URL = config.DATABASE_URL;
 
 var chai = require('chai');
