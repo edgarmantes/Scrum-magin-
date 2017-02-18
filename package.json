@@ -2,7 +2,7 @@
   "name": "thinkful-react-starter",
   "version": "0.0.1",
   "description": "A React template",
-  "main": "js/index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "run-p watch serve",
