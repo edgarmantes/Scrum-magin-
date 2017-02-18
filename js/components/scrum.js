@@ -7,44 +7,109 @@ var List = require('./list-item');
 
 var Scrum = React.createClass({
 
-	backLog: function(entry){
+	componentWillMount: function(){
 
-		this.props.dispatch(actions.backLog(entry))
+		var createProjectId = this.props.projects[this.props.params.Order]._id;
+
+		this.props.dispatch(actions.loadThisBoard(createProjectId))
+
+	},
+
+	backLog: function(entry){
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'entries',
+			from: 'taskList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.backLog))
+		// this.props.dispatch(actions.backLog(entry))
 	},
 
 	addToDev: function(entry){
 
-		this.props.dispatch(actions.addToDev(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'devList',
+			from: 'taskList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.addToDev))	
+		// this.props.dispatch(actions.addToDev(entry))
 	},
 
 	backTask: function(entry){
-
-		this.props.dispatch(actions.backTask(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'taskList',
+			from: 'devList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.backTask))
+		// this.props.dispatch(actions.backTask(entry))
 	},
 
 	addToTest: function(entry){
-
-		this.props.dispatch(actions.addToTest(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'testList',
+			from: 'devList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.addToTest))
+		// this.props.dispatch(actions.addToTest(entry))
 	},
 
 	backDev: function(entry){
-
-		this.props.dispatch(actions.backDev(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'devList',
+			from: 'testList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.backDev))
+		// this.props.dispatch(actions.backDev(entry))
 	},
 
 	addToRelease: function(entry){
-
-		this.props.dispatch(actions.addToRelease(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'releaseList',
+			from: 'testList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.addToRelease))
+		// this.props.dispatch(actions.addToRelease(entry))
 	},
 
 	backTest: function(entry){
-
-		this. props.dispatch(actions.backTest(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'testList',
+			from: 'releaseList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.backTest))
+		// this. props.dispatch(actions.backTest(entry))
 	},
 
 	addToDone: function(entry){
-		console.log('test dispatch')
-		this.props.dispatch(actions.addToDone(entry))
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : 'doneList',
+			from: 'releaseList',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.addToDone))
+		// this.props.dispatch(actions.addToDone(entry))
 	},
 
 
@@ -113,7 +178,8 @@ var mapStateToProps = function(state, props){
 		taskList: state.taskList,
 		devList:  state.devList,
 		testList: state.testList,
-		releaseList: state.releaseList
+		releaseList: state.releaseList,
+		projects: state.projects
 	}
 };
 

@@ -79,9 +79,10 @@ var addToTest = function(entry){
 
 var BACK_DEV = 'BACK_DEV';
 var backDev = function(entry){
+	// var parsed = JSON.parse(entry)
 	return {
 		type: BACK_DEV,
-		entry: entry
+		entry: entry // parsed
 	}
 };
 
@@ -213,7 +214,6 @@ var fetchUser = function(objects){
 };
 
 var getUser = function(cred){
-	console.log(212, 'this is what was passed when signing in: ', cred)
 
 	return function(dispatch){
 		return fetch('/hidden', 
@@ -239,6 +239,8 @@ var getUser = function(cred){
 				return userId;
 
 			}).then(function(userId){
+
+				localStorage.setItem('userId', userId)
 				setTimeout(function(){
 					hashHistory.push('home')
 				},1500)
@@ -317,10 +319,9 @@ var move = function(creds, callback){
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+					'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+					// 'x-access-token': localStorage.getItem('token');
 				}, 
-				// mode: 'cors',
-				// cache: 'default',
 				body: JSON.stringify(sendInfo.payload)
 			}).then(function(response){
 				console.log(325, response)
@@ -335,6 +336,7 @@ var move = function(creds, callback){
 
 			}).then(function(object){
 				console.log(336, object, callback)
+
 				return dispatch(
 					callback(object)
 				);
@@ -384,14 +386,164 @@ var loadThisProject = function(createProjectId){
 
 			}).catch(function(error){
 				return error
-				// return dispatch(
-				// 	createProjectError(error)
-				// )
 
 			});
 	}		
 };
 
+var loadThisBoard = function(createProjectId){
+	return function(dispatch){
+
+		var sendProject = { _id: createProjectId}
+
+		return fetch('/loadboard', 
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+					}, 
+
+					body: JSON.stringify(sendProject)
+				}).then(function(response){
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+			
+				return response.text();
+
+			}).then(function(project){
+
+				return dispatch(
+					loadBoardSuccess(project)
+				);
+
+			}).catch(function(error){
+
+				return error
+
+			});
+	}		
+};
+
+var loadThisDoneList = function(createProjectId){
+	return function(dispatch){
+
+		var sendProject = { _id: createProjectId}
+
+		return fetch('/loadlist', 
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+					}, 
+					body: JSON.stringify(sendProject)
+				}).then(function(response){
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+			
+				return response.text();
+
+			}).then(function(project){
+				console.log(454, project)
+				return dispatch(
+					loadDoneListSuccess(project)
+				);
+
+			}).catch(function(error){
+				return error
+
+			});
+	}		
+};
+
+var addNotes = function(notes){
+	return function(dispatch){
+
+		var sendProject = { 
+			_id: localStorage.createProjectId,
+			dailyNotes: notes
+		}
+
+		return fetch('/notes', 
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+					}, 
+					body: JSON.stringify(sendProject)
+				}).then(function(response){
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+			
+				return response.text();
+
+			}).then(function(project){
+				console.log(454, project)
+
+				return project
+				// return dispatch(
+				// 	loadDoneListSuccess(project)
+				// );
+
+			}).catch(function(error){
+				return error
+
+			});
+	}	
+};
+
+var getNotes = function(){
+	return function(dispatch){
+
+		var sendProject = { 
+			_id: localStorage.createProjectId
+		}
+
+		return fetch('/notes/daily', 
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
+					}, 
+					body: JSON.stringify(sendProject)
+				}).then(function(response){
+
+				if (response.status < 200 || response.status >= 300){
+					var error = new Error (response.statusText)
+					error.response = response
+					throw error;
+				}
+			
+				return response.text();
+
+			}).then(function(notes){
+
+
+				return dispatch(
+					getNotesSuccess(notes)
+				);
+
+			}).catch(function(error){
+				return error
+
+			});
+	}	
+};
 
 var CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
 var createProjectSuccess = function(project) {
@@ -473,6 +625,34 @@ var loadEntriesSuccess = function(entries){
 	}
 };
 
+var LOAD_BOARD_SUCCESS = 'LOAD_BOARD_SUCCESS';
+var loadBoardSuccess = function(project){
+
+	return {
+		type: LOAD_BOARD_SUCCESS,
+		project: project
+	}
+};
+
+var LOAD_DONE_LIST_SUCCESS = 'LOAD_DONE_LIST_SUCCESS';
+var loadDoneListSuccess = function(donelist){
+
+	return {
+		type: LOAD_DONE_LIST_SUCCESS,
+		doneList: donelist
+	}
+};
+
+var GET_NOTES_SUCCESS = 'GET_NOTES_SUCCESS';
+var getNotesSuccess = function(notes){
+
+	return {
+		type: GET_NOTES_SUCCESS,
+		notes: notes
+	}
+};
+
+
 
 exports.RESET_STATE = RESET_STATE;
 exports.resetState = resetState;
@@ -524,9 +704,20 @@ exports.GET_PROJECTS_ERROR = GET_PROJECTS_ERROR;
 exports.getProjectsError = getProjectsError;
 exports.LOAD_ENTRIES_SUCCESS = LOAD_ENTRIES_SUCCESS;
 exports.loadEntriesSuccess = loadEntriesSuccess;
+exports.LOAD_BOARD_SUCCESS = LOAD_BOARD_SUCCESS;
+exports.loadBoardSuccess = loadBoardSuccess;
+exports.LOAD_DONE_LIST_SUCCESS = LOAD_DONE_LIST_SUCCESS;
+exports.loadDoneListSuccess = loadDoneListSuccess
+exports.GET_NOTES_SUCCESS = GET_NOTES_SUCCESS;
+exports.getNotesSuccess = getNotesSuccess;
+
 
 exports.fetchUser = fetchUser;
 exports.createProject = createProject;
 exports.getUser = getUser;
 exports.move = move;
-exports.loadThisProject = loadThisProject
+exports.loadThisProject = loadThisProject;
+exports.loadThisBoard = loadThisBoard;
+exports.loadThisDoneList = loadThisDoneList;
+exports.addNotes = addNotes;
+exports.getNotes = getNotes;

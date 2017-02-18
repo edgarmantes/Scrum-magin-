@@ -1,8 +1,15 @@
 var React = require('react');
 var connect = require('react-redux').connect;
 
-var DonePile = React.createClass({
+var actions = require('../actions/index');
 
+var DonePile = React.createClass({
+	componentWillMount: function(){
+		var createProjectId = this.props.projects[this.props.params.Order]._id;
+		console.log(12, createProjectId)
+		this.props.dispatch(actions.loadThisDoneList(createProjectId))
+		// this.props.dispatch(actions.loadThisProject(createProjectId))
+	},
 
 	render: function(props){
 
@@ -32,7 +39,8 @@ var DonePile = React.createClass({
 var mapStateToProps = function(state, props){	
 
 	return {
-		doneList : state.doneList
+		doneList : state.doneList,
+		projects: state.projects
 	}
 };
 

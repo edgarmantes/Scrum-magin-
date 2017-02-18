@@ -117,7 +117,7 @@ app.get('/protected_page/:userId', function(req, res){
 });
 
 app.post('/projects', function(req, res){
-
+    console.log(120, req.sessions)
     var userid = String(req.body.userid)
     User.findOne({ _id: userid})
         .populate('projects')
@@ -256,6 +256,7 @@ app.post('/createproject', function(req, res){
 })
 
 function CreateProjectUpdate(req, res, update){
+    console.log(259, update)
     CreateProject.findOneAndUpdate(
         {projectName: req.body.projectName}, update,
         function(err, object){
@@ -273,14 +274,11 @@ function CreateProjectUpdate(req, res, update){
 
 // used to move/remove payload from one section of the scrum board to another
 app.post('/move', function(req, res){
-
-                // object: creds.object,
-                // to: creds.to,
-                // from: creds.from,
-                // projectName: creds.projectName
+console.log(277, req.session)
+    
     var updateTo = null;
     var updateFrom = null;
-
+    // When 'to' is passed in, this move function will push object into the 'to' location.
     if (req.body.to === 'entries') {
 
        updateTo = {$push:{ 'entries' : req.body.object }}
@@ -291,24 +289,60 @@ app.post('/move', function(req, res){
         updateTo = {$push:{ 'taskList' : req.body.object }}
         CreateProjectUpdate(req, res, updateTo)
 
+    } else if (req.body.to === 'devList') {
+
+        updateTo = {$push:{ 'devList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    } else if (req.body.to === 'testList') {
+
+        updateTo = {$push:{ 'testList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    } else if (req.body.to === 'releaseList') {
+
+        updateTo = {$push:{ 'releaseList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
+    } else if (req.body.to === 'doneList') {
+
+        updateTo = {$push:{ 'doneList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateTo)
     }
 
 
 
-
+    // When 'from' is assigned, the move function will remove the object 'from' the list of which it is currently moved out of.
     if (req.body.from === 'entries'){
 
         updateFrom = {$pull:{ 'entries' : req.body.object }}
         CreateProjectUpdate(req, res, updateFrom)
 
-    }
+    } else if (req.body.from === 'taskList'){
 
+        updateFrom = {$pull:{ 'taskList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'devList'){
+
+        updateFrom = {$pull:{ 'devList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'testList'){
+
+        updateFrom = {$pull:{ 'testList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    } else if (req.body.from === 'releaseList'){
+
+        updateFrom = {$pull:{ 'releaseList' : req.body.object }}
+        CreateProjectUpdate(req, res, updateFrom)
+
+    }
+    console.log(339, req.body.object)
     return res.status(200).json(req.body.object)
 })
 
 
 app.post('/loading', function(req, res){
-    console.log(293, 'testing load')
+    console.log(316, 'testing load')
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
         var entries = project.entries;
@@ -316,6 +350,59 @@ app.post('/loading', function(req, res){
         return res.status(200).json(entries)
     })
 
+});
+
+app.post('/loadlist', function(req, res){
+    console.log(316, 'testing load')
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+        console.log(359, 'server loadlist test', project)
+        var doneList = project.doneList;
+        console.log(361, doneList)
+        return res.status(200).json(doneList)
+    })
+
+
+});
+
+app.post('/loadboard', function(req, res){
+    console.log(327, 'testing loadboard', req.body._id)
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+
+        var newBoard = {
+            taskList: project.taskList, 
+            devList: project.devList, 
+            testList: project.testList,
+            releaseList: project.releaseList,
+        }
+        return res.status(200).send(newBoard)
+    })
+
+});
+
+app.post('/notes', function(req, res){
+    console.log(385, 'notes testing')
+
+    CreateProject.findOneAndUpdate({_id: req.body._id}, {dailyNotes: req.body.dailyNotes}, {upsert:true}, function(err, project){
+        if (err) {return res.send(500, { error: err })};
+        console.log(389, project.dailyNotes)
+        return res.status(200).json({dailyNotes: req.body.dailyNotes});
+    })  
+})
+
+
+app.post('/notes/daily', function(req, res){
+    console.log(385, 'notes loading testing')
+
+    CreateProject.findOne({_id: req.body._id}, function(err, project){
+        if (err) {
+            return res.send(500, { error: err })
+        };
+
+        console.log(389, project.dailyNotes)
+        return res.status(200).json({dailyNotes: project.dailyNotes});
+    })  
 })
 
 // Used for error handling. If a request was made to a non-existing endpoint this will be returned

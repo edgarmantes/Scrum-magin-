@@ -1,6 +1,11 @@
 var React = require('react');
 var connect = require('react-redux').connect;
 
+var router = require('react-router');
+var Router = router.Router;
+var Route = router.Route;
+var hashHistory = router.hashHistory;
+
 var actions = require('../actions/index');
 
 var List = require('./list-item');
@@ -8,10 +13,24 @@ var List = require('./list-item');
 
 var BackLogs = React.createClass({
 
-	componentWillMount: function(){
-		var createProjectId = this.props.projects[this.props.params.Order]._id;
+	componentDidMount: function(){
+		// var createProjectId = this.props.projects[this.props.params.Order]._id;
+		var createProjectId = null;
+		localStorage.setItem('Order', this.props.params.Order)
+		if (this.props.entries !== null) {
+			createProjectId = this.props.projects[this.props.params.Order]._id;			
+			localStorage.setItem('createProjectId', createProjectId);
+
+		}  else {
+			alert('reloading causes you to go back to your list of projects!')
+			hashHistory.push('/home')
+		}
+
+		// localStorage.setItem('createProjectId', createProjectId)
 		console.log(12, createProjectId)
 		this.props.dispatch(actions.loadThisProject(createProjectId))
+		this.props.dispatch(actions.getNotes());
+		document.getElementById('hidenotes').style.display = 'block'
 	},
 
 	addEntry: function(event){
@@ -31,7 +50,6 @@ var BackLogs = React.createClass({
 
 	addToTaskList: function(entry){
 
-	
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -49,12 +67,18 @@ var BackLogs = React.createClass({
 	},
 
 	render: function(props){
-	
-		var entryArray = this.props.entries.map(function(entry, index){
 
-			return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} btnOne='&minus;' btnTwo='&oplus;' />
-			
-		}, this)
+		var entryArray = null;
+			if(!this.props.entries){
+				entryArray = "Restart from 'Projects' list"
+			} else {
+				var entryArray = this.props.entries.map(function(entry, index){
+					return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} btnOne='&minus;' btnTwo='&oplus;' />			
+				}, this)
+
+			}
+
+
 
 		return (
 

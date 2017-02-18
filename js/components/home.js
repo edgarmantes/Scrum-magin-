@@ -29,7 +29,7 @@ var Home = React.createClass({
 					<h4 className='menu-header'>Scrum-mage</h4>
 					<Link to="home"><button className="project-list btn-home" onClick={this.closeMenu}>Projects</button></Link>
 					<Link to="createproject"><button className="new-project btn-home" onClick={this.closeMenu}>Create Projects</button></Link>
-					<Link to="dailynotes"><button className="daily-notes btn-home" onClick={this.closeMenu}>Daily Notes</button></Link>
+					<Link id='hidenotes' to={"dailynotes/" + this.props.params.Order}><button className="daily-notes btn-home" onClick={this.closeMenu}>Daily Notes</button></Link>
 				</nav>
 				<div className='home-container'>
 					{this.props.children}

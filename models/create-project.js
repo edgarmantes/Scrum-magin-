@@ -16,6 +16,7 @@ var CreateProjectSchema = new mongoose.Schema({
 	releaseList: [{ type: String }],
 	doneList: [{ type: String }],
 	crew:[{ type: String }],
+    dailyNotes: { type: String }
 });
 
 var CreateProject = mongoose.model('CreateProject', CreateProjectSchema);
