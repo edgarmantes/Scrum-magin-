@@ -4,7 +4,7 @@
   "description": "A React template",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "dev": "run-p watch serve",
     "test": "mocha --recursive --compilers js:babel-core/register",
     "build": "run-s build:*",
