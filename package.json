@@ -2,7 +2,7 @@
   "name": "thinkful-react-starter",
   "version": "0.0.1",
   "description": "A React template",
-  "main": "js/index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "run-p watch serve",
@@ -22,7 +22,7 @@
     "mkdir:js": "mkdirp build/js",
     "build:js": "run-s clean:js mkdir:js _build:js",
     "_build:js": "webpack",
-    "watch:js": "run-s build:js _watch:js",
+    "watch:js": "ruan-s build:js _watch:js",
     "_watch:js": "webpack --watch",
     "clean:css": "rimraf build/css",
     "mkdir:css": "run-s mkdir",
