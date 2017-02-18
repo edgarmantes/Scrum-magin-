@@ -130,7 +130,7 @@ var getProjects = function(userid){
 
 	return function(dispatch){
 
-		return fetch('http://localhost:8080/projects', 
+		return fetch('/projects', 
 			{
 				method: 'POST',
 				headers: {
@@ -175,7 +175,7 @@ var fetchUser = function(objects){
 
 	return function(dispatch){
 
-		return fetch('http://localhost:8080/users', 
+		return fetch('/users', 
 			{
 				method: 'POST',
 				headers: {
@@ -263,7 +263,7 @@ var createProject = function(newProject){
 
 	return function(dispatch){
 
-		return fetch('http://localhost:8080/createproject', 
+		return fetch('/createproject', 
 			{
 				method: 'POST',
 				headers: {
