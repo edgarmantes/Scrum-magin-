@@ -75,8 +75,6 @@ var BackLogs = React.createClass({
 
 			}
 
-
-
 		return (
 
 			<div className="container row"> 

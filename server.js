@@ -16,7 +16,7 @@ var app = express();
 
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
 
-app.use(express.static('public'));
+app.use(express.static('build'));
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -83,10 +83,8 @@ app.get('/test', function(){
 })
 
 
-
+// End point for existing user to log in and authenticate
 app.post('/hidden', function(req, res){
-                    //  - when a call gets made to '/hidden' endpoint passport.authenticate('local'). The info in the req.body will be parsed by the LocalStrategy method
-                     //req.user is able to see req.user object
 
         User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
             
@@ -112,24 +110,15 @@ app.post('/hidden', function(req, res){
         });  
 });
 
+//  User ID is passed through the params from the '/hidden' endpoint
 app.get('/protected_page/:userId', function(req, res){
     res.status(200).json({userId:req.params.userId})
 });
 
-app.post('/projects', function(req, res){
-    console.log(120, req.sessions)
-    var userid = String(req.body.userid)
-    User.findOne({ _id: userid})
-        .populate('projects')
-        .exec(function(err, data){
 
-            res.status(200).json(data)
-        })
-});
 
 // Create new users
 app.post('/users', function(req, res) {
-    console.log('server received ' + req.body.username)
 
     if (!req.body) {
         return res.status(400).json({
@@ -216,7 +205,19 @@ app.post('/users', function(req, res) {
 });
 
 
+// Passes in userid to retrieve their list of current projects
+app.post('/projects', function(req, res){
+    var userid = String(req.body.userid)
+    User.findOne({ _id: userid})
+        .populate('projects')   // finds the projects object._id and references the createProject model
+        .exec(function(err, data){
 
+            res.status(200).json(data)
+        })
+});
+
+
+// create new project
 app.post('/createproject', function(req, res){
     var newProject = {
                 projectName: req.body.projectName,
@@ -239,14 +240,14 @@ app.post('/createproject', function(req, res){
 
             User.findOneAndUpdate(
                 {_id: object.userid},
-                {$push:{'projects': object._id}}, 
+                {$push:{'projects': object._id}}, // pushes newly created objects object._id into users project list
                 function(err, user){
                     if (err) {
                         return res.status(502).json({
                             message: 'Internal Server Error'
                         })
                     }
-                    console.log(342, user)
+
                 }
             )
             res.status(200).json(object)
@@ -255,8 +256,10 @@ app.post('/createproject', function(req, res){
 
 })
 
+
+// This function is called after a request to move an entry from one list to another on the database
 function CreateProjectUpdate(req, res, update){
-    console.log(259, update)
+
     CreateProject.findOneAndUpdate(
         {projectName: req.body.projectName}, update,
         function(err, object){
@@ -272,13 +275,13 @@ function CreateProjectUpdate(req, res, update){
 }
 
 
-// used to move/remove payload from one section of the scrum board to another
+// used to move/remove payload from one section of the scrum board to another updating the redux store
 app.post('/move', function(req, res){
-console.log(277, req.session)
+
     
     var updateTo = null;
     var updateFrom = null;
-    // When 'to' is passed in, this move function will push object into the 'to' location.
+    // When 'to' is passed in, this 'move' function will push object into the 'to' location.
     if (req.body.to === 'entries') {
 
        updateTo = {$push:{ 'entries' : req.body.object }}
@@ -336,13 +339,13 @@ console.log(277, req.session)
         CreateProjectUpdate(req, res, updateFrom)
 
     }
-    console.log(339, req.body.object)
+
     return res.status(200).json(req.body.object)
 })
 
 
+// After clicking on a specific project, this endpoint is called and retrieves the entries of each list in the scrum project and sends the informations back to the client
 app.post('/loading', function(req, res){
-    console.log(316, 'testing load')
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
         var entries = project.entries;
@@ -352,21 +355,23 @@ app.post('/loading', function(req, res){
 
 });
 
+
+//  sends the Done List
 app.post('/loadlist', function(req, res){
-    console.log(316, 'testing load')
+
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
-        console.log(359, 'server loadlist test', project)
+
         var doneList = project.doneList;
-        console.log(361, doneList)
+
         return res.status(200).json(doneList)
     })
 
 
 });
 
+//  Updates the DB with entries for each list
 app.post('/loadboard', function(req, res){
-    console.log(327, 'testing loadboard', req.body._id)
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
 
@@ -381,26 +386,26 @@ app.post('/loadboard', function(req, res){
 
 });
 
+
+// Updates the DB notes section
 app.post('/notes', function(req, res){
-    console.log(385, 'notes testing')
 
     CreateProject.findOneAndUpdate({_id: req.body._id}, {dailyNotes: req.body.dailyNotes}, {upsert:true}, function(err, project){
         if (err) {return res.send(500, { error: err })};
-        console.log(389, project.dailyNotes)
+
         return res.status(200).json({dailyNotes: req.body.dailyNotes});
     })  
 })
 
 
+// Finds the notes for the project and sends it back to the client
 app.post('/notes/daily', function(req, res){
-    console.log(385, 'notes loading testing')
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
         if (err) {
             return res.send(500, { error: err })
         };
 
-        console.log(389, project.dailyNotes)
         return res.status(200).json({dailyNotes: project.dailyNotes});
     })  
 })
