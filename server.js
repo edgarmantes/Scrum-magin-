@@ -85,7 +85,7 @@ app.get('/test', function(){
 
 // End point for existing user to log in and authenticate
 app.post('/hidden', function(req, res){
-
+    console.log(88, 'signin test', req.body)
         User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
             
             if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
@@ -314,7 +314,7 @@ app.post('/move', function(req, res){
 
     // When 'from' is assigned, the move function will remove the object 'from' the list of which it is currently moved out of.
     if (req.body.from === 'entries'){
-
+        console.log(317, req.body.from)
         updateFrom = {$pull:{ 'entries' : req.body.object }}
         CreateProjectUpdate(req, res, updateFrom)
 

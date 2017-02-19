@@ -30,7 +30,7 @@ var scrumReducer = function(state, action){
 
 	if (action.type === actions.ADD_ENTRY){ // Back Log reducer 
 
-		var newArray = state.entries.concat(action.entry)
+		var newArray = state.entries.concat(JSON.parse(action.entry))
 
 		return Object.assign({}, state, {entries: newArray})
 
@@ -162,11 +162,11 @@ var scrumReducer = function(state, action){
 
 	} 
 	else if (action.type === actions.FETCH_CARDS){
-		console.log('testing FETCH_CARDS')
+
 		return state
 		
 	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
-		console.log(169, action.project)
+
 
 		var newProjects = state.project.concat(action.project)
 
@@ -191,8 +191,6 @@ var scrumReducer = function(state, action){
     }
 
     else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
-		
-		console.log(173, 'reducer for FETCH_DESCRIPTION_ERROR')
 		
 		return state
 
@@ -227,16 +225,13 @@ var scrumReducer = function(state, action){
 
     } else if (action.type === actions.LOAD_DONE_LIST_SUCCESS) {
 
-    	// var doneList = JSON.parse(action.doneList)
-    	console.log(221, action.doneList)
-
     	var donelist = JSON.parse(action.doneList);
     	return Object.assign({}, state, {doneList: donelist})
     } 
     else if (action.type === actions.GET_NOTES_SUCCESS) {
 
     	var dailyNotes = JSON.parse(action.notes)
-    	console.log(238,dailyNotes)    	
+  	
     	return Object.assign({}, state, dailyNotes)
 
     } 	

@@ -60,7 +60,7 @@ var addToDev = function(entry){
 
 var BACK_TASK = 'BACK_TASK';
 var backTask = function(entry){
-	console.log('test back_task')
+
 	return {
 		type: BACK_TASK,
 		entry: entry
@@ -98,7 +98,7 @@ var addToRelease = function(entry){
 
 var BACK_TEST = 'BACK_TEST';
 var backTest = function(entry){
-	console.log('test action')
+
 	return {
 		type: BACK_TEST,
 		entry: entry
@@ -108,7 +108,7 @@ var backTest = function(entry){
 
 var ADD_TO_DONE = 'ADD_TO_DONE';
 var addToDone = function(entry){
-	console.log('test actions')
+
 	return {
 		type: ADD_TO_DONE,
 		entry: entry
@@ -117,7 +117,7 @@ var addToDone = function(entry){
 
 var ADD_MEMBER = 'ADD_MEMBER';
 var addMember = function(member){
-	console.log('testing member action')
+
 	return{
 		type: ADD_MEMBER,
 		member: member
@@ -264,7 +264,7 @@ var getUser = function(cred){
 };
 
 var createProject = function(newProject){
-	console.log(267, 'actions', newProject)
+
 	return function(dispatch){
 
 		return fetch('/createproject', 
@@ -287,7 +287,7 @@ var createProject = function(newProject){
 				return response.text();
 
 			}).then(function(project){
-				console.log(290, project)
+
 				hashHistory.push('home')
 				return dispatch(
 					createProjectSuccess(project)
@@ -329,7 +329,7 @@ var move = function(creds, callback){
 				}, 
 				body: JSON.stringify(sendInfo.payload)
 			}).then(function(response){
-				console.log(325, response)
+
 
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
@@ -340,18 +340,15 @@ var move = function(creds, callback){
 				return response.text();
 
 			}).then(function(object){
-				console.log(336, object, callback)
+
 
 				return dispatch(
 					callback(object)
 				);
 
 			}).catch(function(error){
-				console.log(342, error)
+
 				return error
-				// return dispatch(
-				// 	createProjectError(error)
-				// )
 
 			});
 
@@ -458,7 +455,7 @@ var loadThisDoneList = function(createProjectId){
 				return response.text();
 
 			}).then(function(project){
-				console.log(454, project)
+
 				return dispatch(
 					loadDoneListSuccess(project)
 				);
@@ -497,7 +494,6 @@ var addNotes = function(notes){
 				return response.text();
 
 			}).then(function(project){
-				console.log(454, project)
 
 				return project
 				// return dispatch(

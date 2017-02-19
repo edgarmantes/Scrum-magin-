@@ -24,7 +24,7 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.backLog))
-		// this.props.dispatch(actions.backLog(entry))
+
 	},
 
 	addToDev: function(entry){
