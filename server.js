@@ -231,7 +231,7 @@ app.post('/createproject', function(req, res){
 
     CreateProject.create(newProject, function(err, object){
 
-
+        console.log(234, err, object)
             if (err){
                 return res.status(500).json({
                     message: 'did not create the project. Internal Server Error'

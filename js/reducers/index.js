@@ -166,7 +166,7 @@ var scrumReducer = function(state, action){
 		return state
 		
 	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
-
+		console.log(169, action.project)
 
 		var newProjects = state.project.concat(action.project)
 

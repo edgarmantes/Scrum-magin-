@@ -264,7 +264,7 @@ var getUser = function(cred){
 };
 
 var createProject = function(newProject){
-
+	console.log(267, 'actions', newProject)
 	return function(dispatch){
 
 		return fetch('/createproject', 
@@ -287,6 +287,7 @@ var createProject = function(newProject){
 				return response.text();
 
 			}).then(function(project){
+				console.log(290, project)
 				hashHistory.push('home')
 				return dispatch(
 					createProjectSuccess(project)

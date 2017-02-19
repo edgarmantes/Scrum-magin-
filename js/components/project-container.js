@@ -17,6 +17,7 @@ var CreateProjectContainer = React.createClass({
 	},
 
 	createProject: function(e){
+		console.log(20, 'test createProject')
 		e.preventDefault();
 		var info = {
 			projectName: document.getElementsByClassName('project-name')[0].value,
@@ -25,7 +26,7 @@ var CreateProjectContainer = React.createClass({
 			projectLeader: document.getElementsByClassName('project-leader')[0].value,
 			scrumMaster: document.getElementsByClassName('scrum-master')[0].value,
 			crew: this.props.crew,
-			userid: this.props.userid
+			userid: localStorage.userId
 		};
 
 		this.props.dispatch(actions.createProject(info));
@@ -38,15 +39,15 @@ var CreateProjectContainer = React.createClass({
 					<form className="createProjectForm">
 						<fieldset>
 							<label>Project Name:</label><br/>
-							<input type="text" className="project-name create-input" placeholder='"best app ever!"' required /><br/>	
+							<input type="text" className="project-name create-input" placeholder='"best app ever!"' /><br/>	
 							<label>Start Date:</label><br/>
-							<input type="text" className="start-date create-input" placeholder='01/01/17' required /><br/>
+							<input type="text" className="start-date create-input" placeholder='01/01/17' /><br/>
 							<label>End Date:</label><br/>
-							<input type="text" className="end-date create-input" placeholder='01/01/17' required /><br/>
+							<input type="text" className="end-date create-input" placeholder='01/01/17' /><br/>
 							<label>Project Leader:</label><br/>
-							<input type="text" className="project-leader create-input" placeholder='"Big Boss"' required /><br/>
+							<input type="text" className="project-leader create-input" placeholder='"Big Boss"' /><br/>
 							<label>Scrum Master:</label><br/>
-							<input type="text" className="scrum-master create-input" placeholder='"me"'  required/><br/>
+							<input type="text" className="scrum-master create-input" placeholder='"me"' /><br/>
 							<label>Add Member:</label><br/>
 
 							<input type="text" className="add-members create-input" placeholder='Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
