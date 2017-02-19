@@ -14,6 +14,13 @@ var Call = function(props) {
             		<img className='icon-app' src='https://photos-6.dropbox.com/t/2/AABq-xRd0fxSXgOFG6lRGrv3UpnmO0S31WZpyl5SOk9bxA/12/645060565/png/32x32/1/_/1/2/icon-scrum1.png/EI3t2p4FGAkgAigC/UZZn0wtTfTZTexN81m_vTpNZeq8t5_Hwzk0tb0EUrY8?size=2048x1536&size_mode=3' />
             		<h1 className='app-name'>Scrum-mage</h1>
             	</div>
+
+            	<div id="arrows">
+				    <div className="arrow left"></div>
+				    <div className="arrow middle"></div>
+				    <div className="arrow right"></div>
+				</div>
+
             	<div className='box col-12'>
             		<div className='wrapper'>
 	            		<img className='image-intro col-6' src='https://photos-6.dropbox.com/t/2/AACpzUvkK6aBUyrl-wAvRR5Vp3AzQinmbWB9b2zKF8GY1A/12/645060565/jpeg/32x32/1/_/1/2/Scrumboard.jpg/EI3t2p4FGAQgAigC/1VVTDQwNDTteZDyhy1FMy5Y3Lr6Y4EyfqzabBnPs0Ws?size=2048x1536&size_mode=3' />

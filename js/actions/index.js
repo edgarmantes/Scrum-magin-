@@ -195,17 +195,21 @@ var fetchUser = function(objects){
 				return response.text();
 
 			}).then(function(data){
+
+				var userId = data._id;
+
+				localStorage.setItem('userId', userId)
 				setTimeout(function(){
 					hashHistory.push('home')
-				},2000)
+				},1500)
 				return dispatch(
-					fetchDescriptionSuccess(data)
+					getUserSuccess(userId)
 				);
 
 			}).catch(function(error){
 
 				return dispatch(
-					fetchDescriptionError(error)
+					getUserError(error)
 				)
 
 			});

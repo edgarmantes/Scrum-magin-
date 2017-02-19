@@ -38,18 +38,18 @@ var CreateProjectContainer = React.createClass({
 					<form className="createProjectForm">
 						<fieldset>
 							<label>Project Name:</label><br/>
-							<input type="text" className="project-name create-input" placeholder='"best app ever!"' /><br/>	
+							<input type="text" className="project-name create-input" placeholder='"best app ever!"' required /><br/>	
 							<label>Start Date:</label><br/>
-							<input type="text" className="start-date create-input" placeholder='01/01/17' /><br/>
+							<input type="text" className="start-date create-input" placeholder='01/01/17' required /><br/>
 							<label>End Date:</label><br/>
-							<input type="text" className="end-date create-input" placeholder='01/01/17' /><br/>
+							<input type="text" className="end-date create-input" placeholder='01/01/17' required /><br/>
 							<label>Project Leader:</label><br/>
-							<input type="text" className="project-leader create-input" placeholder='"Big Boss"' /><br/>
+							<input type="text" className="project-leader create-input" placeholder='"Big Boss"' required /><br/>
 							<label>Scrum Master:</label><br/>
-							<input type="text" className="scrum-master create-input" placeholder='"me"' /><br/>
+							<input type="text" className="scrum-master create-input" placeholder='"me"'  required/><br/>
 							<label>Add Member:</label><br/>
 
-								<input type="text" className="add-members create-input" placeholder='Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
+							<input type="text" className="add-members create-input" placeholder='Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
 
 							<label>Team Members:</label><br/>	
 							<div className='listedMembers'>

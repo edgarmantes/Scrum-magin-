@@ -49,6 +49,41 @@ Default Grid Settings
 
 /*Modile first styling*/
 
+/*bouncing arrows*/
+@-webkit-keyframes animate {
+ 0%{
+   opacity: 0;
+ }
+40%{
+   opacity: 0;
+}
+100%{
+   opacity: 1;
+ }
+}
+#arrows {
+    width:20%;
+    height:100px;
+    position:absolute;
+    top:220px;
+    left:300px
+}
+#arrows .arrow{
+    background:url(../images/down_48px.png) no-repeat;
+    height:49px;
+    width:40px;
+    float:left;
+    opacity: 0;
+}
+#arrows .arrow.show{
+    -webkit-animation-name: animate;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+}
+
+/*******/
+/*back/forward button*/
 
 
 #app {
@@ -85,7 +120,7 @@ input:focus {
 
 .entry-btn {
 	width: 37px;
-	margin: 0 5px;
+	margin: 0 1px;
 	height: 37px;
 	border-radius: 25px;
 	border: 2px solid gray;
@@ -112,7 +147,7 @@ input:focus {
 .entries {
 
 	width: 100%;
-	height: 55vh;
+	height: 50vh;
 }
 
 .home-container {
@@ -263,11 +298,20 @@ input:focus {
 
 .signup-container,
 .signin-container {
-	margin-top: 25vh;
+	margin-top: 15vh;
 
 }
 
 /*Home Screen*/
+
+/*projects page*/
+.start-a-project {
+	background-color: rgb(153, 255, 255);
+	text-align: center;
+	margin: 50px;
+}
+
+	
 .menu-icon {
     position: absolute;
     left: 15px;
@@ -334,6 +378,7 @@ header {
     border: none;
     border-bottom: 2px solid lightgray;
     height: 50px;
+    width: 100%;
 }
 
 .button-submit {
@@ -433,6 +478,14 @@ header {
     padding: 10px;
 }
 
+.notes {
+	text-align: center;
+}
+
+.notes-entry {
+	width: 100%;
+	height: 65vh;
+}
 
 /*****************
 640px screen or larger
@@ -598,12 +651,6 @@ header {
 		font-size: 30px;
 	}
 
-	/*projects page*/
-	.start-a-project {
-		background-color: rgb(153, 255, 255);
-		text-align: center;
-		margin: 50px;
-	}
 
 	/*done pile page*/
 	.done-pile-h1 {
@@ -618,9 +665,5 @@ header {
 		margin: 5px 0;
 	}
 
-	.notes-entry {
-		width: 80%;
-		height: 100vh;
-		margin: 0 10%;
-	}
+
 }

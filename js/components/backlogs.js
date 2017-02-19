@@ -56,7 +56,6 @@ var BackLogs = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.addToTaskList))		
-		// this.props.dispatch(actions.addToTaskList(entry));
 	},
 
 	deleteEntry: function(entry){
