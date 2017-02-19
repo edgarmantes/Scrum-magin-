@@ -16,7 +16,7 @@ var app = express();
 
 mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
 
-app.use(express.static('build'));
+app.use(express.static('public'));
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended: false}));
