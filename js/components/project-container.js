@@ -13,7 +13,6 @@ var CreateProjectContainer = React.createClass({
 		element.setAttribute('class', 'crewPerson')
 		element.textContent = member
 		document.getElementById('members').appendChild(element);
-		//document.getElementById('members').reset();
 	},
 
 	createProject: function(e){
