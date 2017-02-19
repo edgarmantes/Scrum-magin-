@@ -570,7 +570,7 @@ header {
 
 	/*call to action*/
 	.icon-app {
-		margin-top: 25%;
+		margin-top: 15%;
 		height: 350px;
 
 	}
@@ -578,7 +578,7 @@ header {
 	.app-name {
 		font-size: 125px;		
 	}
-
+heroku
 	.signin,
 	.signup {
 		margin: 0 25%;
