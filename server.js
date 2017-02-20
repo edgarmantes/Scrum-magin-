@@ -314,7 +314,7 @@ app.post('/move', function(req, res){
 
     // When 'from' is assigned, the move function will remove the object 'from' the list of which it is currently moved out of.
     if (req.body.from === 'entries'){
-        console.log(317, req.body.from)
+        console.log(317, req.body.object)
         updateFrom = {$pull:{ 'entries' : req.body.object }}
         CreateProjectUpdate(req, res, updateFrom)
 

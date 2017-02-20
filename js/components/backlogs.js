@@ -59,7 +59,15 @@ var BackLogs = React.createClass({
 	},
 
 	deleteEntry: function(entry){
-		this.props.dispatch(actions.deleteEntry(entry));
+
+		var creds = {
+			object : entry,
+			endpoint : '/move',
+			to : null,
+			from: 'entries',
+			projectName : this.props.projects[this.props.params.Order].projectName
+		};	
+		this.props.dispatch(actions.move(creds, actions.deleteEntry))
 
 	},
 

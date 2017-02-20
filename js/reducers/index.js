@@ -37,7 +37,7 @@ var scrumReducer = function(state, action){
 	} else if (action.type === actions.DELETE_ENTRY){
 
 		var filtered = state.entries.filter(function(entry){
-			return entry !== action.entry
+			return entry !== JSON.parse(action.entry);
 		});
 		return Object.assign({}, state, { entries: filtered});
 
