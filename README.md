@@ -1,8 +1,10 @@
 Scrum-maging
 ===========
+### Live Site:
+https://salty-reef-77673.herokuapp.com/#/
 ### Introduction
 
-Scrum-mage is a productivity app that uses the Agile framework of SCRUM to keep track of complicated projects work flow. Scrum-mage can be used by a team of developers in an office setting or remote work. Very clean and quick to get started, Scrum-mage can get you up and running with your project in no time. Scrum-mage is not only for computer programmers but for any team or person who falls under the umbrella of project based developement. It is a great way to ensure features of your project will get tracked from beginning to deployment. 
+Scrum-mage is a productivity app that uses the Agile framework of SCRUM to keep track of complicated projects work flow. It can be used by a team of developers in an office setting or remote work. Very clean and quick to get started, Scrum-mage can get you up and running with your project in no time. This app is not only for computer programmers but for any team or person who falls under the umbrella of project based developement. It is a great way to ensure features of your project will get tracked from beginning to deployment. 
 
 ### Use Case
 
@@ -18,8 +20,6 @@ Why would this be valuable to you? For anyone who has had the experience working
 From the main sign-in/sign-up page, the user will require a unique username and password. After successfully signing in the page will be directed to the home screen which lists out all current projects that has been made. The user will have the choice of clicking onto a current project or opening up the side bar menu, which will give the option to create a new project. When the user is on a mobile device and enters a project, they will be brought to the Back Log page of the project, a menu at the top will appear for the Scrum board and Done Pile. From the back log page the user can enter a new entry and push it forward onto the Task List. Entries can traverse backward and forward throughout the board until it is placed into the Done Pile. 
 
 
-### Live Site:
-https://salty-reef-77673.herokuapp.com/#/
 
 Page Layout
 --------
