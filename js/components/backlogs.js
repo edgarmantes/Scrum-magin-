@@ -78,7 +78,7 @@ var BackLogs = React.createClass({
 				entryArray = "Restart from 'Projects' list"
 			} else {
 				var entryArray = this.props.entries.map(function(entry, index){
-					return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} btnOne='&minus;' btnTwo='&oplus;' />			
+					return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} moveBack="remove" moveForward="AddTask" />			
 				}, this)
 
 			}
@@ -97,7 +97,7 @@ var BackLogs = React.createClass({
 		      <div className="submit col-12">
 		        <form className="js-submit col-12">
 		          <input className="backlog-entry entry col-12 input" placeholder="User stories" required />
-		          <button className="button-submit greenback" onClick={this.addEntry} type="submit">Create New Story</button>
+		          <button className="button-submit greenback" onClick={this.addEntry} type="submit"></button>
 		        </form>  
 		      </div>
 		    </div>

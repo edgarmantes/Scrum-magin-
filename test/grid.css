@@ -1,88 +1,89 @@
-
-body { font-family: sans-serif; }
-a { text-decoration: none; color: #00A5CC; }
-li { list-style-type: none; }
-
 /*********
 Universal Styles
 *********/
  
 * {
 	box-sizing: border-box;
-	padding: 0; margin: 0;
 }
 
 html {
-	background-color: rgb(230, 230, 230);
+	background-color: rgb(153, 255, 255);
 }
 
 
-header { 
-	width: 100%; 
-	height: 50px; 
-	margin: auto;
-    background-color: rgb(70,127,179);
-    box-shadow: 0px 2px 2px rgba(0,0,0,0.6);	
+/*****************
+Default Grid Settings
+*****************/
+
+/*Defaults for div row grid*/
+.row {
+	max-width: 1500px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin: 0 auto;
 }
-#brand {
+
+.row::before, 
+.row::after {
+	display: table;
+	content: '';
+}
+
+.row::after {
+	clear: both;
+}
+
+/*Defaults for columns*/
+
+.col-3, .col-4, .col-6, .col-12 {
 	float: left;
-	line-height: 50px;
-	color: #E5DAC0;
-	font-size: 25px;
-	font-weight: bolder;
-   margin: 0 0 0 6px;
-}
-nav { width: 100%; text-align: center; }
-nav a { 
-	display: block; 
-	padding: 15px 0;
-	border-bottom: 1px solid #C3AA6E;
-	color: #F0EADC;
-}
-nav a:hover { background: #E5DAC0; color: #FFF; }
-nav li:last-child a { border-bottom: none; }
-
-/*-----------------------------------------*/
-
-.menu {
-	width: 240px;
-	height: 100%;
-	position: absolute;
-	background-color: rgb(255,255,255);
-	left: -240px;
-	transition: all .3s ease-in-out;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-ms-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
-	
+	padding-right: 1.04166666%;
+	padding-left: 1.04166666%;
 }
 
-.menu-header {
-	padding: 10px;
-	color: white;
-	font-size: 32px;
-	font-family: 'Anton', sans-serif;
-    color: white;
-    text-shadow: -4px 2px #000;
-    background-color: rgba(30,55,77,0.8);
-}
+/*Mobile defaults*/
 
-.menu-icon {
-	padding: 10px 20px;
-    background-color: rgb(30,55,77);
-	color: #987D3E;
-	cursor: pointer;
-	float: left;
-	margin: 6px 6px 0 0;
-	border-radius: 5px;
+.col-3, .col-4, .col-6, .col-12 {
+	width: 100%;
 }
-#menuToggle { display: none; }
-
-#menuToggle:checked ~ .menu { position: absolute; left: 0; }
 
 /*Modile first styling*/
 
+/*bouncing arrows*/
+@-webkit-keyframes animate {
+ 0%{
+   opacity: 0;
+ }
+40%{
+   opacity: 0;
+}
+100%{
+   opacity: 1;
+ }
+}
+#arrows {
+    width:20%;
+    height:100px;
+    position:absolute;
+    top:220px;
+    left:300px
+}
+#arrows .arrow{
+    background:url(../images/down_48px.png) no-repeat;
+    height:49px;
+    width:40px;
+    float:left;
+    opacity: 0;
+}
+#arrows .arrow.show{
+    -webkit-animation-name: animate;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+}
+
+/*******/
+/*back/forward button*/
 
 
 #app {
@@ -111,43 +112,27 @@ input:hover {
 	cursor: pointer;
 }
 
+input:focus {
+	background-color: rgba(255,255,255,0.3);
+	box-shadow: 0px 0px 13px 10px rgba(255, 255, 255, 1);
+	outline-width: 0;
+}
+
 .entry-btn {
-    width: 37px;
-    margin: 2px 7px;
-    height: 34px;
-    border: 2px solid white;
-    background-color: rgb(30,50,77);
-}
-
-.backremove {
-	background-image: url(../images/delete.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.forwardAddTask {
-	background-image: url(../images/right.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.backmoveBack {
-	background-image: url(../images/up.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.forwardmoveForward {
-	background-image: url(../images/down.png);
-    background-repeat: no-repeat;
-    background-position: center;
+	width: 37px;
+	margin: 0 1px;
+	height: 37px;
+	border-radius: 25px;
+	border: 2px solid gray;
+	background-color: rgb(252, 217, 88);
 }
 
 .entry {
 	display: inline-block;
 	font-size: 24px;
 	padding: 3%;
-	font-family: 'Cabin', sans-serif;	
+	font-family: 'Cabin', sans-serif;
+	width: 70%;	
 }
 
 
@@ -155,14 +140,14 @@ input:hover {
 	background-color: white;
 	margin: 10px 0;
 	padding: 20px;
-	box-shadow: 0px 3px 4px -2px rgba(0,0,0,0.7);
+	box-shadow: 0px 35px 20px -20px rgba(0,0,0,0.7);
 	font-family: 'Cabin', sans-serif;
 }
 
 .entries {
 
 	width: 100%;
-	height: 55vh;
+	height: 50vh;
 }
 
 .home-container {
@@ -170,7 +155,7 @@ input:hover {
 }
 
 .boards {
-    background-color: rgb(255,255,255);
+    background-color: rgb(230, 230, 230);
     margin: 23px 0 0 0;
     min-height: 68vh;
     border-radius: 10px;
@@ -189,6 +174,10 @@ input:hover {
 	border: none;
 }
 
+#hidenotes {
+	display: none;
+}
+
 /*Call to action page*/
 
 .icon {
@@ -205,8 +194,8 @@ input:hover {
 	text-align: center;
 	font-size: 61px;
 	font-family: 'Anton', sans-serif;
-	color: rgb(30,55,77);
-	text-shadow: -4px 2px 2px rgba(0,0,0,1);
+	color: rgb(252, 217, 88);
+	text-shadow: -4px 2px #000;
 	margin-top: 40px;
 }
 
@@ -230,6 +219,7 @@ input:hover {
 
 .image-intro {
 	margin: 25px 0;
+    box-shadow: 10px 10px 5px #888;
 }
 
 .image-phone {
@@ -240,33 +230,34 @@ input:hover {
 }
 
 .call-board {
-    font-size: 36px;
-    font-family: 'Anton', sans-serif;
-    color: rgb(255,255,255);
-    text-align: center;
-    text-shadow: -1px 1px #000;
-    margin: 10px 5px;
+	font-size: 36px;
+	font-family: 'Anton', sans-serif;
+	color: rgb(252, 217, 88);
+	text-align: center;
+	text-shadow: -4px 5px #000;
+	margin: 10px 5px;
 }
 
 .container-text {
 	margin-top: 30px;
-	margin-bottom: 35px;
+	margin-bottom: 15px;
 }
 
 .box {
-	background-color: rgb(70,127,179);
-    box-shadow: -2px 2px 0px 0px rgba(0,0,0,1);
-    margin-top: 27px;
+	margin: 25px 0;
+	background-color: rgb(230, 230, 230);
+	border-radius: 5px;
+	border: 2px double white;
 }
 
-
 .wrapper {
-
+	padding: 10px;
 }
 
 .intro {
 	font-size: 22px;
 	text-align: center;
+	background-color: rgb(230, 230, 230);
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
@@ -285,25 +276,11 @@ input:hover {
 .input-signup,
 .input-signin {
 	border-radius: 20px;
-	border: none;
 	font-size: 30px;
-	color: rgb(255,255,255);
 	height: 80px;
-	background-color: rgb(30,55,77);;
+	background-color: rgb(252, 217, 88);
 	font-family: 'Cabin', sans-serif;
-	box-shadow: -3px 4px 5px -1px rgba(0,0,0,0.4);
-}
-
-.input-signup:hover,
-.input-signin:hover {
-
-}
-
-.demo-btn {
-	font-size: 15px;
-	text-align: center;
-    text-decoration: underline;
-    color: green;
+	box-shadow: 0px 35px 20px -20px rgba(0,0,0,0.4);
 }
 
 #username-signup, 
@@ -321,30 +298,30 @@ input:hover {
 
 .signup-container,
 .signin-container {
-	margin-top: 25vh;
+	margin-top: 15vh;
 
-}
-
-.signin {
-	margin-top: 5%;
 }
 
 /*Home Screen*/
+
+/*projects page*/
+.start-a-project {
+	background-color: rgb(153, 255, 255);
+	text-align: center;
+	margin: 50px;
+}
+
+	
 .menu-icon {
     position: absolute;
     left: 15px;
-    background-color: rgb(30,55,77);
-    background-image: url(../images/menu.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    border: 1px solid white;
+    background-color: rgb(252, 217, 88);
     top: 6px;
-    padding: 12px;
 }
 
 header {
 	height: 9vh;
-	background-color: rgb(70,127,179);
+	background-color: rgb(230, 230, 230);
 }
 
 .home-icon {
@@ -376,19 +353,17 @@ header {
 
 .listItem {
 	display: block;
-    height: 8vh;
-    border-bottom: 1px solid gray;
-    position: relative;
+
+	border-bottom: 1px solid gray;
+	margin: 11px;
 }
 
 .btn-container {
-    display: inline-block;
-    height: 100%;
-    float: right;
-    padding: 1%;
-    margin-top: 0px;
-    position: absolute;
-    right: 0;
+	display: inline-block;
+	float: right;
+	padding: 1%;
+	width: 30%;
+	text-align: center;
 }
 
 /*backlog page*/
@@ -399,24 +374,19 @@ header {
 }
 
 .backlog-entry {
-	background-color: rgba(255,255,255,0.5);
+	background-color: rgb(188, 255, 255);
     border: none;
     border-bottom: 2px solid lightgray;
-    height: 65px;
-    width: 85%;
+    height: 50px;
+    width: 100%;
 }
 
 .button-submit {
-    width: 14%;
-    height: 65px;
+	width: 100%;
+    height: 46px;
     font-size: 25px;
-    background-color: rgb(30,55,77);
-    background-image: url(../images/plus.png);
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: rgb(252, 217, 88);
     font-family: 'Cabin', sans-serif;
-    margin: 10px 0;
-    border: none;
 }
 
 /*scrum page*/
@@ -508,30 +478,47 @@ header {
     padding: 10px;
 }
 
+.notes {
+	text-align: center;
+}
+
+.notes-entry {
+	width: 100%;
+	height: 65vh;
+}
 
 /*****************
 640px screen or larger
 *****************/
 
 @media only screen and (min-width: 640px) {
+/*	.col-3 {
+		width: 25%;
+	}
+
+	.col-4 {
+		width: 33.33%;
+	}
+
+	.col-6 {
+		width: 50%;
+	}*/
 
 
 	/*call to action page*/
 	
 	.icon {
+		margin: 8px;
 		height: 100vh;
-		margin: 0;
 	}
 
 	.icon-app {
 		display: block;
 		margin: auto;
-		margin-top: 25%;
 	}
 
 	.app-name {
 		margin-top: 0;
-
 	}
 
 	.image-intro {
@@ -544,14 +531,10 @@ header {
 		margin: 12px 0;
 	}
 
-	.call-board {
-		line-height: 41px;
-	}
-
 	/*sign in page*/
 	.signin-container,
 	.signup-container {
-		margin-top: 10%;
+		margin-top: 10vh;
 	}
 
 	.signin-h1,
@@ -572,7 +555,7 @@ header {
 
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 1000px) {
 	.col-3 {
 		width: 25%;
 	}
@@ -586,37 +569,21 @@ header {
 	}
 
 	/*call to action*/
-	.container-text {
-		margin-top: 0;
-	}
-
-	.icon {
-		height: 88vh;
-	}
-
 	.icon-app {
-		margin-top: 25%;
-		height: 300px;
-		width: 300px;
+		margin-top: 15%;
+		height: 350px;
 
 	}
 
 	.app-name {
-		font-size: 80px;		
+		font-size: 125px;		
 	}
-
-	.box {
-		background-color: rgba(70,127,179,0.3);
-		box-shadow: none;
-    	margin-top: 27px;
-    	border: 2px solid white;
-    	border-radius: 15px;
-	}
-
+heroku
 	.signin,
 	.signup {
 		margin: 0 25%;
-		background-color: rgba(70,127,179,0.3);
+		margin-top: 15%;
+		background-color: rgb(230, 230, 230);
 		padding: 50px 20px;
     	border-radius: 15px;
     	font-size: 75px;
@@ -653,17 +620,24 @@ header {
 
 	/*scrum page*/
 
-	.entry-btn {
-		margin: 1vh 5px;
+	.btn-container {
+		height: 100%;
 	}
 
 	.entry {
 		padding: 2%;
-		font-size: 30px;
+		font-size: 100%;
+	}
+
+	.entry-btn {
+		margin: 0;
+		height:27px;
+		width: 27px;
 	}
 
 	.button-submit,
 	.backlog-entry {
+		height: 5vh;
 		font-size: 35px;
 	}
 
@@ -677,12 +651,19 @@ header {
 		font-size: 30px;
 	}
 
-	/*projects page*/
-
 
 	/*done pile page*/
 	.done-pile-h1 {
 		margin: 15px 25%;
     	font-size: 50px;
 	}
+
+	/*Daily Notes*/
+
+	.notes {
+		text-align: center;
+		margin: 5px 0;
+	}
+
+
 }

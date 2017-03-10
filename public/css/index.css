@@ -1,13 +1,28 @@
-* { padding: 0; margin: 0; }
+
 body { font-family: sans-serif; }
 a { text-decoration: none; color: #00A5CC; }
 li { list-style-type: none; }
+
+/*********
+Universal Styles
+*********/
+ 
+* {
+	box-sizing: border-box;
+	padding: 0; margin: 0;
+}
+
+html {
+	background-color: rgb(230, 230, 230);
+}
+
 
 header { 
 	width: 100%; 
 	height: 50px; 
 	margin: auto;
-	border-bottom: 1px solid #EEE;
+    background-color: rgb(70,127,179);
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.6);	
 }
 #brand {
 	float: left;
@@ -33,7 +48,7 @@ nav li:last-child a { border-bottom: none; }
 	width: 240px;
 	height: 100%;
 	position: absolute;
-	background-color: rgb(252, 217, 88);
+	background-color: rgb(255,255,255);
 	left: -240px;
 	transition: all .3s ease-in-out;
 	-webkit-transition: all .3s ease-in-out;
@@ -50,12 +65,12 @@ nav li:last-child a { border-bottom: none; }
 	font-family: 'Anton', sans-serif;
     color: white;
     text-shadow: -4px 2px #000;
-	background-color: rgb(0,162,232);
+    background-color: rgba(30,55,77,0.8);
 }
 
 .menu-icon {
 	padding: 10px 20px;
-	background-color: rgb(252, 217, 88);
+    background-color: rgb(30,55,77);
 	color: #987D3E;
 	cursor: pointer;
 	float: left;
@@ -65,3 +80,609 @@ nav li:last-child a { border-bottom: none; }
 #menuToggle { display: none; }
 
 #menuToggle:checked ~ .menu { position: absolute; left: 0; }
+
+/*Modile first styling*/
+
+
+
+#app {
+	height: 100%;
+}
+
+fieldset {
+	border: none;
+}
+
+label {
+	display: inline-block;
+	margin: 17px 0 0 0;
+	font-weight: bold;
+	font-family: 'Cabin', sans-serif;
+}
+
+input {
+	width: 100%;
+	height: 41px;
+	margin: 10px 0;
+}
+
+button:hover,
+input:hover {
+	cursor: pointer;
+}
+
+.entry-btn {
+    width: 37px;
+    margin: 2px 7px;
+    height: 34px;
+    border: 2px solid white;
+    background-color: rgb(30,50,77);
+}
+
+.backremove {
+	background-image: url(../images/delete.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.forwardAddTask {
+	background-image: url(../images/right.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.backmoveBack {
+	background-image: url(../images/up.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.forwardmoveForward {
+	background-image: url(../images/down.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.entry {
+	display: inline-block;
+	font-size: 24px;
+	padding: 3%;
+	font-family: 'Cabin', sans-serif;	
+}
+
+
+.projectCard {
+	background-color: white;
+	margin: 10px 0;
+	padding: 20px;
+	box-shadow: 0px 3px 4px -2px rgba(0,0,0,0.7);
+	font-family: 'Cabin', sans-serif;
+}
+
+.entries {
+
+	width: 100%;
+	height: 55vh;
+}
+
+.home-container {
+	height: 68vh;
+}
+
+.boards {
+    background-color: rgb(255,255,255);
+    margin: 23px 0 0 0;
+    min-height: 68vh;
+    border-radius: 10px;
+    box-shadow: 5px 9px 15px #999;
+}
+
+.scrumchart, .scrumboard{
+	height: 100%;
+}
+
+.btn-home {
+	width: 100%;
+	font-family: 'Cabin', sans-serif;	
+	font-size: 25px;
+	background-color: transparent;
+	border: none;
+}
+
+/*Call to action page*/
+
+.icon {
+	margin: 100px 0;
+	height: 60vh;
+}
+
+.icon-app {
+	display: block;
+	margin: auto;
+}
+
+.app-name {
+	text-align: center;
+	font-size: 61px;
+	font-family: 'Anton', sans-serif;
+	color: rgb(30,55,77);
+	text-shadow: -4px 2px 2px rgba(0,0,0,1);
+	margin-top: 40px;
+}
+
+.signIn,
+.signUp {
+	width: 50%;
+	height: 50px;
+	font-size: 30px;
+	font-family: 'Cabin', sans-serif;
+	border: none;
+	border-bottom: 2px solid lightgray;
+	border-right: 1px solid lightgray;
+	background-color: rgba(135, 135, 135, 0.5);
+	color: white;
+}
+
+.signIn:active,
+.signUp:active {
+	background-color: rgba(135, 135, 135, 0.9);
+}
+
+.image-intro {
+	margin: 25px 0;
+}
+
+.image-phone {
+	display: block;
+	width: 140px;
+	margin: 20px auto;
+
+}
+
+.call-board {
+    font-size: 36px;
+    font-family: 'Anton', sans-serif;
+    color: rgb(255,255,255);
+    text-align: center;
+    text-shadow: -1px 1px #000;
+    margin: 10px 5px;
+}
+
+.container-text {
+	margin-top: 30px;
+	margin-bottom: 35px;
+}
+
+.box {
+	background-color: rgb(70,127,179);
+    box-shadow: -2px 2px 0px 0px rgba(0,0,0,1);
+    margin-top: 27px;
+}
+
+
+.wrapper {
+
+}
+
+.intro {
+	font-size: 22px;
+	text-align: center;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+/*Sign Up/In Page*/
+.signup-h1,
+.signin-h1 {
+	text-align: center;
+	font-size: 60px;
+	margin-bottom: 60px;
+	font-family: 'Anton', sans-serif;
+	color: white;
+	text-shadow: -4px 5px #000;
+}
+
+.input-signup,
+.input-signin {
+	border-radius: 20px;
+	border: none;
+	font-size: 30px;
+	color: rgb(255,255,255);
+	height: 80px;
+	background-color: rgb(30,55,77);;
+	font-family: 'Cabin', sans-serif;
+	box-shadow: -3px 4px 5px -1px rgba(0,0,0,0.4);
+}
+
+.input-signup:hover,
+.input-signin:hover {
+
+}
+
+.demo-btn {
+	font-size: 15px;
+	text-align: center;
+    text-decoration: underline;
+    color: green;
+}
+
+#username-signup, 
+#password-signup,
+#username-signin,
+#password-signin {
+	height: 70px;
+	text-align: center;
+	font-size: 25px;
+	border: none;
+	border-bottom: 2px solid gray;
+	background-color: rgba(255, 255, 255, 0.5);
+
+}
+
+.signup-container,
+.signin-container {
+	margin-top: 25vh;
+
+}
+
+.signin {
+	margin-top: 5%;
+}
+
+/*Home Screen*/
+.menu-icon {
+    position: absolute;
+    left: 15px;
+    background-color: rgb(30,55,77);
+    background-image: url(../images/menu.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid white;
+    top: 6px;
+    padding: 12px;
+}
+
+header {
+	height: 9vh;
+	background-color: rgb(70,127,179);
+}
+
+.home-icon {
+	height: 9vh;
+    padding: 4px;
+    display: block;
+    margin: auto;
+}
+
+
+/*scrumboard page*/
+.btns-board {
+	width: 33.3%;
+	height: 60px;
+	font-size: 20px;
+	background-color: rgba(255,255,255,0.6);
+	border-bottom: 2px solid lightgray;
+	border-right: 1px solid lightgray;
+	color: gray;
+	font-family: 'Cabin', sans-serif;
+
+}
+
+.btns-board:active {
+	background-color: rgba(255,255,255,0.9);
+	color: black;
+	font-size: 25px;	
+}
+
+.listItem {
+	display: block;
+    height: 8vh;
+    border-bottom: 1px solid gray;
+    position: relative;
+}
+
+.btn-container {
+    display: inline-block;
+    height: 100%;
+    float: right;
+    padding: 1%;
+    margin-top: 0px;
+    position: absolute;
+    right: 0;
+}
+
+/*backlog page*/
+.backlog-h1 {
+	text-align: center;
+	margin: 15px 0;
+	font-family: 'Cabin', sans-serif;
+}
+
+.backlog-entry {
+	background-color: rgba(255,255,255,0.5);
+    border: none;
+    border-bottom: 2px solid lightgray;
+    height: 65px;
+    width: 85%;
+}
+
+.button-submit {
+    width: 14%;
+    height: 65px;
+    font-size: 25px;
+    background-color: rgb(30,55,77);
+    background-image: url(../images/plus.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Cabin', sans-serif;
+    margin: 10px 0;
+    border: none;
+}
+
+/*scrum page*/
+
+.column {
+	text-align: center;
+    padding: 10px;
+    font-family: 'Cabin', sans-serif;
+}
+
+
+/*Done Pile page*/
+
+.done-item {
+	font-size: 24px;
+    padding: 1%;
+    font-family: 'Cabin', sans-serif;
+    border-bottom: 1px solid lightgray;
+}
+
+.done-pile-h1 {
+	font-family: 'Cabin', sans-serif;
+    margin: 23px 0 0 0;
+    text-align: center;
+
+}
+
+/*Create Project form*/
+
+.createContainer {
+	background-color: rgb(230, 230, 230);
+	border-radius: 15px;
+	margin: 10px 0;
+	border: 2px double white;
+}
+
+.createProjectForm {
+	padding: 10px;
+}
+
+.create-input {
+	height: 60px;
+	border: none;
+	border-bottom: 2px solid gray;
+	background-color: rgba(255, 255, 255, 0.5);
+	font-size: 23px;
+	font-family: 'Cabin', sans-serif;
+	padding: 10px;
+}
+
+.create-input:focus {
+	background-color: rgba(255,255,255,0.3);
+	box-shadow: 0px 0px 13px 10px rgba(255, 255, 255, 1);
+	outline-width: 0;
+}
+
+.create-btn {
+    width: 100%;
+    height: 45px;
+    font-size: 25px;
+    background-color: rgb(252, 217, 88);
+    font-family: 'Cabin', sans-serif;
+    margin-bottom: 10px;
+}
+
+.add-members {
+	width: 75%;
+}
+
+.add {
+	width: 25%;
+	height: 60px;
+	background-color: rgb(252, 217, 88);
+    font-family: 'Cabin', sans-serif;
+    border: none;
+    border-bottom: 2px solid gray;
+    margin: 10px 0;
+    float:right;
+}
+
+.add:active {
+	background-color: rgb(233, 196, 73);
+	color: white;
+}
+
+.crewPerson {
+	font-size: 23px;
+    font-family: 'Cabin', sans-serif;
+    padding: 10px;
+}
+
+
+/*****************
+640px screen or larger
+*****************/
+
+@media only screen and (min-width: 640px) {
+
+
+	/*call to action page*/
+	
+	.icon {
+		height: 100vh;
+		margin: 0;
+	}
+
+	.icon-app {
+		display: block;
+		margin: auto;
+		margin-top: 25%;
+	}
+
+	.app-name {
+		margin-top: 0;
+
+	}
+
+	.image-intro {
+		box-shadow: none;
+		padding: 20px;
+	}
+
+	.intro {
+		font-size: 19px;
+		margin: 12px 0;
+	}
+
+	.call-board {
+		line-height: 41px;
+	}
+
+	/*sign in page*/
+	.signin-container,
+	.signup-container {
+		margin-top: 10%;
+	}
+
+	.signin-h1,
+	.signup-h1 {
+		margin-bottom: 0;
+	}
+
+
+	/*home page*/
+
+	header {
+		height: 70px;
+	}
+
+	.home-icon {
+		height: 100%;
+	}
+
+}
+
+@media only screen and (min-width: 800px) {
+	.col-3 {
+		width: 25%;
+	}
+
+	.col-4 {
+		width: 33.33%;
+	}
+
+	.col-6 {
+		width: 50%;
+	}
+
+	/*call to action*/
+	.container-text {
+		margin-top: 0;
+	}
+
+	.icon {
+		height: 88vh;
+	}
+
+	.icon-app {
+		margin-top: 25%;
+		height: 300px;
+		width: 300px;
+
+	}
+
+	.app-name {
+		font-size: 80px;		
+	}
+
+	.box {
+		background-color: rgba(70,127,179,0.3);
+		box-shadow: none;
+    	margin-top: 27px;
+    	border: 2px solid white;
+    	border-radius: 15px;
+	}
+
+	.signin,
+	.signup {
+		margin: 0 25%;
+		background-color: rgba(70,127,179,0.3);
+		padding: 50px 20px;
+    	border-radius: 15px;
+    	font-size: 75px;
+    	border: 2px double white;
+	}
+
+
+	/*home page*/
+	.projectCard {
+		height: 12vh;
+	}
+
+	.project-name, 
+	.progressBar {
+		font-size: 3vh;
+	}
+
+	.project-name {
+		text-align: center;
+	}
+
+	.menu {
+		width: 450px;
+		left: -450px;
+	}
+
+	.menu-header {
+		font-size: 50px;
+	}
+
+	.btn-home {
+		font-size: 40px;
+	}
+
+	/*scrum page*/
+
+	.entry-btn {
+		margin: 1vh 5px;
+	}
+
+	.entry {
+		padding: 2%;
+		font-size: 30px;
+	}
+
+	.button-submit,
+	.backlog-entry {
+		font-size: 35px;
+	}
+
+	.backlog-h1 {
+		margin: 15px 25%;
+		font-size: 50px;
+	}
+
+	.btns-board {
+		height: 75px;
+		font-size: 30px;
+	}
+
+	/*projects page*/
+
+
+	/*done pile page*/
+	.done-pile-h1 {
+		margin: 15px 25%;
+    	font-size: 50px;
+	}
+}

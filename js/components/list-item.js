@@ -16,8 +16,8 @@ var List = React.createClass({
 			<li className='listItem' >
 				<div className='entry'>{this.props.entry}</div>
 				<div className='btn-container'>
-					<input className="entry-btn back" onClick={this.props.onClick} type='submit' value={this.props.btnOne} />
-					<input className="entry-btn foward" onClick={this.props.onClickAdd} type='submit' value={this.props.btnTwo} />
+					<input className={"entry-btn back" + this.props.moveBack} onClick={this.props.onClick} />
+					<input className={"entry-btn forward" + this.props.moveForward} onClick={this.props.onClickAdd} />
 				</div>
 			</li>
 		)
