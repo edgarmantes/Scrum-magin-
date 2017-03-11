@@ -33,7 +33,7 @@ var DailyNotes = React.createClass({
 				<div className='notes-container'>
 			        
 			        <textarea id='notesEntered' className='notes-entry' defaultValue={this.props.dailyNotes}  placeholder='Add Notes - '/>
-			        <button id='submit-notes' className='button-submit col-12' onClick={this.submitNotes} >Save</button>
+			        <button id='submit-notes' className='button-submit col-12' onClick={this.submitNotes} ></button>
 			    </div>
 			</div>
 

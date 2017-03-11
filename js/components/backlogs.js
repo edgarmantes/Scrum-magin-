@@ -15,6 +15,11 @@ var BackLogs = React.createClass({
 
 	componentDidMount: function(){
 
+		var buttons = document.getElementsByClassName('btns-board');
+		buttons[0].className = "backlog btns-board tabbed";
+		buttons[1].className = "scrum btns-board";
+		buttons[2].className = "donepile btns-board";
+
 		var createProjectId = null;
 		localStorage.setItem('Order', this.props.params.Order)
 		if (this.props.entries !== null) {
@@ -34,16 +39,19 @@ var BackLogs = React.createClass({
 	addEntry: function(event){
 		event.preventDefault();
 		var entry = document.getElementsByClassName('backlog-entry')[0].value;	
-		var creds = {
-			object : entry,
-			endpoint : '/move',
-			to : 'entries',
-			from: null,
-			projectName : this.props.projects[this.props.params.Order].projectName
-		};
-		document.getElementsByClassName('backlog-entry')[0].value = '';	
-		this.props.dispatch(actions.move(creds, actions.addEntry))
-	
+		// if (entry) {
+			var creds = {
+				object : entry,
+				endpoint : '/move',
+				to : 'entries',
+				from: null,
+				projectName : this.props.projects[this.props.params.Order].projectName
+			};
+			document.getElementsByClassName('backlog-entry')[0].value = '';	
+			this.props.dispatch(actions.move(creds, actions.addEntry))
+		// } else {
+
+		// }
 	},
 
 	addToTaskList: function(entry){
@@ -95,9 +103,9 @@ var BackLogs = React.createClass({
 		        </ul>
 		      </div>
 		      <div className="submit col-12">
-		        <form className="js-submit col-12">
-		          <input className="backlog-entry entry col-12 input" placeholder="User stories" required />
-		          <button className="button-submit greenback" onClick={this.addEntry} type="submit"></button>
+		        <form className="js-submit submit-form col-12">
+					<input className="backlog-entry col-12 input" placeholder="User stories" required="required" />
+					<button className="button-submit greenback" onClick={this.addEntry} type="submit"></button>
 		        </form>  
 		      </div>
 		    </div>

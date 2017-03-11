@@ -1,7 +1,4 @@
 
-body { font-family: sans-serif; }
-a { text-decoration: none; color: #00A5CC; }
-li { list-style-type: none; }
 
 /*********
 Universal Styles
@@ -14,8 +11,43 @@ Universal Styles
 
 html {
 	background-color: rgb(230, 230, 230);
+	height: 100%;
 }
 
+button.tabbed {
+	background-color: rgb(230, 230, 230);
+	border-bottom: none;
+	color: rgb(0,0,0);
+}
+
+body { 
+	font-family: sans-serif;
+	height: 100%;
+}
+
+#app {
+	height: 100%;
+}
+
+a { 
+	text-decoration: none; color: #00A5CC; 
+}
+
+li { 
+	list-style-type: none; 
+}
+
+button,
+input {
+	outline: none;
+}
+
+.sign-control {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
 
 header { 
 	width: 100%; 
@@ -32,29 +64,46 @@ header {
 	font-weight: bolder;
    margin: 0 0 0 6px;
 }
-nav { width: 100%; text-align: center; }
+
+div.navigation {
+	height: 100%;
+}
+
+nav { 
+	width: 100%; text-align: center; 
+}
+
 nav a { 
 	display: block; 
 	padding: 15px 0;
 	border-bottom: 1px solid #C3AA6E;
 	color: #F0EADC;
 }
-nav a:hover { background: #E5DAC0; color: #FFF; }
-nav li:last-child a { border-bottom: none; }
+
+nav a:hover { 
+	background: rgba(30,55,77,0.8); 
+	color: rgb(0,0,0); 
+}
+
+nav li:last-child a { 
+	border-bottom: none; 
+}
 
 /*-----------------------------------------*/
 
 .menu {
 	width: 240px;
 	height: 100%;
+	z-index: 2;
 	position: absolute;
-	background-color: rgb(255,255,255);
+	background-color: rgb(230, 230, 230);
+	box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
 	left: -240px;
 	transition: all .3s ease-in-out;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-ms-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-ms-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
 	
 }
 
@@ -143,8 +192,16 @@ input:hover {
     background-position: center;
 }
 
+.entry-btn {
+	width: 4vh;
+    height: 4vh;
+    margin-top: 7px;
+}
+
 .entry {
 	display: inline-block;
+	position: absolute;
+    bottom: 0;
 	font-size: 24px;
 	padding: 3%;
 	font-family: 'Cabin', sans-serif;	
@@ -159,14 +216,18 @@ input:hover {
 	font-family: 'Cabin', sans-serif;
 }
 
-.entries {
+.projectCard > a > .container {
+	color: rgb(30,55,77);
+}
 
+.entries {
 	width: 100%;
-	height: 55vh;
+    max-height: 55vh;
+    overflow: auto;
 }
 
 .home-container {
-	height: 68vh;
+	height: 91%;
 }
 
 .boards {
@@ -174,11 +235,11 @@ input:hover {
     margin: 23px 0 0 0;
     min-height: 68vh;
     border-radius: 10px;
-    box-shadow: 5px 9px 15px #999;
+    box-shadow: -4px 4px 3px rgba(0,0,0,0.4);
 }
 
 .scrumchart, .scrumboard{
-	height: 100%;
+	height: 94%;
 }
 
 .btn-home {
@@ -193,7 +254,7 @@ input:hover {
 
 .icon {
 	margin: 100px 0;
-	height: 60vh;
+	height: 63vh;
 }
 
 .icon-app {
@@ -330,16 +391,27 @@ input:hover {
 }
 
 /*Home Screen*/
+
+.start-a-project {
+	text-align: center;
+    background-color: rgb(230, 230, 230);
+    width: 400px;
+    height: 400px;
+    margin: 5vh auto;
+    padding: 80px;
+}
 .menu-icon {
     position: absolute;
     left: 15px;
+    top: 7px;
     background-color: rgb(30,55,77);
     background-image: url(../images/menu.png);
     background-repeat: no-repeat;
     background-position: center;
     border: 1px solid white;
-    top: 6px;
     padding: 12px;
+    height: 45px;
+    width: 45px;
 }
 
 header {
@@ -356,6 +428,8 @@ header {
 
 
 /*scrumboard page*/
+
+
 .btns-board {
 	width: 33.3%;
 	height: 60px;
@@ -369,9 +443,9 @@ header {
 }
 
 .btns-board:active {
-	background-color: rgba(255,255,255,0.9);
-	color: black;
-	font-size: 25px;	
+	background-color: gray;
+	color: rgb(255,255,255);
+
 }
 
 .listItem {
@@ -403,7 +477,8 @@ header {
     border: none;
     border-bottom: 2px solid lightgray;
     height: 65px;
-    width: 85%;
+    width: 84%;
+    font-size: 24px;
 }
 
 .button-submit {
@@ -417,6 +492,13 @@ header {
     font-family: 'Cabin', sans-serif;
     margin: 10px 0;
     border: none;
+}
+
+.submit-form {
+	position: fixed;
+    bottom: 15px;
+    left: 10px;
+    width: 98%;
 }
 
 /*scrum page*/
@@ -444,6 +526,10 @@ header {
 
 }
 
+.done {
+	background-color: rgba(255,255,255,0.8);
+}
+
 /*Create Project form*/
 
 .createContainer {
@@ -468,8 +554,7 @@ header {
 }
 
 .create-input:focus {
-	background-color: rgba(255,255,255,0.3);
-	box-shadow: 0px 0px 13px 10px rgba(255, 255, 255, 1);
+	background-color: rgba(255,255,255,0.8);
 	outline-width: 0;
 }
 
@@ -477,7 +562,8 @@ header {
     width: 100%;
     height: 45px;
     font-size: 25px;
-    background-color: rgb(252, 217, 88);
+    color: white;
+    background-color: rgb(30,55,77);
     font-family: 'Cabin', sans-serif;
     margin-bottom: 10px;
 }
@@ -487,14 +573,15 @@ header {
 }
 
 .add {
-	width: 25%;
-	height: 60px;
-	background-color: rgb(252, 217, 88);
+    width: 25%;
+    height: 60px;
+    color: white;
+    background-color: rgb(30,55,77);
     font-family: 'Cabin', sans-serif;
     border: none;
     border-bottom: 2px solid gray;
     margin: 10px 0;
-    float:right;
+    float: right;
 }
 
 .add:active {
@@ -508,6 +595,39 @@ header {
     padding: 10px;
 }
 
+/*Daily Notes Page*/
+
+.dailynotes {
+	height: 100%;
+}
+
+.notesheader-container {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.notes-container {
+	position: relative;
+	height: 100%;
+}
+
+#submit-notes {
+    position: absolute;
+    right: 26px;
+    bottom: 26px;
+    background-color: rgba(30,55,77,0.5);
+}
+
+#submit-notes:hover {
+    background-color: rgba(30,55,77,1);
+}
+
+#notesEntered {
+	width: 100%;
+    height: 90%;
+    font-size: 20px;	
+}
 
 /*****************
 640px screen or larger
@@ -570,6 +690,23 @@ header {
 		height: 100%;
 	}
 
+	/*BackLog Page*/
+	.entry-btn {
+		margin: 1vh 5px;
+		width: 5vh;
+   	    height: 5vh;
+	}
+
+	.listItem {
+		height: 80px;
+		padding: 0 5px;
+	}
+
+	.entry {
+		padding: 4px;
+		font-size: 28px;
+	}
+
 }
 
 @media only screen and (min-width: 800px) {
@@ -587,7 +724,7 @@ header {
 
 	/*call to action*/
 	.container-text {
-		margin-top: 0;
+		margin-top: 65px;
 	}
 
 	.icon {
@@ -658,7 +795,7 @@ header {
 	}
 
 	.entry {
-		padding: 2%;
+		padding: 5px;
 		font-size: 30px;
 	}
 
@@ -677,12 +814,143 @@ header {
 		font-size: 30px;
 	}
 
-	/*projects page*/
+	.listItem {
+		height: 7vh;
+	}
 
+	.boards > ul > li > .entry {
+		font-size: 15px;
+	}
+
+	.entry-btn {
+		margin: 1vh 5px;
+		width: 3vh;
+    	height: 3vh;
+	}
+
+	.backmoveBack {
+		background-image: url(../images/left.png);
+	    background-repeat: no-repeat;
+	    background-position: center;
+	}
+
+	.forwardmoveForward {
+		background-image: url(../images/right.png);
+	    background-repeat: no-repeat;
+	    background-position: center;
+	}
+
+	.backremove {
+		margin: 1vh 9px;
+	    width: 5vh;
+	    height: 4vh;
+	}
+
+	.forwardAddTask {
+		margin: 1vh 9px;
+	    width: 5vh;
+	    height: 4vh;
+	}
+
+	/*projects page*/
 
 	/*done pile page*/
 	.done-pile-h1 {
 		margin: 15px 25%;
     	font-size: 50px;
+	}
+
+	/*Daily Notes Page*/
+	.notesheader-container {
+		margin: 10px 25%;
+	}
+
+}
+
+
+@media only screen and (min-width: 1100px) {
+
+/*	html {
+		background-color: rgba(30,55,77,0.9);
+
+	}*/
+
+	/*Call To Action Page*/
+	.sign-control {
+		position: static;
+	}
+
+	.signIn,
+	.signUp {
+		width: 40%;
+		margin: 0 5%;
+		border-radius: 5px;
+		border: none;
+		background-color: rgba(30,55,77,0.8);
+	}
+
+	.icon-app {
+		margin-top: 10%;
+	}
+
+	.app-name {
+		margin-bottom: 100px;
+		text-shadow: -4px 2px 2px rgba(0,0,0,0.4);
+	}
+	
+	.call-desc-container {
+		border-left: 2px solid rgba(255,255,255,1);
+	}
+
+	.icon {
+		height: unset;
+	}
+
+	.container-text {
+		margin-top: 20vh;
+		/*background-color: rgba(30,55,77,0.2);*/
+	}
+
+	.box {
+		background-color: transparent;
+		border: none;
+	}
+
+	.call-board {
+		margin: 4vh 0;
+	}
+
+	.intro {
+		line-height: 3vh;
+	}
+
+	.icon-cont {
+
+	}
+
+	.entries {
+		max-height: unset;
+		height: 100%;
+	}
+
+	.container {
+		height: 100%;
+	}
+
+	.log-container {
+		height: 63vh;
+	}
+
+	.submit-form {
+		position: static;
+		width: 100%;
+	}
+
+	.button-submit {
+		width: 16%;
+	}
+
+	.boards > ul > li > .entry {
+	    font-size: 25px;
 	}
 }

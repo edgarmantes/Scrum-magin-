@@ -7,16 +7,18 @@ var Link = router.Link;
 var Call = function(props) {
     return (
        <div>  
-	        <Link to="signin" ><button className="signIn">Sign In</button></Link>
-	        <Link to="signup" ><button className="signUp">Sign Up</button></Link>     
+    
             <div className='container-text row'>
-            	<div className='icon col-6'>
+            	<div className='icon col-6 icon-cont'>
             		<img className='icon-app' src='../images/icon-scrum.png' />
             		<h1 className='app-name'>Scrum-mage</h1>
-            		
+				    <div className="sign-control">
+				        <Link to="signin" ><button className="signIn">Sign In</button></Link>
+				        <Link to="signup" ><button className="signUp">Sign Up</button></Link>             		
+            		</div>
             	</div>
-            	<div className="call-desc-container">
-	            	<div className='box col-6'>
+            	<div className="call-desc-container col-6">
+	            	<div className='box col-12'>
 	            		<div className='wrapper'>
 		            		<img className='image-intro col-6' src='../images/board.png'/>
 			            	<div className='description col-6'>	
@@ -29,7 +31,7 @@ var Call = function(props) {
 		            		</div>
 		            	</div>
 	            	</div>
-	            	<div className='box col-6'>
+	            	<div className='box col-12'>
 	            		<div className='wrapper'>
 		            		<div className='img-container col-6'>
 		            			<img className='image-phone' src='../images/phone-ex.png' />

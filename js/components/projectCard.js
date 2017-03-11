@@ -8,8 +8,8 @@ var ProjectCard = function(props){
 	return (
 		<div className='projectCard col-12'>
 			<Link to={'scrumboard/' + props.Order}><div className='container' onClick={props.onclick} >
-				<div className='project-name'>Project Name: {props.projectName}</div>
-				<div className='progressBar'>Sprint: {props.sprint}</div>
+				<div className='project-name'>{props.projectName}</div>
+				<div className='progressBar'>End Date: {props.sprint}</div>
 			</div></Link>
 		</div>
 	)

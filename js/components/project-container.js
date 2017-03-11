@@ -54,7 +54,7 @@ var CreateProjectContainer = React.createClass({
 							<label>Team Members:</label><br/>	
 							<div className='listedMembers'>
 								<ul id='members'>
-									<li className='crewPerson'>Steve</li>
+									<li className='crewPerson'></li>
 								</ul>
 							</div>
 							<button className='create-btn' type="submit" onClick={this.createProject}>Create Project</button><br/>

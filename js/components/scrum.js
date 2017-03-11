@@ -9,6 +9,11 @@ var Scrum = React.createClass({
 
 	componentWillMount: function(){
 
+		var buttons = document.getElementsByClassName('btns-board');
+		buttons[0].className = "backlog btns-board";
+		buttons[1].className = "scrum btns-board tabbed";
+		buttons[2].className = "donepile btns-board";
+
 		var createProjectId = this.props.projects[this.props.params.Order]._id;
 
 		this.props.dispatch(actions.loadThisBoard(createProjectId))
