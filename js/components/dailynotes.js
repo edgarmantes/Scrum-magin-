@@ -6,7 +6,30 @@ var actions = require('../actions/index');
 var DailyNotes = React.createClass({
 
 	componentDidMount: function(){
+
+		var buttons = document.getElementsByClassName('btns-board');
+		buttons[0].className = "backlog btns-board";
+		buttons[1].className = "scrum btns-board";
+		buttons[2].className = "donepile btns-board";
+
+		var createProjectId = null;
+
+
+		// if (!this.props.dailyNotes) {
+		// 	console.log(17, this.props.dailyNotes)
+		// 	createProjectId = localStorage.getItem('createProjectId');			
+
+		// 	createProjectId = localStorage.getItem('createProjectId')
+		// 	this.props.dispatch(actions.loadThisProject(createProjectId))
+		// 	this.props.dispatch(actions.getProjects({userid: localStorage.userId}))		
+		// }  
+
 		this.props.dispatch(actions.getNotes());
+
+		
+
+
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';
 
 	},
 
@@ -21,10 +44,10 @@ var DailyNotes = React.createClass({
 	render: function(props){
 
 		if (document.getElementById('notesEntered') !== null){
-			console.log(24, 'testing innerHTML')
+
 			document.getElementById('notesEntered').innerHTML = this.props.dailyNotes;
 		}
-		console.log(23, document.getElementById('notesEntered'))
+
 		return (
 			<div className='dailynotes row'>
 				<div className='notesheader-container col-6'>
@@ -44,7 +67,7 @@ var DailyNotes = React.createClass({
 var mapStateToProps = function(state, props){	
 
 	return {
-		dailyNotes: state.dailyNotes
+		dailyNotes: state.dailyNotes || []
 
 	}
 };

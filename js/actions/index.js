@@ -513,7 +513,7 @@ var getNotes = function(){
 		var sendProject = { 
 			_id: localStorage.createProjectId
 		}
-
+		console.log(516, sendProject)
 		return fetch('/notes/daily', 
 				{
 					method: 'POST',
@@ -523,7 +523,7 @@ var getNotes = function(){
 					}, 
 					body: JSON.stringify(sendProject)
 				}).then(function(response){
-
+					console.log(526, response.status)
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
@@ -533,7 +533,7 @@ var getNotes = function(){
 				return response.text();
 
 			}).then(function(notes){
-
+				console.log(536, notes)
 
 				return dispatch(
 					getNotesSuccess(notes)
