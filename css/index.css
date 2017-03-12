@@ -76,7 +76,7 @@ nav {
 nav a { 
 	display: block; 
 	padding: 15px 0;
-	border-bottom: 1px solid #C3AA6E;
+	border-bottom: 1px solid rgba(0,0,0,0.4);
 	color: #F0EADC;
 }
 
@@ -97,7 +97,6 @@ nav li:last-child a {
 	z-index: 2;
 	position: absolute;
 	background-color: rgb(230, 230, 230);
-	box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
 	left: -240px;
 	transition: all .3s ease-in-out;
 	-webkit-transition: all 1s ease-in-out;
@@ -126,13 +125,18 @@ nav li:last-child a {
 	margin: 6px 6px 0 0;
 	border-radius: 5px;
 }
-#menuToggle { display: none; }
+#menuToggle { 
+	display: none; 
+}
 
-#menuToggle:checked ~ .menu { position: absolute; left: 0; }
+#menuToggle:checked ~ .menu { 
+	position: absolute; 
+	left: 0; 
+	box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+	z-index: 1;
+}
 
 /*Modile first styling*/
-
-
 
 #app {
 	height: 100%;
@@ -248,6 +252,27 @@ input:hover {
 	font-size: 25px;
 	background-color: transparent;
 	border: none;
+
+}
+
+nav > a:nth-child(3) {
+	animation-name: flash;
+	animation-duration: 4s;
+}
+
+@keyframes flash {
+	0% { background-color: rgba(30,55,77,1.0); }
+	20% { background-color: transparent; }
+	40% { background-color: rgba(30,55,77,1.0); }
+	60% { background-color: transparent; }
+	80% { background-color: rgba(30,55,77,0.6); }
+	100% { background-color: transparent; }
+/*	60% { background-color: rgba(30,55,77,0.4); }
+	70% { background-color: rgba(30,55,77,0.3); }
+	80% { background-color: rgba(30,55,77,0.2); }
+	90% { background-color: rgba(30,55,77,0.1); }
+	100% { background-color: rgba(30,55,77,0.0); }*/
+
 }
 
 /*Call to action page*/
@@ -395,11 +420,14 @@ input:hover {
 .start-a-project {
 	text-align: center;
     background-color: rgb(230, 230, 230);
-    width: 400px;
-    height: 400px;
     margin: 5vh auto;
     padding: 80px;
+    color: rgba(30,55,77,0.8);
+    font-family: 'Anton', sans-serif;
+    font-size: 37px;
 }
+
+
 .menu-icon {
     position: absolute;
     left: 15px;
@@ -410,8 +438,8 @@ input:hover {
     background-position: center;
     border: 1px solid white;
     padding: 12px;
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
 }
 
 header {
@@ -424,6 +452,10 @@ header {
     padding: 4px;
     display: block;
     margin: auto;
+}
+
+.project-name {
+	text-align: center;
 }
 
 
@@ -568,6 +600,11 @@ header {
     margin-bottom: 10px;
 }
 
+.create-btn:active {
+	background-color: rgba(30,55,77,0.3);
+	color: rgb(30,55,77);	
+}
+
 .add-members {
 	width: 75%;
 }
@@ -585,8 +622,8 @@ header {
 }
 
 .add:active {
-	background-color: rgb(233, 196, 73);
-	color: white;
+	background-color: rgba(30,55,77,0.3);
+	color: rgb(30,55,77);
 }
 
 .crewPerson {
@@ -617,9 +654,12 @@ header {
     right: 26px;
     bottom: 26px;
     background-color: rgba(30,55,77,0.5);
+    background-image: url(../images/save.png);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-#submit-notes:hover {
+#submit-notes:active {
     background-color: rgba(30,55,77,1);
 }
 
@@ -690,6 +730,11 @@ header {
 		height: 100%;
 	}
 
+	.start-a-project {
+	    width: 400px;
+	    height: 400px;
+	}
+
 	/*BackLog Page*/
 	.entry-btn {
 		margin: 1vh 5px;
@@ -705,6 +750,11 @@ header {
 	.entry {
 		padding: 4px;
 		font-size: 28px;
+	}
+
+	.menu-icon {
+	    height: 45px;
+	    width: 45px;
 	}
 
 }
@@ -769,10 +819,6 @@ header {
 	.project-name, 
 	.progressBar {
 		font-size: 3vh;
-	}
-
-	.project-name {
-		text-align: center;
 	}
 
 	.menu {
@@ -952,5 +998,10 @@ header {
 
 	.boards > ul > li > .entry {
 	    font-size: 25px;
+	}
+
+	/*Daily Notes Page*/
+	#submit-notes:hover {
+	    background-color: rgba(30,55,77,1);
 	}
 }
