@@ -5,6 +5,12 @@ var actions = require('../actions/index');
 
 var DonePile = React.createClass({
 	componentWillMount: function(){
+
+		var buttons = document.getElementsByClassName('btns-board');
+		buttons[0].className = "backlog btns-board";
+		buttons[1].className = "scrum btns-board";
+		buttons[2].className = "donepile btns-board tabbed";
+
 		var createProjectId = this.props.projects[this.props.params.Order]._id;
 		console.log(12, createProjectId)
 		this.props.dispatch(actions.loadThisDoneList(createProjectId))
@@ -25,7 +31,7 @@ var DonePile = React.createClass({
 				<div className="row border">
 					<h1 className="done-pile-h1 col-6">Done Pile</h1>
 				</div>
-				<div className="log-container col-12 border">
+				<div className="log-container done col-12 border">
 					<ul className="done-list">
 						{doneArray}
 					</ul>

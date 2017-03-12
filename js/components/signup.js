@@ -19,6 +19,17 @@ var SignUp = React.createClass({
 		this.props.dispatch(actions.fetchUser(user))
 	},
 
+	demo: function(e){
+		e.preventDefault();
+		console.log('submit test')
+		var user = {
+			username: 'demo',
+			password: '123'
+		}
+
+		this.props.dispatch(actions.getUser(user))		
+	},
+
 	render: function(props){
 
 		return (
@@ -30,6 +41,7 @@ var SignUp = React.createClass({
 							<input id='username-signup' type='text' placeholder='User Name' required/>
 							<input id='password-signup' type='password' placeholder='*********' required/>
 							<input className='input-signup' type='submit' value='Sign Up' onClick={this.createUser}  />
+							<a href="/Demo" onClick={this.demo}><p className="demo-btn">Demo</p></a>						
 						</fieldset>
 					</form>
 				</div>

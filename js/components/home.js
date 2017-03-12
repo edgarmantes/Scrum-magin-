@@ -21,9 +21,9 @@ var Home = React.createClass({
 		return (
 			<div className="navigation">
 				<input type="checkbox" id="menuToggle" />
-				<label htmlFor="menuToggle" className="menu-icon">&#9776;</label>
+				<label htmlFor="menuToggle" className="menu-icon"></label>
 				<header>
-					<img className='home-icon' src='https://photos-3.dropbox.com/t/2/AACVDNd-SWOFEUIrSk-wW9Ad_9Gs4T10Wwl9KWjTCv_ZgQ/12/645060565/png/32x32/1/_/1/2/icon-scrum2.png/EI3t2p4FGAogAigC/OG-jsGYdhtmNRjES9jh5BndaOUOF4_NeCbnc7aDRg5k?size=1024x768&size_mode=3' />
+					<img className='home-icon' src='../images/icon-scrum.png' />
 				</header>
 				<nav className="menu">
 					<h4 className='menu-header'>Scrum-mage</h4>

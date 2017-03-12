@@ -9,6 +9,11 @@ var Scrum = React.createClass({
 
 	componentWillMount: function(){
 
+		var buttons = document.getElementsByClassName('btns-board');
+		buttons[0].className = "backlog btns-board";
+		buttons[1].className = "scrum btns-board tabbed";
+		buttons[2].className = "donepile btns-board";
+
 		var createProjectId = this.props.projects[this.props.params.Order]._id;
 
 		this.props.dispatch(actions.loadThisBoard(createProjectId))
@@ -116,19 +121,19 @@ var Scrum = React.createClass({
 	render: function(props){
 
 		var tasks = this.props.taskList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backLog.bind(null, entry)} onClickAdd={this.addToDev.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />
+			return <List key={index} entry={entry} onClick={this.backLog.bind(null, entry)} onClickAdd={this.addToDev.bind(null, entry)} index={index} moveBack="moveBack" moveForward="moveForward" />
 		}, this)
 
 		var dev = this.props.devList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backTask.bind(null, entry)} onClickAdd={this.addToTest.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />		
+			return <List key={index} entry={entry} onClick={this.backTask.bind(null, entry)} onClickAdd={this.addToTest.bind(null, entry)} index={index} moveBack="moveBack" moveForward="moveForward" />		
 		}, this)
 
 		var test = this.props.testList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backDev.bind(null, entry)} onClickAdd={this.addToRelease.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />		
+			return <List key={index} entry={entry} onClick={this.backDev.bind(null, entry)} onClickAdd={this.addToRelease.bind(null, entry)} index={index} moveBack="moveBack" moveForward="moveForward" />		
 		}, this)
 
 		var release = this.props.releaseList.map(function(entry, index){
-			return <List key={index} entry={entry} onClick={this.backTest.bind(null, entry)} onClickAdd={this.addToDone.bind(null, entry)} index={index} btnOne='&larr;' btnTwo='&rarr;' />	
+			return <List key={index} entry={entry} onClick={this.backTest.bind(null, entry)} onClickAdd={this.addToDone.bind(null, entry)} index={index} moveBack="moveBack" moveForward="moveForward" />	
 		}, this)
 
 		return (

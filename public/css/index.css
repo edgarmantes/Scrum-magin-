@@ -1,13 +1,60 @@
-* { padding: 0; margin: 0; }
-body { font-family: sans-serif; }
-a { text-decoration: none; color: #00A5CC; }
-li { list-style-type: none; }
+
+
+/*********
+Universal Styles
+*********/
+ 
+* {
+	box-sizing: border-box;
+	padding: 0; margin: 0;
+}
+
+html {
+	background-color: rgb(230, 230, 230);
+	height: 100%;
+}
+
+button.tabbed {
+	background-color: rgb(230, 230, 230);
+	border-bottom: none;
+	color: rgb(0,0,0);
+}
+
+body { 
+	font-family: sans-serif;
+	height: 100%;
+}
+
+#app {
+	height: 100%;
+}
+
+a { 
+	text-decoration: none; color: #00A5CC; 
+}
+
+li { 
+	list-style-type: none; 
+}
+
+button,
+input {
+	outline: none;
+}
+
+.sign-control {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
 
 header { 
 	width: 100%; 
 	height: 50px; 
 	margin: auto;
-	border-bottom: 1px solid #EEE;
+    background-color: rgb(70,127,179);
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.6);	
 }
 #brand {
 	float: left;
@@ -17,29 +64,45 @@ header {
 	font-weight: bolder;
    margin: 0 0 0 6px;
 }
-nav { width: 100%; text-align: center; }
+
+div.navigation {
+	height: 100%;
+}
+
+nav { 
+	width: 100%; text-align: center; 
+}
+
 nav a { 
 	display: block; 
 	padding: 15px 0;
-	border-bottom: 1px solid #C3AA6E;
+	border-bottom: 1px solid rgba(0,0,0,0.4);
 	color: #F0EADC;
 }
-nav a:hover { background: #E5DAC0; color: #FFF; }
-nav li:last-child a { border-bottom: none; }
+
+nav a:hover { 
+	background: rgba(30,55,77,0.8); 
+	color: rgb(0,0,0); 
+}
+
+nav li:last-child a { 
+	border-bottom: none; 
+}
 
 /*-----------------------------------------*/
 
 .menu {
 	width: 240px;
 	height: 100%;
+	z-index: 2;
 	position: absolute;
-	background-color: rgb(252, 217, 88);
+	background-color: rgb(230, 230, 230);
 	left: -240px;
 	transition: all .3s ease-in-out;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-ms-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-ms-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
 	
 }
 
@@ -50,18 +113,895 @@ nav li:last-child a { border-bottom: none; }
 	font-family: 'Anton', sans-serif;
     color: white;
     text-shadow: -4px 2px #000;
-	background-color: rgb(0,162,232);
+    background-color: rgba(30,55,77,0.8);
 }
 
 .menu-icon {
 	padding: 10px 20px;
-	background-color: rgb(252, 217, 88);
+    background-color: rgb(30,55,77);
 	color: #987D3E;
 	cursor: pointer;
 	float: left;
 	margin: 6px 6px 0 0;
 	border-radius: 5px;
 }
-#menuToggle { display: none; }
+#menuToggle { 
+	display: none; 
+}
 
-#menuToggle:checked ~ .menu { position: absolute; left: 0; }
+#menuToggle:checked ~ .menu { 
+	position: absolute; 
+	left: 0; 
+	box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+	z-index: 1;
+}
+
+/*Modile first styling*/
+
+#app {
+	height: 100%;
+}
+
+fieldset {
+	border: none;
+}
+
+label {
+	display: inline-block;
+	margin: 17px 0 0 0;
+	font-weight: bold;
+	font-family: 'Cabin', sans-serif;
+}
+
+input {
+	width: 100%;
+	height: 41px;
+	margin: 10px 0;
+}
+
+button:hover,
+input:hover {
+	cursor: pointer;
+}
+
+.entry-btn {
+    width: 37px;
+    margin: 2px 7px;
+    height: 34px;
+    border: 2px solid white;
+    background-color: rgb(30,50,77);
+}
+
+.backremove {
+	background-image: url(../images/delete.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.forwardAddTask {
+	background-image: url(../images/right.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.backmoveBack {
+	background-image: url(../images/up.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.forwardmoveForward {
+	background-image: url(../images/down.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.entry-btn {
+	width: 4vh;
+    height: 4vh;
+    margin-top: 7px;
+}
+
+.entry {
+	display: inline-block;
+	position: absolute;
+    bottom: 0;
+	font-size: 24px;
+	padding: 3%;
+	font-family: 'Cabin', sans-serif;	
+}
+
+
+.projectCard {
+	background-color: white;
+	margin: 10px 0;
+	padding: 20px;
+	box-shadow: 0px 3px 4px -2px rgba(0,0,0,0.7);
+	font-family: 'Cabin', sans-serif;
+}
+
+.projectCard > a > .container {
+	color: rgb(30,55,77);
+}
+
+.entries {
+	width: 100%;
+    max-height: 55vh;
+    overflow: auto;
+}
+
+.home-container {
+	height: 91%;
+}
+
+.boards {
+    background-color: rgb(255,255,255);
+    margin: 23px 0 0 0;
+    min-height: 68vh;
+    border-radius: 10px;
+    box-shadow: -4px 4px 3px rgba(0,0,0,0.4);
+}
+
+.scrumchart, .scrumboard{
+	height: 94%;
+}
+
+.btn-home {
+	width: 100%;
+	font-family: 'Cabin', sans-serif;	
+	font-size: 25px;
+	background-color: transparent;
+	border: none;
+
+}
+
+nav > a:nth-child(3) {
+	animation-name: flash;
+	animation-duration: 4s;
+}
+
+@keyframes flash {
+	0% { background-color: rgba(30,55,77,1.0); }
+	20% { background-color: transparent; }
+	40% { background-color: rgba(30,55,77,1.0); }
+	60% { background-color: transparent; }
+	80% { background-color: rgba(30,55,77,0.6); }
+	100% { background-color: transparent; }
+/*	60% { background-color: rgba(30,55,77,0.4); }
+	70% { background-color: rgba(30,55,77,0.3); }
+	80% { background-color: rgba(30,55,77,0.2); }
+	90% { background-color: rgba(30,55,77,0.1); }
+	100% { background-color: rgba(30,55,77,0.0); }*/
+
+}
+
+/*Call to action page*/
+
+.icon {
+	margin: 100px 0;
+	height: 63vh;
+}
+
+.icon-app {
+	display: block;
+	margin: auto;
+}
+
+.app-name {
+	text-align: center;
+	font-size: 61px;
+	font-family: 'Anton', sans-serif;
+	color: rgb(30,55,77);
+	text-shadow: -4px 2px 2px rgba(0,0,0,1);
+	margin-top: 40px;
+}
+
+.signIn,
+.signUp {
+	width: 50%;
+	height: 50px;
+	font-size: 30px;
+	font-family: 'Cabin', sans-serif;
+	border: none;
+	border-bottom: 2px solid lightgray;
+	border-right: 1px solid lightgray;
+	background-color: rgba(135, 135, 135, 0.5);
+	color: white;
+}
+
+.signIn:active,
+.signUp:active {
+	background-color: rgba(135, 135, 135, 0.9);
+}
+
+.image-intro {
+	margin: 25px 0;
+}
+
+.image-phone {
+	display: block;
+	width: 140px;
+	margin: 20px auto;
+
+}
+
+.call-board {
+    font-size: 36px;
+    font-family: 'Anton', sans-serif;
+    color: rgb(255,255,255);
+    text-align: center;
+    text-shadow: -1px 1px #000;
+    margin: 10px 5px;
+}
+
+.container-text {
+	margin-top: 30px;
+	margin-bottom: 35px;
+}
+
+.box {
+	background-color: rgb(70,127,179);
+    box-shadow: -2px 2px 0px 0px rgba(0,0,0,1);
+    margin-top: 27px;
+}
+
+
+.wrapper {
+
+}
+
+.intro {
+	font-size: 22px;
+	text-align: center;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+/*Sign Up/In Page*/
+.signup-h1,
+.signin-h1 {
+	text-align: center;
+	font-size: 60px;
+	margin-bottom: 60px;
+	font-family: 'Anton', sans-serif;
+	color: white;
+	text-shadow: -4px 5px #000;
+}
+
+.input-signup,
+.input-signin {
+	border-radius: 20px;
+	border: none;
+	font-size: 30px;
+	color: rgb(255,255,255);
+	height: 80px;
+	background-color: rgb(30,55,77);;
+	font-family: 'Cabin', sans-serif;
+	box-shadow: -3px 4px 5px -1px rgba(0,0,0,0.4);
+}
+
+.input-signup:hover,
+.input-signin:hover {
+
+}
+
+.demo-btn {
+	font-size: 15px;
+	text-align: center;
+    text-decoration: underline;
+    color: green;
+}
+
+#username-signup, 
+#password-signup,
+#username-signin,
+#password-signin {
+	height: 70px;
+	text-align: center;
+	font-size: 25px;
+	border: none;
+	border-bottom: 2px solid gray;
+	background-color: rgba(255, 255, 255, 0.5);
+
+}
+
+.signup-container,
+.signin-container {
+	margin-top: 25vh;
+
+}
+
+.signin {
+	margin-top: 5%;
+}
+
+/*Home Screen*/
+
+.start-a-project {
+	text-align: center;
+    background-color: rgb(230, 230, 230);
+    margin: 5vh auto;
+    padding: 80px;
+    color: rgba(30,55,77,0.8);
+    font-family: 'Anton', sans-serif;
+    font-size: 37px;
+}
+
+
+.menu-icon {
+    position: absolute;
+    left: 15px;
+    top: 7px;
+    background-color: rgb(30,55,77);
+    background-image: url(../images/menu.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid white;
+    padding: 12px;
+    height: 35px;
+    width: 35px;
+}
+
+header {
+	height: 9vh;
+	background-color: rgb(70,127,179);
+}
+
+.home-icon {
+	height: 9vh;
+    padding: 4px;
+    display: block;
+    margin: auto;
+}
+
+.project-name {
+	text-align: center;
+}
+
+
+/*scrumboard page*/
+
+
+.btns-board {
+	width: 33.3%;
+	height: 60px;
+	font-size: 20px;
+	background-color: rgba(255,255,255,0.6);
+	border-bottom: 2px solid lightgray;
+	border-right: 1px solid lightgray;
+	color: gray;
+	font-family: 'Cabin', sans-serif;
+
+}
+
+.btns-board:active {
+	background-color: gray;
+	color: rgb(255,255,255);
+
+}
+
+.listItem {
+	display: block;
+    height: 8vh;
+    border-bottom: 1px solid gray;
+    position: relative;
+}
+
+.btn-container {
+    display: inline-block;
+    height: 100%;
+    float: right;
+    padding: 1%;
+    margin-top: 0px;
+    position: absolute;
+    right: 0;
+}
+
+/*backlog page*/
+.backlog-h1 {
+	text-align: center;
+	margin: 15px 0;
+	font-family: 'Cabin', sans-serif;
+}
+
+.backlog-entry {
+	background-color: rgba(255,255,255,0.5);
+    border: none;
+    border-bottom: 2px solid lightgray;
+    height: 65px;
+    width: 84%;
+    font-size: 24px;
+}
+
+.button-submit {
+    width: 14%;
+    height: 65px;
+    font-size: 25px;
+    background-color: rgb(30,55,77);
+    background-image: url(../images/plus.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Cabin', sans-serif;
+    margin: 10px 0;
+    border: none;
+}
+
+.submit-form {
+	position: fixed;
+    bottom: 15px;
+    left: 10px;
+    width: 98%;
+}
+
+/*scrum page*/
+
+.column {
+	text-align: center;
+    padding: 10px;
+    font-family: 'Cabin', sans-serif;
+}
+
+
+/*Done Pile page*/
+
+.done-item {
+	font-size: 24px;
+    padding: 1%;
+    font-family: 'Cabin', sans-serif;
+    border-bottom: 1px solid lightgray;
+}
+
+.done-pile-h1 {
+	font-family: 'Cabin', sans-serif;
+    margin: 23px 0 0 0;
+    text-align: center;
+
+}
+
+.done {
+	background-color: rgba(255,255,255,0.8);
+}
+
+/*Create Project form*/
+
+.createContainer {
+	background-color: rgb(230, 230, 230);
+	border-radius: 15px;
+	margin: 10px 0;
+	border: 2px double white;
+}
+
+.createProjectForm {
+	padding: 10px;
+}
+
+.create-input {
+	height: 60px;
+	border: none;
+	border-bottom: 2px solid gray;
+	background-color: rgba(255, 255, 255, 0.5);
+	font-size: 23px;
+	font-family: 'Cabin', sans-serif;
+	padding: 10px;
+}
+
+.create-input:focus {
+	background-color: rgba(255,255,255,0.8);
+	outline-width: 0;
+}
+
+.create-btn {
+    width: 100%;
+    height: 45px;
+    font-size: 25px;
+    color: white;
+    background-color: rgb(30,55,77);
+    font-family: 'Cabin', sans-serif;
+    margin-bottom: 10px;
+}
+
+.create-btn:active {
+	background-color: rgba(30,55,77,0.3);
+	color: rgb(30,55,77);	
+}
+
+.add-members {
+	width: 75%;
+}
+
+.add {
+    width: 25%;
+    height: 60px;
+    color: white;
+    background-color: rgb(30,55,77);
+    font-family: 'Cabin', sans-serif;
+    border: none;
+    border-bottom: 2px solid gray;
+    margin: 10px 0;
+    float: right;
+}
+
+.add:active {
+	background-color: rgba(30,55,77,0.3);
+	color: rgb(30,55,77);
+}
+
+.crewPerson {
+	font-size: 23px;
+    font-family: 'Cabin', sans-serif;
+    padding: 10px;
+}
+
+/*Daily Notes Page*/
+
+.dailynotes {
+	height: 100%;
+}
+
+.notesheader-container {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.notes-container {
+	position: relative;
+	height: 100%;
+}
+
+#submit-notes {
+    position: absolute;
+    right: 26px;
+    bottom: 26px;
+    background-color: rgba(30,55,77,0.5);
+    background-image: url(../images/save.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#submit-notes:active {
+    background-color: rgba(30,55,77,1);
+}
+
+#notesEntered {
+	width: 100%;
+    height: 90%;
+    font-size: 20px;	
+}
+
+/*****************
+640px screen or larger
+*****************/
+
+@media only screen and (min-width: 640px) {
+
+
+	/*call to action page*/
+	
+	.icon {
+		height: 100vh;
+		margin: 0;
+	}
+
+	.icon-app {
+		display: block;
+		margin: auto;
+		margin-top: 25%;
+	}
+
+	.app-name {
+		margin-top: 0;
+
+	}
+
+	.image-intro {
+		box-shadow: none;
+		padding: 20px;
+	}
+
+	.intro {
+		font-size: 19px;
+		margin: 12px 0;
+	}
+
+	.call-board {
+		line-height: 41px;
+	}
+
+	/*sign in page*/
+	.signin-container,
+	.signup-container {
+		margin-top: 10%;
+	}
+
+	.signin-h1,
+	.signup-h1 {
+		margin-bottom: 0;
+	}
+
+
+	/*home page*/
+
+	header {
+		height: 70px;
+	}
+
+	.home-icon {
+		height: 100%;
+	}
+
+	.start-a-project {
+	    width: 400px;
+	    height: 400px;
+	}
+
+	/*BackLog Page*/
+	.entry-btn {
+		margin: 1vh 5px;
+		width: 5vh;
+   	    height: 5vh;
+	}
+
+	.listItem {
+		height: 80px;
+		padding: 0 5px;
+	}
+
+	.entry {
+		padding: 4px;
+		font-size: 28px;
+	}
+
+	.menu-icon {
+	    height: 45px;
+	    width: 45px;
+	}
+
+}
+
+@media only screen and (min-width: 800px) {
+	.col-3 {
+		width: 25%;
+	}
+
+	.col-4 {
+		width: 33.33%;
+	}
+
+	.col-6 {
+		width: 50%;
+	}
+
+	/*call to action*/
+	.container-text {
+		margin-top: 65px;
+	}
+
+	.icon {
+		height: 88vh;
+	}
+
+	.icon-app {
+		margin-top: 25%;
+		height: 300px;
+		width: 300px;
+
+	}
+
+	.app-name {
+		font-size: 80px;		
+	}
+
+	.box {
+		background-color: rgba(70,127,179,0.3);
+		box-shadow: none;
+    	margin-top: 27px;
+    	border: 2px solid white;
+    	border-radius: 15px;
+	}
+
+	.signin,
+	.signup {
+		margin: 0 25%;
+		background-color: rgba(70,127,179,0.3);
+		padding: 50px 20px;
+    	border-radius: 15px;
+    	font-size: 75px;
+    	border: 2px double white;
+	}
+
+
+	/*home page*/
+	.projectCard {
+		height: 12vh;
+	}
+
+	.project-name, 
+	.progressBar {
+		font-size: 3vh;
+	}
+
+	.menu {
+		width: 450px;
+		left: -450px;
+	}
+
+	.menu-header {
+		font-size: 50px;
+	}
+
+	.btn-home {
+		font-size: 40px;
+	}
+
+	/*scrum page*/
+
+	.entry-btn {
+		margin: 1vh 5px;
+	}
+
+	.entry {
+		padding: 5px;
+		font-size: 30px;
+	}
+
+	.button-submit,
+	.backlog-entry {
+		font-size: 35px;
+	}
+
+	.backlog-h1 {
+		margin: 15px 25%;
+		font-size: 50px;
+	}
+
+	.btns-board {
+		height: 75px;
+		font-size: 30px;
+	}
+
+	.listItem {
+		height: 7vh;
+	}
+
+	.boards > ul > li > .entry {
+		font-size: 15px;
+	}
+
+	.entry-btn {
+		margin: 1vh 5px;
+		width: 3vh;
+    	height: 3vh;
+	}
+
+	.backmoveBack {
+		background-image: url(../images/left.png);
+	    background-repeat: no-repeat;
+	    background-position: center;
+	}
+
+	.forwardmoveForward {
+		background-image: url(../images/right.png);
+	    background-repeat: no-repeat;
+	    background-position: center;
+	}
+
+	.backremove {
+		margin: 1vh 9px;
+	    width: 5vh;
+	    height: 4vh;
+	}
+
+	.forwardAddTask {
+		margin: 1vh 9px;
+	    width: 5vh;
+	    height: 4vh;
+	}
+
+	/*projects page*/
+
+	/*done pile page*/
+	.done-pile-h1 {
+		margin: 15px 25%;
+    	font-size: 50px;
+	}
+
+	/*Daily Notes Page*/
+	.notesheader-container {
+		margin: 10px 25%;
+	}
+
+}
+
+
+@media only screen and (min-width: 1100px) {
+
+/*	html {
+		background-color: rgba(30,55,77,0.9);
+
+	}*/
+
+	/*Call To Action Page*/
+	.sign-control {
+		position: static;
+	}
+
+	.signIn,
+	.signUp {
+		width: 40%;
+		margin: 0 5%;
+		border-radius: 5px;
+		border: none;
+		background-color: rgba(30,55,77,0.8);
+	}
+
+	.icon-app {
+		margin-top: 10%;
+	}
+
+	.app-name {
+		margin-bottom: 100px;
+		text-shadow: -4px 2px 2px rgba(0,0,0,0.4);
+	}
+	
+	.call-desc-container {
+		border-left: 2px solid rgba(255,255,255,1);
+	}
+
+	.icon {
+		height: unset;
+	}
+
+	.container-text {
+		margin-top: 20vh;
+		/*background-color: rgba(30,55,77,0.2);*/
+	}
+
+	.box {
+		background-color: transparent;
+		border: none;
+	}
+
+	.call-board {
+		margin: 4vh 0;
+	}
+
+	.intro {
+		line-height: 3vh;
+	}
+
+	.icon-cont {
+
+	}
+
+	.entries {
+		max-height: unset;
+		height: 100%;
+	}
+
+	.container {
+		height: 100%;
+	}
+
+	.log-container {
+		height: 63vh;
+	}
+
+	.submit-form {
+		position: static;
+		width: 100%;
+	}
+
+	.button-submit {
+		width: 16%;
+	}
+
+	.boards > ul > li > .entry {
+	    font-size: 25px;
+	}
+
+	/*Daily Notes Page*/
+	#submit-notes:hover {
+	    background-color: rgba(30,55,77,1);
+	}
+}

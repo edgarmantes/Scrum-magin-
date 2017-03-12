@@ -11,31 +11,42 @@ var Projects = React.createClass({
 	componentDidMount: function(){
 
 		this.props.dispatch(actions.resetState())
-
+		var thiss = this;
 		var userid = null;
-		 if (localStorage.userId) {
+		if (localStorage.userId) {
 			var userid = {userid: localStorage.userId};
 		} else {
 			alert('you are not logged in')
 			hashHistory.push('/')
 		}
 
+		setTimeout(this.openEmpty.bind(null, thiss),500)  //After trying to retrieve projects, if this.props.projects === 0 the side menu will open, if not projects will show and side menu remain closed
+
 		this.props.dispatch(actions.getProjects(userid))
 		document.getElementById('hidenotes').style.display = 'none'
 	},
 
-	render: function(props){
-		
-		if (this.props.projects.length !== 0) {
-
-			var projectsList = this.props.projects.map(function(object, index){
-				return <ProjectCard Order={index} key={index} index={index} projectName={object.projectName} sprint={object.startDate} />
-			})
-
-		} else {	
-
-			var projectsList =  <h1 className='menu-header start-a-project'>Start A New Project</h1>;		
+	openEmpty: function(thiss){		// Used to open side menu if projects === 0
+		if (thiss.props.projects.length === 0){
+			setTimeout(function(){
+				document.getElementById('menuToggle').checked = true;
+			},500)
 		}
+	},
+
+	render: function(props){
+
+			if (this.props.projects.length !== 0) {
+
+				var projectsList = this.props.projects.map(function(object, index){
+					return <ProjectCard Order={index} key={index} index={index} projectName={object.projectName} sprint={object.startDate} />
+				})
+
+			} else {
+				
+				var projectsList =  <h1 className='start-a-project'>Start A New Project</h1>;		
+			
+			}
 
 		return (
 			<div className="project-list-container row">
