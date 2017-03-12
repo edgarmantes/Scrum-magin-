@@ -806,7 +806,7 @@ header {
 	.signin,
 	.signup {
 		margin: 0 25%;
-		background-color: rgba(70,127,179,0.8);
+		background-color: rgba(70,127,179,0.9);
 		padding: 50px 20px;
     	border-radius: 15px;
     	font-size: 75px;

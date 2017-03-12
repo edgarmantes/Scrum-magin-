@@ -10,6 +10,15 @@ var Home = React.createClass({
 
 	componentDidMount: function(){
 		this.props.dispatch(actions.resetState());
+
+				var userid = null;
+		if (localStorage.userId) {				// Checks to see if the user is logged in
+			var userid = {userid: localStorage.userId};
+		} else {
+			alert('you are not logged in')
+			hashHistory.push('/')
+		}
+
 	},
 
 	closeMenu: function(e){

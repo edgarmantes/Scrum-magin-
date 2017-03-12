@@ -7,17 +7,26 @@ var List = require('./list-item');
 
 var Scrum = React.createClass({
 
-	componentWillMount: function(){
+	componentDidMount: function(){
 
 		var buttons = document.getElementsByClassName('btns-board');
-		buttons[0].className = "backlog btns-board";
-		buttons[1].className = "scrum btns-board tabbed";
-		buttons[2].className = "donepile btns-board";
+		buttons[0].className = "backlog btns-board";		// Highlights the tabs
+		buttons[1].className = "scrum btns-board tabbed";	// Highlights the tabs
+		buttons[2].className = "donepile btns-board";		// Highlights the tabs
 
-		var createProjectId = this.props.projects[this.props.params.Order]._id;
+		var createProjectId = null;
+		if (this.props.entries !== null) {
+
+			createProjectId = localStorage.getItem('createProjectId');			
+
+			createProjectId = localStorage.getItem('createProjectId')
+			this.props.dispatch(actions.loadThisProject(createProjectId))
+			this.props.dispatch(actions.getProjects({userid: localStorage.userId}))
+
+		}  
 
 		this.props.dispatch(actions.loadThisBoard(createProjectId))
-
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';
 	},
 
 	backLog: function(entry){
@@ -179,12 +188,12 @@ var Scrum = React.createClass({
 var mapStateToProps = function(state, props){	
 
 	return {
-		entries: state.entries,
-		taskList: state.taskList,
-		devList:  state.devList,
-		testList: state.testList,
-		releaseList: state.releaseList,
-		projects: state.projects
+		entries: state.entries || [],
+		taskList: state.taskList || [],
+		devList:  state.devList || [],
+		testList: state.testList || [],
+		releaseList: state.releaseList || [],
+		projects: state.projects || []
 	}
 };
 

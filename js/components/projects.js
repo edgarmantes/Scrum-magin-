@@ -10,10 +10,11 @@ var Projects = React.createClass({
 
 	componentDidMount: function(){
 
-		this.props.dispatch(actions.resetState())
+		// this.props.dispatch(actions.resetState()) //Clears the state when moving out of project
 		var thiss = this;
 		var userid = null;
-		if (localStorage.userId) {
+
+		if (localStorage.userId) {				// Checks to see if the user is logged in
 			var userid = {userid: localStorage.userId};
 		} else {
 			alert('you are not logged in')
@@ -24,9 +25,7 @@ var Projects = React.createClass({
 
 		this.props.dispatch(actions.getProjects(userid))
 		document.getElementById('hidenotes').style.display = 'none';
-		var html = document.getElementsByTagName('html')[0]
-		console.log(html)
-		html.style.backgroundImage = 'none';		
+		var html = document.getElementsByTagName('html')[0].style.backgroundImage = 'none'; //Sets the background color to light grey	
 	},
 
 	openEmpty: function(thiss){		// Used to open side menu if projects === 0

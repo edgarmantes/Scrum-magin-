@@ -21,23 +21,28 @@ var BackLogs = React.createClass({
 		buttons[2].className = "donepile btns-board";
 
 		var createProjectId = null;
-		localStorage.setItem('Order', this.props.params.Order)
-		if (this.props.entries !== null) {
+
+		if (this.props.entries !== null && this.props.params.Order) {
+
 			createProjectId = this.props.projects[this.props.params.Order]._id;			
 			localStorage.setItem('createProjectId', createProjectId);
 
 		}  else {
-			alert('reloading causes you to go back to your list of projects!')
-			hashHistory.push('/home')
+			// this.props.dispatch(actions.getProjects(localStorage.getItem(userid)))
+			createProjectId = localStorage.getItem('createProjectId')
+
 		}
 
+		this.props.dispatch(actions.getProjects({userid: localStorage.userId}))
 		this.props.dispatch(actions.loadThisProject(createProjectId))
 		this.props.dispatch(actions.getNotes());
 		document.getElementById('hidenotes').style.display = 'block'
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';
 	},
 
 	addEntry: function(event){
 		event.preventDefault();
+		console.log(45, this.props.projects)
 		var entry = document.getElementsByClassName('backlog-entry')[0].value;	
 		// if (entry) {
 			var creds = {
@@ -83,7 +88,9 @@ var BackLogs = React.createClass({
 
 		var entryArray = null;
 			if(!this.props.entries){
+
 				entryArray = "Restart from 'Projects' list"
+
 			} else {
 				var entryArray = this.props.entries.map(function(entry, index){
 					return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} moveBack="remove" moveForward="AddTask" />			
