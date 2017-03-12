@@ -392,7 +392,7 @@ nav > a:nth-child(3) {
 	font-size: 15px;
 	text-align: center;
     text-decoration: underline;
-    color: green;
+    color: red;
 }
 
 #username-signup, 
@@ -806,7 +806,7 @@ header {
 	.signin,
 	.signup {
 		margin: 0 25%;
-		background-color: rgba(70,127,179,0.3);
+		background-color: rgba(70,127,179,0.8);
 		padding: 50px 20px;
     	border-radius: 15px;
     	font-size: 75px;
@@ -938,8 +938,12 @@ header {
 		width: 40%;
 		margin: 0 5%;
 		border-radius: 5px;
-		border: none;
+	    border: 1px solid white;
 		background-color: rgba(30,55,77,0.8);
+	}
+
+	.input-signup, .input-signin {
+		border: 1px solid white;
 	}
 
 	.icon-app {

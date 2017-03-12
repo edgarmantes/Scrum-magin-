@@ -8,6 +8,10 @@ var Form = require('./form');
 
 var SignIn = React.createClass({
 
+	componentDidMount: function(){
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'url(../images/desktop.png)';	
+	},
+
 	signIn: function(e){
 		e.preventDefault();
 		var user = {

@@ -8,6 +8,10 @@ var Form = require('./form');
 
 var SignUp = React.createClass({
 
+	componentDidMount: function(){
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'url(../images/desktop.png)';	
+	},
+
 	createUser: function(e){
 		e.preventDefault();
 		console.log('submit test')
