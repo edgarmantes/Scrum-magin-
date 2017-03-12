@@ -23,7 +23,10 @@ var Projects = React.createClass({
 		setTimeout(this.openEmpty.bind(null, thiss),500)  //After trying to retrieve projects, if this.props.projects === 0 the side menu will open, if not projects will show and side menu remain closed
 
 		this.props.dispatch(actions.getProjects(userid))
-		document.getElementById('hidenotes').style.display = 'none'
+		document.getElementById('hidenotes').style.display = 'none';
+		var html = document.getElementsByTagName('html')[0]
+		console.log(html)
+		html.style.backgroundImage = 'none';		
 	},
 
 	openEmpty: function(thiss){		// Used to open side menu if projects === 0
@@ -35,7 +38,7 @@ var Projects = React.createClass({
 	},
 
 	render: function(props){
-
+			
 			if (this.props.projects.length !== 0) {
 
 				var projectsList = this.props.projects.map(function(object, index){

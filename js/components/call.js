@@ -20,7 +20,7 @@ var Call = function(props) {
             	<div className="call-desc-container col-6">
 	            	<div className='box col-12'>
 	            		<div className='wrapper'>
-		            		<img className='image-intro col-6' src='../images/board.png'/>
+		            		<img className='image-intro col-6' src='../images/call-image.png'/>
 			            	<div className='description col-6'>	
 			            		<h3 className='call-board'>Organize your projects</h3>
 			            		<p className='intro'>Keep organized and stay on track 
