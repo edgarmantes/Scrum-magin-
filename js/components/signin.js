@@ -8,8 +8,17 @@ var Form = require('./form');
 
 var SignIn = React.createClass({
 
-	componentDidMount: function(){
-		document.getElementsByTagName('html')[0].style.backgroundImage = 'url(../images/desktop.png)';	
+	componentDidMount: function(){											// 'url(../images/desktop.png)'
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';	
+		var backCont = document.createElement('DIV');
+		backCont.setAttribute('id', 'background');
+		var backRoll = document.createElement('DIV');
+		backRoll.setAttribute('id', 'background_roll')
+
+		var wallpaper = backCont
+		console.log(19, backCont, backRoll)
+		document.getElementsByClassName('signin-container')[0].appendChild(wallpaper);
+		document.getElementById('background').appendChild(backRoll)
 	},
 
 	signIn: function(e){
