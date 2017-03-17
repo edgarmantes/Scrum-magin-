@@ -11,19 +11,19 @@ var Home = React.createClass({
 	componentDidMount: function(){
 		this.props.dispatch(actions.resetState());
 
-				var userid = null;
+		var userid = null;
 		if (localStorage.userId) {				// Checks to see if the user is logged in
 			var userid = {userid: localStorage.userId};
 		} else {
 			alert('you are not logged in')
-			hashHistory.push('/')
+			hashHistory.push('/')				// If not logged in redirects to call page
 		}
 
 	},
 
 	closeMenu: function(e){
 		e.stopPropagation();
-		document.getElementById('menuToggle').checked = false;		
+		document.getElementById('menuToggle').checked = false;		// On click on a project the menu will close
 	},
 
 	render: function(props){

@@ -1,15 +1,6 @@
 var React = require('react');
 
-
-
-
 var List = React.createClass({
-
-	deleteItem: function(index){
-		
-		console.log(index)
-	},
-
 
 	render: function(props){
 		return (

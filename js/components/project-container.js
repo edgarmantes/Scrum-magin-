@@ -5,7 +5,7 @@ var actions = require("../actions/index");
 
 var CreateProjectContainer = React.createClass({
 
-	addMember: function(e){
+	addMember: function(e){			// Adds new member to the team
 		e.preventDefault();
 		var member = document.getElementsByClassName('add-members')[0].value
 		this.props.dispatch(actions.addMember(member))
@@ -15,7 +15,7 @@ var CreateProjectContainer = React.createClass({
 		document.getElementById('members').appendChild(element);
 	},
 
-	createProject: function(e){
+	createProject: function(e){		// On click, will create a new project and redirect to the projects page
 		console.log(20, 'test createProject')
 		e.preventDefault();
 		var info = {
@@ -28,7 +28,7 @@ var CreateProjectContainer = React.createClass({
 			userid: localStorage.userId
 		};
 
-		this.props.dispatch(actions.createProject(info));
+		this.props.dispatch(actions.createProject(info)); //async call to db and redux
 	},
 
 	render: function(props){

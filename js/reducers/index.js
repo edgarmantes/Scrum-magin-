@@ -165,7 +165,7 @@ var scrumReducer = function(state, action){
 
 		return state
 		
-	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   // ***
+	} else if (action.type === actions.CREATE_PROJECT_SUCCESS) {   
 
 
 		var newProjects = state.project.concat(action.project)
@@ -190,11 +190,11 @@ var scrumReducer = function(state, action){
     
     }
 
-    else if (action.type === actions.FETCH_DESCRIPTION_ERROR) {   // ***
+    else if (action.type === actions.FETCH_DESCRIPTION_ERROR) { 
 		
 		return state
 
-    } else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {   // ***
+    } else if (action.type === actions.FETCH_DESCRIPTION_SUCCESS) {  
 		
     	var userInfo = {
     		userId: action.user._id,

@@ -8,7 +8,9 @@ var Form = require('./form');
 
 var SignIn = React.createClass({
 
-	componentDidMount: function(){											// 'url(../images/desktop.png)'
+	componentDidMount: function(){		
+
+		// Loads the background image
 		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';	
 		var backCont = document.createElement('DIV');
 		backCont.setAttribute('id', 'background');
@@ -16,12 +18,11 @@ var SignIn = React.createClass({
 		backRoll.setAttribute('id', 'background_roll')
 
 		var wallpaper = backCont
-		console.log(19, backCont, backRoll)
 		document.getElementsByClassName('signin-container')[0].appendChild(wallpaper);
 		document.getElementById('background').appendChild(backRoll)
 	},
 
-	signIn: function(e){
+	signIn: function(e){		// send out credentials for sign in
 		e.preventDefault();
 		var user = {
 			username: document.getElementById('username-signin').value,
@@ -31,7 +32,7 @@ var SignIn = React.createClass({
 		this.props.dispatch(actions.getUser(user))
 	},
 
-	demo: function(e){
+	demo: function(e){		// Demo link credentials
 		e.preventDefault();
 		console.log('submit test')
 		var user = {

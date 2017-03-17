@@ -10,12 +10,11 @@ var Projects = React.createClass({
 
 	componentDidMount: function(){
 
-		// this.props.dispatch(actions.resetState()) //Clears the state when moving out of project
 		var thiss = this;
 		var userid = null;
 
 		if (localStorage.userId) {				// Checks to see if the user is logged in
-			var userid = {userid: localStorage.userId};
+			var userid = {userid: localStorage.userId};	
 		} else {
 			alert('you are not logged in')
 			hashHistory.push('/')

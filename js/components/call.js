@@ -7,7 +7,7 @@ var Link = router.Link;
 var Call = React.createClass({
 
 	componentDidMount: function(){
-		document.getElementsByTagName('html')[0].style.backgroundImage = 'url(../images/backgroundfade1.png)';	
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'url(../images/backgroundfade1.png)';	//load background image
 	},
 
 	render: function(props) {

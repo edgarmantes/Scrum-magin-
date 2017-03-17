@@ -14,7 +14,7 @@ var Scrum = React.createClass({
 		buttons[1].className = "scrum btns-board tabbed";	// Highlights the tabs
 		buttons[2].className = "donepile btns-board";		// Highlights the tabs
 
-		var createProjectId = null;
+		var createProjectId = null;				//Load the current project to load on refresh
 		if (this.props.entries !== null) {
 
 			createProjectId = localStorage.getItem('createProjectId');			
@@ -29,7 +29,7 @@ var Scrum = React.createClass({
 		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';
 	},
 
-	backLog: function(entry){
+	backLog: function(entry){	// Moves entry back to Backlogs
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -41,7 +41,7 @@ var Scrum = React.createClass({
 
 	},
 
-	addToDev: function(entry){
+	addToDev: function(entry){	// Move entry forward to Dev List
 
 		var creds = {
 			object : entry,
@@ -51,10 +51,10 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.addToDev))	
-		// this.props.dispatch(actions.addToDev(entry))
+
 	},
 
-	backTask: function(entry){
+	backTask: function(entry){	// Moves entry back to Tasklist
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -63,10 +63,10 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.backTask))
-		// this.props.dispatch(actions.backTask(entry))
+
 	},
 
-	addToTest: function(entry){
+	addToTest: function(entry){		// Move entry forward to Test List
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -75,10 +75,10 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.addToTest))
-		// this.props.dispatch(actions.addToTest(entry))
+
 	},
 
-	backDev: function(entry){
+	backDev: function(entry){	// Moves entry back to Dev List
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -87,10 +87,10 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.backDev))
-		// this.props.dispatch(actions.backDev(entry))
+
 	},
 
-	addToRelease: function(entry){
+	addToRelease: function(entry){	// Move entry forward to Release List
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -99,11 +99,11 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.addToRelease))
-		// this.props.dispatch(actions.addToRelease(entry))
+
 	},
 
-	backTest: function(entry){
-		var creds = {
+	backTest: function(entry){	// Moves entry back to Test List
+		var creds = {		
 			object : entry,
 			endpoint : '/move',
 			to : 'testList',
@@ -111,10 +111,10 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.backTest))
-		// this. props.dispatch(actions.backTest(entry))
+
 	},
 
-	addToDone: function(entry){
+	addToDone: function(entry){		// Move entry forward to Done List
 		var creds = {
 			object : entry,
 			endpoint : '/move',
@@ -123,7 +123,7 @@ var Scrum = React.createClass({
 			projectName : this.props.projects[this.props.params.Order].projectName
 		};	
 		this.props.dispatch(actions.move(creds, actions.addToDone))
-		// this.props.dispatch(actions.addToDone(entry))
+
 	},
 
 

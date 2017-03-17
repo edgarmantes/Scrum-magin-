@@ -8,44 +8,31 @@ var DailyNotes = React.createClass({
 	componentDidMount: function(){
 
 		var buttons = document.getElementsByClassName('btns-board');
-		buttons[0].className = "backlog btns-board";
-		buttons[1].className = "scrum btns-board";
-		buttons[2].className = "donepile btns-board";
+		buttons[0].className = "backlog btns-board";					// Highlights the "backlog" tab
+		buttons[1].className = "scrum btns-board";						// clears tab highlight
+		buttons[2].className = "donepile btns-board";					// clears tab highlight
 
 		var createProjectId = null;
 
+		this.props.dispatch(actions.getNotes());	// Loads the notes to the page
 
-		// if (!this.props.dailyNotes) {
-		// 	console.log(17, this.props.dailyNotes)
-		// 	createProjectId = localStorage.getItem('createProjectId');			
-
-		// 	createProjectId = localStorage.getItem('createProjectId')
-		// 	this.props.dispatch(actions.loadThisProject(createProjectId))
-		// 	this.props.dispatch(actions.getProjects({userid: localStorage.userId}))		
-		// }  
-
-		this.props.dispatch(actions.getNotes());
-
-		
-
-
-		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';
+		document.getElementsByTagName('html')[0].style.backgroundImage = 'none';	// removes the image
 
 	},
 
 	submitNotes: function(e){
 		e.preventDefault();
 
-		var notes = document.getElementsByClassName('notes-entry')[0].value;
+		var notes = document.getElementsByClassName('notes-entry')[0].value;	
 
-		this.props.dispatch(actions.addNotes(notes))
+		this.props.dispatch(actions.addNotes(notes))		// Saves the notes on click
 	},
 
 	render: function(props){
 
 		if (document.getElementById('notesEntered') !== null){
 
-			document.getElementById('notesEntered').innerHTML = this.props.dailyNotes;
+			document.getElementById('notesEntered').innerHTML = this.props.dailyNotes; // Adds the text to the textarea
 		}
 
 		return (
