@@ -211,11 +211,11 @@ var scrumReducer = function(state, action){
 
     	return state
 
-    } else if (action.type === actions.LOAD_ENTRIES_SUCCESS) {
+    } else if (action.type === actions.LOAD_PROJECT_SUCCESS) {
 
-    	var entries = JSON.parse(action.entries);
+    	var project = JSON.parse(action.project);
 
-    	return Object.assign({}, state, {entries: entries})
+    	return Object.assign({}, state, project)
 
     } else if (action.type === actions.LOAD_BOARD_SUCCESS) {
     	

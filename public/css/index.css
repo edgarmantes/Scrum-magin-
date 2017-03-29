@@ -7,17 +7,36 @@ Universal Styles
 * {
 	box-sizing: border-box;
 	padding: 0; margin: 0;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 
 
 html {
-	background-image: url(../images/backgroundfade1.png);
 	background-repeat: none;
 	background-size: cover;
 	background-color: rgb(230, 230, 230);
+/*	animation: colorchange 50s;
+	-webkit-animation: colorchange 50s;*/
 	height: 100%;
 	max-width: 2500px;
+}
+
+
+@keyframes colorchange {
+	0%   {background: red;}
+	25%  {background: yellow;}
+	50%  {background: blue;}
+	75%  {background: green;}
+	100% {background: red;}
+}
+
+@-webkit-keyframes colorchange {
+	0%   {background: red;}
+	25%  {background: yellow;}
+	50%  {background: blue;}
+	75%  {background: green;}
+	100% {background: red;}
 }
 
 button.tabbed {
@@ -279,12 +298,13 @@ nav > a:nth-child(3) {
 
 .icon {
 	margin: 100px 0;
-	height: 63vh;
+	height: 15vh;
 }
 
 .icon-app {
 	display: block;
 	margin: auto;
+	width: 90%;
 }
 
 .app-name {
@@ -298,15 +318,13 @@ nav > a:nth-child(3) {
 
 .signIn,
 .signUp {
-	width: 50%;
-	height: 50px;
-	font-size: 30px;
-	font-family: 'Cabin', sans-serif;
-	border: none;
-	border-bottom: 2px solid lightgray;
-	border-right: 1px solid lightgray;
-	background-color: rgba(135, 135, 135, 0.5);
-	color: white;
+    width: 50%;
+    height: 50px;
+    font-size: 30px;
+    font-family: 'Cabin', sans-serif;
+    border: none;
+    border-right: 1px solid lightgray;
+    background-color: rgba(255,255,255,1.0);
 }
 
 .signIn:active,
@@ -314,9 +332,7 @@ nav > a:nth-child(3) {
 	background-color: rgba(135, 135, 135, 0.9);
 }
 
-/*.image-intro {
-	margin: 25px 0;
-}*/
+
 
 .image-phone {
 	display: block;
@@ -327,10 +343,8 @@ nav > a:nth-child(3) {
 
 .call-board {
     font-size: 36px;
-    font-family: 'Anton', sans-serif;
-    color: rgb(255,255,255);
+    color: rgb(0,0,0);
     text-align: center;
-    text-shadow: -1px 1px #000;
     margin: 10px 5px;
 }
 
@@ -340,21 +354,28 @@ nav > a:nth-child(3) {
 }
 
 .box {
-	background-color: rgb(200, 200, 200);
-    box-shadow: -2px 2px 0px 0px rgba(0,0,0,1);
-    margin-top: 27px;
+    margin-top: 35px;
 }
 
 
-.wrapper {
-
+.bottom-desc {
+	background-color: white;
 }
+
 
 .intro {
-	font-size: 22px;
+    font-size: 26px;
+    line-height: 1.4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: rgb(255,255,255);
+    padding: 25px;
+}
+
+.call-away-desc {
+	color: rgb(0,0,0);
 	text-align: center;
-	border-radius: 5px;
-	margin-bottom: 10px;
+    margin-bottom: 100px;
 }
 
 /*Sign Up/In Page*/
@@ -539,6 +560,11 @@ header {
 	text-align: center;
 }
 
+.projects-hdr {
+	text-align: center;
+    padding: 10px;
+}
+
 
 /*scrumboard page*/
 
@@ -576,6 +602,17 @@ header {
     margin-top: 0px;
     position: absolute;
     right: 0;
+}
+
+.ProjectName {
+	font-style: italic;
+	font-size: 20px;
+}
+
+.home-away-img {
+	width: 70%;
+    margin-top: 100px;
+    margin-left: 15%;
 }
 
 /*backlog page*/
@@ -750,6 +787,19 @@ header {
     font-size: 20px;	
 }
 
+
+
+@media only screen and (max-width: 640px) {
+	
+	.col-6, .col-12,
+	.row {
+		padding: 0;
+	}
+
+
+
+}
+
 /*****************
 640px screen or larger
 *****************/
@@ -757,362 +807,16 @@ header {
 @media only screen and (min-width: 640px) {
 
 
-	/*call to action page*/
-	
-	.icon {
-		height: 100vh;
-		margin: 0;
-	}
-
-	.icon-app {
-		display: block;
-		margin: auto;
-		margin-top: 25%;
-	}
-
-	.app-name {
-		margin-top: 0;
-
-	}
-
-	.image-intro {
-		box-shadow: none;
-		padding: 20px;
-	}
-
-	.intro {
-		 font-size: 35px;
-	    /* font-size: 19px; */
-	    margin: 20px;
-	    line-height: 50px;
-	}
-
-	.call-board {
-		line-height: 41px;
-		font-size: 60px;
-	}
-
-	/*sign in page*/
-	.signin-container,
-	.signup-container {
-		margin-top: 10%;
-	}
-
-	.signin-h1,
-	.signup-h1 {
-		margin-bottom: 0;
-	}
-
-
-	/*home page*/
-
-	header {
-		height: 70px;
-	}
-
-	.home-icon {
-		height: 100%;
-	}
-
-	.start-a-project {
-	    width: 400px;
-	    height: 400px;
-	}
-
-	/*BackLog Page*/
-	.entry-btn {
-		margin: 1vh 5px;
-		width: 5vh;
-   	    height: 5vh;
-	}
-
-	.listItem {
-		height: 80px;
-		padding: 0 5px;
-	}
-
-	.entry {
-		padding: 4px;
-		font-size: 28px;
-	}
-
-	.menu-icon {
-	    height: 45px;
-	    width: 45px;
-	}
 
 }
 
 @media only screen and (min-width: 800px) {
-	.col-3 {
-		width: 25%;
-	}
 
-	.col-4 {
-		width: 33.33%;
-	}
-
-	.col-6 {
-		width: 50%;
-	}
-
-	/*call to action*/
-	.container-text {
-		margin-top: 65px;
-	}
-
-	.icon {
-		height: 88vh;
-	}
-
-	.icon-app {
-		margin-top: 25%;
-		height: 300px;
-		width: 300px;
-
-	}
-
-	.app-name {
-		font-size: 80px;		
-	}
-
-	.box {
-	    background-color: transparent;
-	    box-shadow: none;
-	    margin-top: 0;
-	    border: none; 
-	    border-radius: none; 
-	}
-
-	.call-board {
-		font-size: 35px;
-	}
-
-	.call-desc-container {
-		border-left: 2px solid white;
-	}
-
-	.image-intro {
-		margin: 10% 0;
-	}
-
-	.intro {
-		font-size: 17px;
-    	color: rgb(255,255,255);
-    	line-height: 20px;
-	}
-
-	.signin,
-	.signup {
-		margin: 0 25%;
-		background-color: rgba(70,127,179,0.9);
-		padding: 50px 20px;
-    	border-radius: 15px;
-    	font-size: 75px;
-    	border: 2px double white;
-	}
-
-
-	/*home page*/
-	.projectCard {
-		height: 12vh;
-	}
-
-	.project-name, 
-	.progressBar {
-		font-size: 3vh;
-	}
-
-	.menu {
-		width: 450px;
-		left: -450px;
-	}
-
-	.menu-header {
-		font-size: 50px;
-	}
-
-	.btn-home {
-		font-size: 40px;
-	}
-
-	/*scrum page*/
-
-	.entry-btn {
-		margin: 1vh 5px;
-	}
-
-	.entry {
-		padding: 5px;
-		font-size: 30px;
-	}
-
-	.button-submit,
-	.backlog-entry {
-		font-size: 35px;
-	}
-
-	.backlog-h1 {
-		margin: 15px 25%;
-		font-size: 50px;
-	}
-
-	.btns-board {
-		height: 75px;
-		font-size: 30px;
-	}
-
-	.listItem {
-		height: 7vh;
-	}
-
-	.boards > ul > li > .entry {
-		font-size: 15px;
-	}
-
-	.entry-btn {
-		margin: 1vh 5px;
-		width: 3vh;
-    	height: 3vh;
-	}
-
-	.backmoveBack {
-		background-image: url(../images/left.png);
-	    background-repeat: no-repeat;
-	    background-position: center;
-	}
-
-	.forwardmoveForward {
-		background-image: url(../images/right.png);
-	    background-repeat: no-repeat;
-	    background-position: center;
-	}
-
-	.backremove {
-		margin: 1vh 9px;
-	    width: 5vh;
-	    height: 4vh;
-	}
-
-	.forwardAddTask {
-		margin: 1vh 9px;
-	    width: 5vh;
-	    height: 4vh;
-	}
-
-	/*projects page*/
-
-	/*done pile page*/
-	.done-pile-h1 {
-		margin: 15px 25%;
-    	font-size: 50px;
-	}
-
-	/*Daily Notes Page*/
-	.notesheader-container {
-		margin: 10px 25%;
-	}
 
 }
 
 
 @media only screen and (min-width: 1100px) {
 
-/*	html {
-		background-color: rgba(30,55,77,0.9);
 
-	}*/
-
-	/*Call To Action Page*/
-	.sign-control {
-		position: static;
-	}
-
-	body {
-		height: 93%;
-	}
-
-	.signIn,
-	.signUp {
-		width: 40%;
-		margin: 0 5%;
-		border-radius: 5px;
-	    border: 1px solid white;
-		background-color: rgba(30,55,77,0.8);
-	}
-
-	.input-signup, .input-signin {
-		border: 1px solid white;
-	}
-
-	.icon-app {
-		margin-top: 10%;
-	}
-
-	.app-name {
-		margin-bottom: 100px;
-		text-shadow: -4px 2px 2px rgba(0,0,0,0.4);
-	}
-	
-	.call-desc-container {
-		border-left: 2px solid rgba(255,255,255,1);
-	}
-
-	.icon {
-		height: unset;
-	}
-
-	.container-text {
-		margin: 7vh auto;
-		/*background-color: rgba(30,55,77,0.2);*/
-	}
-
-	.box {
-		background-color: transparent;
-		border: none;
-	}
-
-	.call-board {
-		margin: 4vh 0;
-	}
-
-	.intro {
-		line-height: 4vh;
-		color: rgb(255,255,255);
-	}
-
-	.icon-cont {
-
-	}
-
-	.entries {
-		max-height: unset;
-		height: 100%;
-	}
-
-	.container {
-		height: 100%;
-	}
-
-	.log-container {
-		height: 63vh;
-	}
-
-	.submit-form {
-		position: static;
-		width: 100%;
-	}
-
-	.button-submit {
-		width: 16%;
-	}
-
-	.boards > ul > li > .entry {
-	    font-size: 25px;
-	}
-
-	/*Daily Notes Page*/
-	#submit-notes:hover {
-	    background-color: rgba(30,55,77,1);
-	}
 }

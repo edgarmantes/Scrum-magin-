@@ -29,20 +29,20 @@ var routes = (
 	<Provider store={store}>
 		<Router history={hashHistory}>
 			<Route path='/' component={Call} />
-				<Route path='signin' component={SignIn} />
-				<Route path='signup' component={SignUp} />
-				<Route path='home' component={Home}>
-					<IndexRoute component={Projects} />
-					<Route path='/createproject' component={ProjectContainer} />
-				</Route>	 
-				<Route path='scrumboard/:Order' component={Home}> 
-					<Route component={Scrumboard}>
-						<IndexRoute component={BackLogs} />
-						<Route path='/scrum/:Order' component={Scrum} />
-						<Route path='/donepile/:Order' component={DonePile} />
-						<Route path='/dailynotes/:Order' component={DailyNotes} />
-					</Route>
+			<Route path='signin' component={SignIn} />
+			<Route path='signup' component={SignUp} />
+			<Route path='home' component={Home}>
+				<IndexRoute component={Projects} />
+				<Route path='/createproject' component={ProjectContainer} />
+			</Route>	 
+			<Route path='scrumboard/:Order' component={Home}> 
+				<Route component={Scrumboard}>
+					<IndexRoute component={BackLogs} />
+					<Route path='/scrum/:Order' component={Scrum} />
+					<Route path='/donepile/:Order' component={DonePile} />
+					<Route path='/dailynotes/:Order' component={DailyNotes} />
 				</Route>
+			</Route>
 				
 		</Router>
 	</Provider>
