@@ -51,6 +51,7 @@ var Projects = React.createClass({
 
 		return (
 			<div className="project-list-container row">
+				<h1 className="projects-hdr">All Projects</h1>
 				{projectsList}
 			</div>
 		)

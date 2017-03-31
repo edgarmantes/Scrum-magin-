@@ -129,6 +129,8 @@ var Scrum = React.createClass({
 
 	render: function(props){
 
+		var projectName = this.props.projectName;
+
 		var tasks = this.props.taskList.map(function(entry, index){
 			return <List key={index} entry={entry} onClick={this.backLog.bind(null, entry)} onClickAdd={this.addToDev.bind(null, entry)} index={index} moveBack="moveBack" moveForward="moveForward" />
 		}, this)
@@ -145,11 +147,13 @@ var Scrum = React.createClass({
 			return <List key={index} entry={entry} onClick={this.backTest.bind(null, entry)} onClickAdd={this.addToDone.bind(null, entry)} index={index} moveBack="moveBack" moveForward="moveForward" />	
 		}, this)
 
+
+
 		return (
 			<div className='scrum-container row'>
 				<div className='col-3'>
 					<div className='scrum-tasks boards'>
-						<h2 className='column'>Tasks</h2>
+						<h2 className='column'>Tasks - <span className="projectName">({projectName})</span></h2>
 						<ul>
 							{tasks}
 						</ul>
@@ -193,7 +197,8 @@ var mapStateToProps = function(state, props){
 		devList:  state.devList || [],
 		testList: state.testList || [],
 		releaseList: state.releaseList || [],
-		projects: state.projects || []
+		projects: state.projects || [],
+		projectName: state.projectName
 	}
 };
 

@@ -348,9 +348,10 @@ app.post('/move', function(req, res){
 app.post('/loading', function(req, res){
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
-        var entries = project.entries;
+        // var entries = project.entries;
+        var project = project;
 
-        return res.status(200).json(entries)
+        return res.status(200).json(project)
     })
 
 });

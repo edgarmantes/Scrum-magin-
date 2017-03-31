@@ -381,9 +381,8 @@ var loadThisProject = function(createProjectId){
 				return response.text();
 
 			}).then(function(project){
-
 				return dispatch(
-					loadEntriesSuccess(project)
+					loadProjectSuccess(project)
 				);
 
 			}).catch(function(error){
@@ -513,7 +512,7 @@ var getNotes = function(){
 		var sendProject = { 
 			_id: localStorage.createProjectId
 		}
-		console.log(516, sendProject)
+
 		return fetch('/notes/daily', 
 				{
 					method: 'POST',
@@ -523,7 +522,7 @@ var getNotes = function(){
 					}, 
 					body: JSON.stringify(sendProject)
 				}).then(function(response){
-					console.log(526, response.status)
+
 				if (response.status < 200 || response.status >= 300){
 					var error = new Error (response.statusText)
 					error.response = response
@@ -533,7 +532,6 @@ var getNotes = function(){
 				return response.text();
 
 			}).then(function(notes){
-				console.log(536, notes)
 
 				return dispatch(
 					getNotesSuccess(notes)
@@ -618,11 +616,12 @@ var getUserError = function(err){
 	}
 };
 
-var LOAD_ENTRIES_SUCCESS = 'LOAD_ENTRIES_SUCCESS'
-var loadEntriesSuccess = function(entries){
+var LOAD_PROJECT_SUCCESS = 'LOAD_PROJECT_SUCCESS'
+var loadProjectSuccess = function(project){
+
 	return {
-		type: LOAD_ENTRIES_SUCCESS,
-		entries: entries
+		type: LOAD_PROJECT_SUCCESS,
+		project: project
 	}
 };
 
@@ -703,8 +702,8 @@ exports.GET_PROJECTS_SUCCESS = GET_PROJECTS_SUCCESS;
 exports.getProjectsSuccess = getProjectsSuccess;
 exports.GET_PROJECTS_ERROR = GET_PROJECTS_ERROR;
 exports.getProjectsError = getProjectsError;
-exports.LOAD_ENTRIES_SUCCESS = LOAD_ENTRIES_SUCCESS;
-exports.loadEntriesSuccess = loadEntriesSuccess;
+exports.LOAD_PROJECT_SUCCESS = LOAD_PROJECT_SUCCESS;
+exports.loadProjectSuccess = loadProjectSuccess;
 exports.LOAD_BOARD_SUCCESS = LOAD_BOARD_SUCCESS;
 exports.loadBoardSuccess = loadBoardSuccess;
 exports.LOAD_DONE_LIST_SUCCESS = LOAD_DONE_LIST_SUCCESS;

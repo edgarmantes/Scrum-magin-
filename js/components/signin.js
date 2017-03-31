@@ -1,5 +1,6 @@
 var React = require('react');
 var connect = require('react-redux').connect;
+var router = require('react-router');
 
 var actions = require('../actions/index');
 

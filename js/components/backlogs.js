@@ -92,14 +92,14 @@ var BackLogs = React.createClass({
 				var entryArray = this.props.entries.map(function(entry, index){		// Will load all projects
 					return <List key={index} entry={entry} onClick={this.deleteEntry.bind(null, entry)} onClickAdd={this.addToTaskList.bind(null, entry)} index={index} moveBack="remove" moveForward="AddTask" />			
 				}, this)
-
+				var projectName = this.props.projectName;
 			}
 
 		return (
 
 			<div className="container row"> 
 		      <div className="header row border">
-		        <h1 className="backlog-h1 col-6">Back Logs</h1>
+		        <h1 className="backlog-h1 col-6">Back Logs - <span className="ProjectName">({projectName})</span></h1>
 		      </div>
 		      <div className="log-container col-12 border">
 		        <ul className="js-entries entries">
@@ -123,7 +123,8 @@ var mapStateToProps = function(state, props){
 	return {
 		entries : state.entries,
 		projects: state.projects, 
-		userid: state.userid
+		userid: state.userid,
+		projectName: state.projectName
 	}
 };
 
