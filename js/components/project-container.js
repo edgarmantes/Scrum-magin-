@@ -40,16 +40,16 @@ var CreateProjectContainer = React.createClass({
 							<label>Project Name:</label><br/>
 							<input type="text" className="project-name create-input" placeholder='"best app ever!"' /><br/>	
 							<label>Start Date:</label><br/>
-							<input type="text" className="start-date create-input" placeholder='01/01/17' /><br/>
+							<input type="text" className="start-date create-input" placeholder='eg:01/01/17' /><br/>
 							<label>End Date:</label><br/>
-							<input type="text" className="end-date create-input" placeholder='01/01/17' /><br/>
+							<input type="text" className="end-date create-input" placeholder='eg:01/01/17' /><br/>
 							<label>Project Leader:</label><br/>
-							<input type="text" className="project-leader create-input" placeholder='"Big Boss"' /><br/>
+							<input type="text" className="project-leader create-input" placeholder='eg:"Big Boss"' /><br/>
 							<label>Scrum Master:</label><br/>
-							<input type="text" className="scrum-master create-input" placeholder='"me"' /><br/>
+							<input type="text" className="scrum-master create-input" placeholder='eg:"me"' /><br/>
 							<label>Add Member:</label><br/>
 
-							<input type="text" className="add-members create-input" placeholder='Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
+							<input type="text" className="add-members create-input" placeholder='eg:Steve' /><button className='add' onClick={this.addMember}>ADD</button><br/>
 
 							<label>Team Members:</label><br/>	
 							<div className='listedMembers'>

@@ -379,11 +379,11 @@ div#background {
 
 div#background > #background_roll {
 	position: relative;
-	background: url(../images/wallpaper.png) repeat;
+	background: url(../images/backgroundcall.png) repeat;
 	width: 3600px;
 	max-height: 1200px;
 	height: 100%;
-	-webkit-animation: background-roll linear 20s infinite;
+	/*-webkit-animation: background-roll linear 20s infinite;*/
 }
 
 @keyframes background-roll {
@@ -675,7 +675,8 @@ header {
 }
 
 .create-input:focus {
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255,255,255,1);
+	border-bottom: 2px solid rgb(70,127,179);
 	outline-width: 0;
 }
 
@@ -920,6 +921,7 @@ header {
 	.description {
 		width: 40%;
     	display: inline-block;
+    	vertical-align: top;
 	}
 
 	.intro {
@@ -947,6 +949,20 @@ header {
 	.project-name, 
 	.progressBar {
 		font-size: 3vh;
+	}
+
+	.projects-hdr {
+		text-align: center;
+	}
+
+	.ProjectName {
+		font-size: 32px;
+    	font-style: italic;
+	}
+
+	.projectName {
+		font-size: 15px;
+    	font-style: italic;
 	}
 
 	.menu {
@@ -1089,6 +1105,8 @@ header {
 	    margin-right: auto;
 	    border: none;
 	    background-color: transparent;
+	    font-size: 20px;
+    	margin-top: 10px;
 	}
 
 	.input-signup, .input-signin {

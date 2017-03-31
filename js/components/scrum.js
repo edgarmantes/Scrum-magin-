@@ -153,7 +153,7 @@ var Scrum = React.createClass({
 			<div className='scrum-container row'>
 				<div className='col-3'>
 					<div className='scrum-tasks boards'>
-						<h2 className='column'>Tasks - <span className="ProjectName">({projectName})</span></h2>
+						<h2 className='column'>Tasks - <span className="projectName">({projectName})</span></h2>
 						<ul>
 							{tasks}
 						</ul>
