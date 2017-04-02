@@ -547,6 +547,26 @@ header {
 	text-align: center;
 }
 
+.projects-hdr {
+	text-align: center;
+	margin: 12px;
+}
+
+.project-name, 
+.progressBar {
+	font-size: 3vh;
+}
+
+.ProjectName {
+	font-size: 14px;
+	font-style: italic;
+}
+
+.projectName {
+	font-size: 14px;
+	font-style: italic;
+}
+
 
 /*scrumboard page*/
 
@@ -668,7 +688,7 @@ header {
 	height: 60px;
 	border: none;
 	border-bottom: 2px solid gray;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 1.0);
 	font-size: 23px;
 	font-family: 'Cabin', sans-serif;
 	padding: 10px;
@@ -676,7 +696,7 @@ header {
 
 .create-input:focus {
 	background-color: rgba(255,255,255,1);
-	border-bottom: 2px solid rgb(70,127,179);
+	border-bottom: 3px solid rgb(70,127,179);
 	outline-width: 0;
 }
 
@@ -946,23 +966,14 @@ header {
 		height: 12vh;
 	}
 
-	.project-name, 
-	.progressBar {
-		font-size: 3vh;
-	}
-
-	.projects-hdr {
-		text-align: center;
-	}
-
 	.ProjectName {
 		font-size: 32px;
-    	font-style: italic;
+		font-style: italic;
 	}
 
 	.projectName {
-		font-size: 15px;
-    	font-style: italic;
+		font-size: 14px;
+		font-style: italic;
 	}
 
 	.menu {
