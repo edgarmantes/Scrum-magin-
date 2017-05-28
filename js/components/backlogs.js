@@ -46,7 +46,7 @@ var BackLogs = React.createClass({
 
 			var creds = {
 				object : entry,
-				endpoint : '/move',
+				endpoint : '/object',
 				to : 'entries',
 				from: null,
 				projectName : this.props.projects[this.props.params.Order].projectName
@@ -60,7 +60,7 @@ var BackLogs = React.createClass({
 
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'taskList',
 			from: 'entries',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -72,7 +72,7 @@ var BackLogs = React.createClass({
 
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : null,
 			from: 'entries',
 			projectName : this.props.projects[this.props.params.Order].projectName

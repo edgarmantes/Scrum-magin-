@@ -1,4 +1,5 @@
 var fetch = require('isomorphic-fetch');
+require('es6-promise').polyfill();
 
 var router = require('react-router');
 var Router = router.Router;
@@ -183,7 +184,6 @@ var fetchUser = function(objects){
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 				}, 
 				credentials: 'same-origin',
-				cache: 'default',
 				body: JSON.stringify(objects)
 			}).then(function(response){
 				if (response.status < 200 || response.status >= 300){
@@ -207,7 +207,7 @@ var fetchUser = function(objects){
 				);
 
 			}).catch(function(error){
-
+				console.log(error)
 				return dispatch(
 					getUserError(error)
 				)
@@ -217,10 +217,12 @@ var fetchUser = function(objects){
 	};
 };
 
+
+//  Signing into existing users account
 var getUser = function(cred){
 
 	return function(dispatch){
-		return fetch('/hidden', 
+		return fetch('/account', 
 			{
 				method: 'POST',
 				headers: {
@@ -263,19 +265,20 @@ var getUser = function(cred){
 	};
 };
 
+
+//  Send info to create new project
 var createProject = function(newProject){
 
 	return function(dispatch){
 
-		return fetch('/createproject', 
+		return fetch('/project', 
 			{
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*'
 				}, 
-				// mode: 'cors',
-				// cache: 'default',
+
 				body: JSON.stringify(newProject)
 			}).then(function(response){
 				if (response.status < 200 || response.status >= 300){
@@ -325,7 +328,7 @@ var move = function(creds, callback){
 				headers: {
 					'Content-Type': 'application/json',
 					'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-					// 'x-access-token': localStorage.getItem('token');
+
 				}, 
 				body: JSON.stringify(sendInfo.payload)
 			}).then(function(response){
@@ -347,7 +350,7 @@ var move = function(creds, callback){
 				);
 
 			}).catch(function(error){
-
+				console.log('actions', error)
 				return error
 
 			});
@@ -361,7 +364,7 @@ var loadThisProject = function(createProjectId){
 
 		var sendProject = { _id: createProjectId}
 
-		return fetch('/loading', 
+		return fetch('/info', 
 				{
 					method: 'POST',
 					headers: {
@@ -397,7 +400,7 @@ var loadThisBoard = function(createProjectId){
 
 		var sendProject = { _id: createProjectId}
 
-		return fetch('/loadboard', 
+		return fetch('/board', 
 				{
 					method: 'POST',
 					headers: {
@@ -435,7 +438,7 @@ var loadThisDoneList = function(createProjectId){
 
 		var sendProject = { _id: createProjectId}
 
-		return fetch('/loadlist', 
+		return fetch('/list', 
 				{
 					method: 'POST',
 					headers: {

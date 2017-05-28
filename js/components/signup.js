@@ -34,7 +34,7 @@ var SignUp = React.createClass({
 
 	demo: function(e){		// demo link
 		e.preventDefault();
-		console.log('submit test')
+
 		var user = {
 			username: 'demo',
 			password: '123'

@@ -209,6 +209,7 @@ var scrumReducer = function(state, action){
 
     } else if (action.type === actions.GET_USER_ERROR) {
 
+    	alert("Credentials are not valid. Please re-enter credentials")
     	return state
 
     } else if (action.type === actions.LOAD_PROJECT_SUCCESS) {
@@ -234,7 +235,7 @@ var scrumReducer = function(state, action){
   	
     	return Object.assign({}, state, dailyNotes)
 
-    } 	
+    }
 
     else {
 

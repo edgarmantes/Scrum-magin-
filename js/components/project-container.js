@@ -16,7 +16,7 @@ var CreateProjectContainer = React.createClass({
 	},
 
 	createProject: function(e){		// On click, will create a new project and redirect to the projects page
-		console.log(20, 'test createProject')
+
 		e.preventDefault();
 		var info = {
 			projectName: document.getElementsByClassName('project-name')[0].value,

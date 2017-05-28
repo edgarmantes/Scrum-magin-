@@ -14,7 +14,7 @@ var CreateProject = require('./models/create-project')
 var config = require('./config');
 var app = express();
 
-mongoose.Promise = global.Promise;  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
+mongoose.Promise = global.Promise  // Use this code because mongoose.Promise has been deprecated and global.Promise is taking its place.
 
 app.use(express.static('public'));
 var bodyParser = require('body-parser');
@@ -57,13 +57,10 @@ if (require.main === module) {
 exports.app = app;
 exports.runServer = runServer;
 
-
-
-
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({ 
-        secret: 'blahblahblahblah-Trump', 
+app.use(session({           // session description
+        secret: 'blahblah', 
         cookie: {maxAge: 60000},
         resave: false, 
         saveUninitialized: true,
@@ -78,14 +75,10 @@ app.options('*', function(req, res){
     res.status(200)
 });
 
-app.get('/test', function(){
-    console.log('testing server')
-})
-
 
 // End point for existing user to log in and authenticate
-app.post('/hidden', function(req, res){
-    console.log(88, 'signin test', req.body)
+app.post('/account', function(req, res){
+    console.log(req.body)
         User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
             
             if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
@@ -104,7 +97,7 @@ app.post('/hidden', function(req, res){
                     return res.status(401).json({ message: 'Incorrect password.' });
                 }
                 req.session.user = user
-                console.log(187, 'login authenticated')
+
                 res.redirect('/protected_page/' + user._id)
             });
         });  
@@ -180,7 +173,7 @@ app.post('/users', function(req, res) {
 
         bcrypt.hash(password, salt, function(err, hash) {
             if (err) {
-                return res.status(500).json({
+                return res.status(501).json({
                     message: 'Internal server error'
                 });
             }
@@ -193,7 +186,7 @@ app.post('/users', function(req, res) {
             user.save(function(err, object) {
 
                 if (err) {
-                    return res.status(500).json({
+                    return res.status(502).json({
                         message: 'Internal server error'
                     });
                 }
@@ -218,7 +211,8 @@ app.post('/projects', function(req, res){
 
 
 // create new project
-app.post('/createproject', function(req, res){
+app.post('/project', function(req, res){
+    console.log('server', req.body)
     var newProject = {
                 projectName: req.body.projectName,
                 startDate: req.body.startDate,
@@ -231,7 +225,6 @@ app.post('/createproject', function(req, res){
 
     CreateProject.create(newProject, function(err, object){
 
-        console.log(234, err, object)
             if (err){
                 return res.status(500).json({
                     message: 'did not create the project. Internal Server Error'
@@ -276,12 +269,15 @@ function CreateProjectUpdate(req, res, update){
 
 
 // used to move/remove payload from one section of the scrum board to another updating the redux store
-app.post('/move', function(req, res){
+app.post('/object', function(req, res){
 
     
-    var updateTo = null;
-    var updateFrom = null;
+    var updateTo = null;    // moving entry to__
+    var updateFrom = null;  // moving entry from__
+
+
     // When 'to' is passed in, this 'move' function will push object into the 'to' location.
+    // CreateProjectUpdate() will update the database
     if (req.body.to === 'entries') {
 
        updateTo = {$push:{ 'entries' : req.body.object }}
@@ -314,7 +310,7 @@ app.post('/move', function(req, res){
 
     // When 'from' is assigned, the move function will remove the object 'from' the list of which it is currently moved out of.
     if (req.body.from === 'entries'){
-        console.log(317, req.body.object)
+
         updateFrom = {$pull:{ 'entries' : req.body.object }}
         CreateProjectUpdate(req, res, updateFrom)
 
@@ -345,10 +341,10 @@ app.post('/move', function(req, res){
 
 
 // After clicking on a specific project, this endpoint is called and retrieves the entries of each list in the scrum project and sends the informations back to the client
-app.post('/loading', function(req, res){
+app.post('/info', function(req, res){
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
-        // var entries = project.entries;
+
         var project = project;
 
         return res.status(200).json(project)
@@ -358,7 +354,7 @@ app.post('/loading', function(req, res){
 
 
 //  sends the Done List
-app.post('/loadlist', function(req, res){
+app.post('/list', function(req, res){
 
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
@@ -372,7 +368,7 @@ app.post('/loadlist', function(req, res){
 });
 
 //  Updates the DB with entries for each list
-app.post('/loadboard', function(req, res){
+app.post('/board', function(req, res){
 
     CreateProject.findOne({_id: req.body._id}, function(err, project){
 

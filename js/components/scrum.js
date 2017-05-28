@@ -32,7 +32,7 @@ var Scrum = React.createClass({
 	backLog: function(entry){	// Moves entry back to Backlogs
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'entries',
 			from: 'taskList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -45,7 +45,7 @@ var Scrum = React.createClass({
 
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'devList',
 			from: 'taskList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -57,7 +57,7 @@ var Scrum = React.createClass({
 	backTask: function(entry){	// Moves entry back to Tasklist
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'taskList',
 			from: 'devList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -69,7 +69,7 @@ var Scrum = React.createClass({
 	addToTest: function(entry){		// Move entry forward to Test List
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'testList',
 			from: 'devList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -81,7 +81,7 @@ var Scrum = React.createClass({
 	backDev: function(entry){	// Moves entry back to Dev List
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'devList',
 			from: 'testList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -93,7 +93,7 @@ var Scrum = React.createClass({
 	addToRelease: function(entry){	// Move entry forward to Release List
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'releaseList',
 			from: 'testList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -105,7 +105,7 @@ var Scrum = React.createClass({
 	backTest: function(entry){	// Moves entry back to Test List
 		var creds = {		
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'testList',
 			from: 'releaseList',
 			projectName : this.props.projects[this.props.params.Order].projectName
@@ -117,7 +117,7 @@ var Scrum = React.createClass({
 	addToDone: function(entry){		// Move entry forward to Done List
 		var creds = {
 			object : entry,
-			endpoint : '/move',
+			endpoint : '/object',
 			to : 'doneList',
 			from: 'releaseList',
 			projectName : this.props.projects[this.props.params.Order].projectName
