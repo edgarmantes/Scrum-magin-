@@ -236,6 +236,18 @@ input:hover {
     text-overflow: clip;	
 }
 
+@media only screen and (min-width: 425px) {
+	.entry {
+		width: 298px;
+	}
+}
+
+@media only screen and (min-width: 525px) {
+	.entry {
+		width: 398px;
+	}
+}
+
 
 .projectCard {
 	background-color: white;
@@ -877,13 +889,19 @@ header {
 	}
 
 	.listItem {
-		height: 80px;
 		padding: 0 5px;
 	}
 
 	.entry {
 		padding: 4px;
 		font-size: 28px;
+		width: 505px;
+	}
+
+	@media only screen and (min-width: 725px) {
+		.entry {
+			width: 645px;
+		}
 	}
 
 	.menu-icon {
@@ -1048,10 +1066,6 @@ header {
 		font-size: 30px;
 	}
 
-	.listItem {
-		height: 7vh;
-	}
-
 	.boards > ul > li > .entry {
 		font-size: 15px;
 	}
@@ -1075,7 +1089,7 @@ header {
 	}
 
 	.backremove {
-		margin: 1vh 9px;
+		margin: 1vh 5px;
 	    width: 5vh;
 	    height: 4vh;
 	}
@@ -1201,6 +1215,8 @@ header {
 	.scrum-iphone {
 		width: 50%;
 	}
+
+	
 
 	.entries {
 		max-height: unset;
