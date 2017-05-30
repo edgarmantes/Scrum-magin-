@@ -33,7 +33,7 @@ var Call = React.createClass({
 				    </div>
 				    <div className="bottom-container">
 			            <div className="bottom-call">
-			            	<div className='box'>
+			            	<div className='box box-left'>
 			            		<div className='wrapper right'>
 				            		<img className='image-intro' src='../images/call-image.png'/>
 					            	<div className='description'>	
@@ -46,7 +46,7 @@ var Call = React.createClass({
 				            		</div>
 				            	</div>
 			            	</div>
-			            	<div className='box'>
+			            	<div className='box box-right'>
 			            		<div className='wrapper'>
 				            		<div className='img-container'>
 				            			<img className='image-phone' src='../images/phone-ex.png' />

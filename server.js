@@ -78,7 +78,7 @@ app.options('*', function(req, res){
 
 // End point for existing user to log in and authenticate
 app.post('/account', function(req, res){
-    console.log(req.body)
+
         User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
             
             if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
@@ -212,7 +212,7 @@ app.post('/projects', function(req, res){
 
 // create new project
 app.post('/project', function(req, res){
-    console.log('server', req.body)
+
     var newProject = {
                 projectName: req.body.projectName,
                 startDate: req.body.startDate,

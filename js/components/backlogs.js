@@ -42,6 +42,7 @@ var BackLogs = React.createClass({
 
 	addEntry: function(event){		// Adds a new entry to back-logs
 		event.preventDefault();
+		
 		var entry = document.getElementsByClassName('backlog-entry')[0].value;	
 
 			var creds = {

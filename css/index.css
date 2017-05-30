@@ -61,6 +61,8 @@ header {
     background-color: rgb(70,127,179);
     box-shadow: 0px 2px 2px rgba(0,0,0,0.6);	
 }
+
+
 #brand {
 	float: left;
 	line-height: 50px;
@@ -95,6 +97,20 @@ nav li:last-child a {
 }
 
 /*-----------------------------------------*/
+
+.scrum-iphone {
+	width: 100%;
+	max-width: 400px;
+	padding-bottom: 50px;
+}
+
+.call-desc-container {
+	text-align: center;
+}
+
+.image-intro {
+	width: 100%;
+}
 
 .menu {
 	width: 240px;
@@ -202,8 +218,8 @@ input:hover {
 }
 
 .entry-btn {
-	width: 4vh;
-    height: 4vh;
+	width: 27px;
+    height: 27px;
     margin-top: 7px;
 }
 
@@ -213,7 +229,11 @@ input:hover {
     bottom: 0;
 	font-size: 24px;
 	padding: 3%;
-	font-family: 'Cabin', sans-serif;	
+	font-family: 'Cabin', sans-serif;
+    width: 236px;
+    white-space: pre;
+    overflow: scroll;
+    text-overflow: clip;	
 }
 
 
@@ -231,7 +251,7 @@ input:hover {
 
 .entries {
 	width: 100%;
-    max-height: 55vh;
+    max-height: 280px;
     overflow: auto;
 }
 
@@ -320,7 +340,8 @@ nav > a:nth-child(3) {
 .image-phone {
 	display: block;
 	width: 140px;
-	margin: 20px auto;
+	margin: 0 auto;
+    padding: 30px 0;
 
 }
 
@@ -356,11 +377,11 @@ nav > a:nth-child(3) {
 	font-size: 22px;
 	text-align: center;
 	border-radius: 5px;
-	margin-bottom: 10px;
+	padding-bottom: 30px;
 }
 
 .bottom-container {
-	background-color: rgb(255,255,255);
+	/*background-color: rgb(255,255,255);*/
 	height: 100vh;
 	padding: 16vh 0;
 }
@@ -532,12 +553,12 @@ div#background > #background_roll {
 }
 
 header {
-	height: 9vh;
+	height: 60px;
 	background-color: rgb(70,127,179);
 }
 
 .home-icon {
-	height: 9vh;
+	height: 57px;
     padding: 4px;
     display: block;
     margin: auto;
@@ -554,7 +575,7 @@ header {
 
 .project-name, 
 .progressBar {
-	font-size: 3vh;
+	font-size: 21px;
 }
 
 .ProjectName {
@@ -591,7 +612,7 @@ header {
 
 .listItem {
 	display: block;
-    height: 8vh;
+    height: 51px;
     border-bottom: 1px solid gray;
     position: relative;
 }
@@ -636,10 +657,10 @@ header {
 }
 
 .submit-form {
-	position: fixed;
+/*	position: fixed;
     bottom: 15px;
-    left: 10px;
-    width: 98%;
+    left: 10px;*/
+    width: 100%;
 }
 
 /*scrum page*/
@@ -806,20 +827,20 @@ header {
 
 	.image-intro {
 		box-shadow: none;
-		padding: 20px;
+		/*padding: 20px;*/
 	}
 
 	.intro {
-		 font-size: 35px;
-	    /* font-size: 19px; */
+		font-size: 27px;
 	    margin: 20px;
 	    line-height: 50px;
 	}
 
 	.call-board {
 		line-height: 41px;
-		font-size: 60px;
+		font-size: 47px;
 	}
+
 
 	/*sign in page*/
 	.signin-container,
@@ -915,12 +936,20 @@ header {
 	    border-radius: none; 
 	}
 
+	.box-right {
+		float: right;
+	}
+
 	.call-board {
 		font-size: 35px;
 	}
 
 	.call-desc-container {
 		border-left: 2px solid white;
+	}
+
+	.bottom-container {
+		background-color: rgb(255,255,255);
 	}
 
 
@@ -934,19 +963,23 @@ header {
 	}
 
 	.bottom-call {
-		width: 80%;
+		width: 90%;
     	margin: 10px auto;
 	}
 
 	.description {
-		width: 40%;
+		width: 60%;
     	display: inline-block;
     	vertical-align: top;
 	}
 
+	.container-text {
+		margin-bottom: 0px;
+	}
+
 	.intro {
 		font-size: 17px;
-    	color: rgb(255,255,255);
+    	/*color: rgb(255,255,255);*/
     	line-height: 20px;
 	}
 
@@ -1084,6 +1117,7 @@ header {
 	}
 
 	.call-desc-container {
+		float: right;
 		width: 50%;
     	display: inline-block;
 	}
@@ -1092,6 +1126,10 @@ header {
 		width: 80%;
 	    text-align: center;
 	    margin: 15vh auto;
+	}
+
+	.scrum-iphone {
+		padding-top: 32px;
 	}
 
 	.sign-control {

@@ -207,7 +207,7 @@ var fetchUser = function(objects){
 				);
 
 			}).catch(function(error){
-				console.log(error)
+
 				return dispatch(
 					getUserError(error)
 				)
@@ -350,7 +350,7 @@ var move = function(creds, callback){
 				);
 
 			}).catch(function(error){
-				console.log('actions', error)
+
 				return error
 
 			});

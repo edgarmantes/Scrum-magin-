@@ -35,7 +35,7 @@ var SignIn = React.createClass({
 
 	demo: function(e){		// Demo link credentials
 		e.preventDefault();
-		console.log('submit test')
+
 		var user = {
 			username: 'demo',
 			password: '123'
@@ -52,8 +52,8 @@ var SignIn = React.createClass({
 					<h1 className='signin-h1'>Sign In</h1>
 					<form>
 						<fieldset>
-							<input id='username-signin' type='text' placeholder='User Name' required/>
-							<input id='password-signin' type='password' placeholder='*********' required/>
+							<input id='username-signin' pattern="[a-zA-Z0-9]+" type='text' placeholder='User Name' required/>
+							<input id='password-signin' pattern="[a-zA-Z0-9]+" type='password' placeholder='*********' required/>
 							<input className='input-signin' type='submit' value='Sign In' onClick={this.signIn}  />
 							<a href="/Demo" onClick={this.demo}><p className="demo-btn">Demo</p></a>
 						</fieldset>
