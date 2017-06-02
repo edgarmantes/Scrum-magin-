@@ -225,28 +225,12 @@ input:hover {
 
 .entry {
 	display: inline-block;
-	/*position: absolute;*/
     bottom: 0;
 	font-size: 24px;
 	padding: 3%;
 	font-family: 'Cabin', sans-serif;
     width: 68%;
-    /*white-space: pre;*/
-    /*overflow: scroll;*/
-    /*text-overflow: clip;	*/
     word-break: break-word;
-}
-
-@media only screen and (min-width: 425px) {
-	.entry {
-		/*width: 298px;*/
-	}
-}
-
-@media only screen and (min-width: 525px) {
-	.entry {
-		/*width: 398px;*/
-	}
 }
 
 
@@ -348,9 +332,6 @@ nav > a:nth-child(3) {
 	background-color: rgba(135, 135, 135, 0.9);
 }
 
-/*.image-intro {
-	margin: 25px 0;
-}*/
 
 .image-phone {
 	display: block;
@@ -396,7 +377,6 @@ nav > a:nth-child(3) {
 }
 
 .bottom-container {
-	/*background-color: rgb(255,255,255);*/
 	height: 100vh;
 	padding: 16vh 0;
 }
@@ -419,7 +399,6 @@ div#background > #background_roll {
 	width: 3600px;
 	max-height: 1200px;
 	height: 100%;
-	/*-webkit-animation: background-roll linear 20s infinite;*/
 }
 
 @keyframes background-roll {
@@ -476,58 +455,58 @@ div#background > #background_roll {
 }
 
 
-#username-signup::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#username-signup::-webkit-input-placeholder { 
   color: white;
 }
-#password-signup::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#password-signup::-webkit-input-placeholder {
   color: white;
 }
-#username-signin::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#username-signin::-webkit-input-placeholder {
   color: white;
 }
-#password-signin::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: white;
-}
-
-
-#username-signup::-moz-placeholder { /* Firefox 19+ */
-  color: white;
-}
-#password-signup::-moz-placeholder { /* Firefox 19+ */
-  color: white;
-}
-#username-signin::-moz-placeholder { /* Firefox 19+ */
-  color: white;
-}
-#password-signin::-moz-placeholder { /* Firefox 19+ */
+#password-signin::-webkit-input-placeholder {
   color: white;
 }
 
 
-#username-signup:-ms-input-placeholder { /* IE 10+ */
+#username-signup::-moz-placeholder { 
   color: white;
 }
-#password-signup:-ms-input-placeholder { /* IE 10+ */
+#password-signup::-moz-placeholder {
   color: white;
 }
-#username-signin:-ms-input-placeholder { /* IE 10+ */
+#username-signin::-moz-placeholder { 
   color: white;
 }
-#password-signin:-ms-input-placeholder { /* IE 10+ */
+#password-signin::-moz-placeholder { 
   color: white;
 }
 
 
-#username-signup:-moz-placeholder { /* Firefox 18- */
+#username-signup:-ms-input-placeholder { 
   color: white;
 }
-#password-signup:-moz-placeholder { /* Firefox 18- */
+#password-signup:-ms-input-placeholder { 
   color: white;
 }
-#username-signin:-moz-placeholder { /* Firefox 18- */
+#username-signin:-ms-input-placeholder { 
   color: white;
 }
-#password-signin:-moz-placeholder { /* Firefox 18- */
+#password-signin:-ms-input-placeholder { 
+  color: white;
+}
+
+
+#username-signup:-moz-placeholder { 
+  color: white;
+}
+#password-signup:-moz-placeholder { 
+  color: white;
+}
+#username-signin:-moz-placeholder { 
+  color: white;
+}
+#password-signin:-moz-placeholder { 
   color: white;
 }
 
@@ -631,9 +610,7 @@ header {
 
 .listItem {
 	display: block;
-    /*height: 51px;*/
     border-bottom: 1px solid gray;
-    /*position: relative;*/
 }
 
 .btn-container {
@@ -642,7 +619,6 @@ header {
     float: right;
     padding: 5px;
     margin-top: 0px;
-    /*position: absolute;*/
     right: 0;
 }
 
@@ -680,9 +656,6 @@ header {
 }
 
 .submit-form {
-/*	position: fixed;
-    bottom: 15px;
-    left: 10px;*/
     width: 100%;
 }
 
@@ -851,7 +824,6 @@ header {
 
 	.image-intro {
 		box-shadow: none;
-		/*padding: 20px;*/
 	}
 
 	.intro {
@@ -911,9 +883,7 @@ header {
 	}
 
 	@media only screen and (min-width: 725px) {
-		.entry {
-			/*width: 645px;*/
-		}
+
 	}
 
 	.menu-icon {
@@ -1009,7 +979,6 @@ header {
 
 	.intro {
 		font-size: 17px;
-    	/*color: rgb(255,255,255);*/
     	line-height: 20px;
 	}
 
@@ -1127,9 +1096,7 @@ header {
 
 @media only screen and (min-width: 1100px) {
 
-/*	html {
-		background-color: rgba(30,55,77,0.9);
-	}*/
+
 
 	/*Call To Action Page*/
 
