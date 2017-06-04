@@ -78,7 +78,7 @@ app.options('*', function(req, res){
 
 // End point for existing user to log in and authenticate
 app.post('/account', function(req, res){
-
+        console.log('testing')
         User.findOne({ username: req.body.username }, function (err, user) { // First this searches for an existing username that was provided
             
             if (err) {  // if there was an issue besides 'nonexisting user' the error message will be passed in here. 
@@ -98,14 +98,15 @@ app.post('/account', function(req, res){
                 }
                 req.session.user = user
 
-                res.redirect('/protected_page/' + user._id)
+                res.status(201).redirect('/protected_page/' + user._id)
             });
         });  
 });
 
 //  User ID is passed through the params from the '/hidden' endpoint
 app.get('/protected_page/:userId', function(req, res){
-    res.status(200).json({userId:req.params.userId})
+
+    res.status(201).json({userId:req.params.userId})
 });
 
 

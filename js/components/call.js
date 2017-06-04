@@ -13,8 +13,8 @@ var Call = React.createClass({
 
 	render: function(props) {
 	    return (
-	       <div>    
-	            <div className='container-text'>
+	       <div className="call-container">    
+	            <div className="container-text">
 	            	<div className="hero-container">
 		            	<div className="hero">
 			            	<div className='icon icon-cont'>
