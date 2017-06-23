@@ -4,7 +4,6 @@ var router = require('react-router');
 
 var actions = require('../actions/index');
 
-
 var Form = require('./form');
 
 var SignIn = React.createClass({
@@ -67,3 +66,4 @@ var SignIn = React.createClass({
 var Container = connect()(SignIn);
 
 module.exports = Container;
+module.exports.SignIn = SignIn;
